@@ -5,8 +5,7 @@ package plateau;
  */
 
 public class Axis {
-    private int x;
-    private int y;
+    private int x, y;
 
     public Axis(int x, int y) {
         this.x = x;
