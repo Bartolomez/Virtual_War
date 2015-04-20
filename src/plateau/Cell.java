@@ -1,7 +1,19 @@
 package plateau;
 
 /**
- * Created by boinc on 20/04/15.
+ * @author boinc
  */
 public class Cell {
+
+    public Cell(int i, int j) {
+
+    }
+
+    public int getBase() {
+        return 0;
+    }
+
+    public boolean isObstacle() {
+        return fasle;
+    }
 }
