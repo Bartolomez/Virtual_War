@@ -17,4 +17,5 @@ public class Vue {
     public Plateau getPlateau() {
         return plateau;
     }
+
 }
