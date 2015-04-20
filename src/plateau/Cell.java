@@ -6,7 +6,7 @@ package plateau;
 public class Cell {
     private Axis axis;
     private Robot robot;
-    private boolean isObstacle;
+    private boolean obstacle;
     private int mine = 0, base = 0;
 
     public Cell(int x, int y) {
@@ -41,11 +41,52 @@ public class Cell {
         this.robot = null;
     }
 
-    public int getBase() {
-        return 0;
+    public boolean isObstacle() {
+        return this.obstacle;
     }
 
-    public boolean isObstacle() {
-        return fasle;
+    public void putObstacle(boolean obstacle) {
+        this.obstacle = obstacle;
+    }
+
+    public void putMine(int equipe) {
+        this.mine = equipe;
+    }
+
+    public int containsMine() {
+        return this.mine;
+    }
+
+    public void revokeMine() {
+        this.mine = 0;
+    }
+
+    public int getBase() {
+        return this.base;
+    }
+
+    public void putBase(int equipe) {
+        this.base = equipe;
+    }
+
+    public boolean isEmpty() {
+        return !(this.robot == null || this.obstacle || this.mine == 0 || this.base == 0);
+    }
+
+    public void clearCell() {
+        this.revokeRobot ();
+        this.obstacle = false;
+        this.revokeMine ();
+        this.base = 0;
+    }
+
+    @Override public String toString() {
+        return "Cell{" +
+            "axis=" + axis +
+            ", robot=" + robot +
+            ", obstacle=" + obstacle +
+            ", mine=" + mine +
+            ", base=" + base +
+            '}';
     }
 }
