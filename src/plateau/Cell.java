@@ -30,7 +30,7 @@ public class Cell {
             return 0;
         }
 
-        return this.robot.getTeam();
+        return this.robot.getTeam ();
     }
 
     public void putRobot(Robot robot) {
@@ -70,7 +70,7 @@ public class Cell {
     }
 
     public boolean isEmpty() {
-        return !(this.robot == null || this.obstacle || this.mine == 0 || this.base == 0);
+        return !( this.robot == null || this.obstacle || this.mine == 0 || this.base == 0 );
     }
 
     public void clearCell() {
