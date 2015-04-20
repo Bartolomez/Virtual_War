@@ -17,11 +17,36 @@ public class Plateau {
         this.length = length;
         this.width = width;
         this.plateau = new Cell[ width ][ length ];
-
         this.plateau = initializePlateau (this.plateau);
         initializeObstacles (percentageObstacles);
+    }
 
+    public Cell getCell(int x, int y) {
+        return this.plateau[x][y];
+    }
 
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getLength() {
+        return this.length;
+    }
+
+    public boolean isObstacle(int x, int y) {
+        return this.plateau[x][y].isObstacle ();
+    }
+
+    public int isBase(int x, int y) {
+        return this.plateau[x][y].getBase ();
+    }
+
+    public int isMine(int x, int y) {
+        return this.plateau[x][y].isMine();
+    }
+
+    public int isRobot(int x, int y) {
+        return this.plateau[x][y].isRobot();
     }
 
     private void initializeObstacles(double percentageObstacles) {
