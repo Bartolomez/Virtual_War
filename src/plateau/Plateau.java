@@ -8,10 +8,7 @@ import config.Constants;
 
 public class Plateau {
     private Cell[][] plateau;
-    private int x;
-    private int y;
-    private int length;
-    private int width;
+    private int x, y, length, width;
 
     public Plateau(int length, int width, double percentageObstacles) {
         this.length = length;
