@@ -22,6 +22,18 @@ public class Plateau {
         return this.plateau[ x ][ y ];
     }
 
+    public Cell getCell(Axis axis) {
+        for ( Cell[] cells : this.plateau ) {
+            for ( Cell cell : cells ) {
+                if ( cell.equals (axis) ) {
+                    return cell;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public int getWidth() {
         return this.width;
     }
@@ -75,15 +87,15 @@ public class Plateau {
             y = Constants.random.nextInt (this.length);
 
             if ( this.plateau[ x ][ y ].getBase () == 0 && !this.plateau[ x ][ y ].isObstacle () ) {
-                this.plateau[ x ][ y ].setObstacle (true);
+                this.plateau[ x ][ y ].putObstacle (true);
                 obstacles += 1;
             }
 
             if ( x == 0 && this.plateau[ x ][ y ].isObstacle () ) {
-                this.plateau[ x ][ y ].setObstacle (false);
+                this.plateau[ x ][ y ].putObstacle (false);
                 obstacles -= 1;
             } else if ( y == this.plateau.length - 1 && this.plateau[ x ][ y ].isObstacle () ) {
-                this.plateau[ x ][ y ].setObstacle (false);
+                this.plateau[ x ][ y ].putObstacle (false);
                 obstacles -= 1;
             }
         }
@@ -158,7 +170,7 @@ public class Plateau {
                     results.insert (results.length (), "X");
                 } else if ( this.plateau[ i ][ j ].getMine () == 2 ) {
                     results.insert (results.length (), "x");
-                } else if ( this.plateau[ i ][ j ].getObstacle () ) {
+                } else if ( this.plateau[ i ][ j ].isObstacle () ) {
                     results.insert (results.length (), "O");
                 } else {
                     results.insert (results.length (), " ");
@@ -166,7 +178,7 @@ public class Plateau {
                 results.insert (results.length (), " | ");
             }
             results.insert (results.length (), "\n+");
-            for ( int i = 0; i < this.largeur; i++ )
+            for ( int i = 0; i < this.width; i++ )
                 results.insert (results.length (), "---+");
         }
         results.insert (results.length (), "\n");
