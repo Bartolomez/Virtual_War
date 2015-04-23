@@ -85,7 +85,7 @@ public abstract class Robot {
 				calculateAxisYByTeam()));
 	}
 
-	public abstract void suddenShootBy(Robot robot);
+	public abstract void suddenByShoot(Robot robot);
 
 	public abstract void suddenByMine();
 
@@ -127,11 +127,11 @@ public abstract class Robot {
 		}
 	}
 
-	private String direction(Axis axis) {
+	public String direction(Axis axis) {
 		return null;
 	}
 
-	private Action chosesDisplacement(List<Axis> displacement) {
+	public Action chosesDisplacement(List<Axis> displacement) {
 		return null;
 	}
 
