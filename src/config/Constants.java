@@ -9,8 +9,12 @@ import java.util.Scanner;
 
 public class Constants {
 
-    public static final Random random = new Random (0);
-    public static Scanner sc = new Scanner (System.in);
+	public static final Random random = new Random(0);
+	public static Scanner sc = new Scanner(System.in);
 
+	public static final int FIRST_TEAM = 1;
+	public static final int SECOND_TEAM = 2;
 
+	public static final String[] NAME_COUNTRY = new String[] { "France",
+			"Japon", "USA", "Russie" };
 }
