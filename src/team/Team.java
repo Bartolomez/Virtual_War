@@ -1,6 +1,7 @@
 package team;
 
 import config.Constants;
+import config.ShowFrame;
 import plateau.Axis;
 import robot.Robot;
 
@@ -8,24 +9,43 @@ import java.util.List;
 
 /**
  * @author seysn
+ * @author boinc
  */
 public class Team {
     private List<Robot> robots;
     private String nomPays;
     private Axis axisBase;
+    private int team;
 
     public Team(Axis axisBase) {
         this.axisBase = axisBase;
         this.nomPays = choosePays();
     }
-
-    private String choosePays() {
-        // TODO Ajouter la liste des pays
-        System.out.print("Choisissez un pays : ");
-        return Constants.sc.nextLine();
+    
+    public Robot chooseRobot() {
+    	int count = 0, chosen;
+    	for (Robot robot : this.robots) {
+			System.out.println("Choix ["+count+"] \t"+robot.toString());
+			count += 1;
+		}
+    	do {
+    		chosen = Constants.sc.nextInt();
+    	} while (chosen < 1 && chosen > count);
+    	return this.robots.get(chosen);
     }
 
-    public String getNomPays() {
+	private String choosePays() {
+		ShowFrame.showFrame("Choisir pays", Constants.NAME_COUNTRY);
+		System.out.print("Choisissez un pays : ");
+        return Constants.sc.nextLine();
+    }
+    
+
+    public int getTeam() {
+		return this.team;
+	}
+
+	public String getNomPays() {
         return nomPays;
     }
 
@@ -41,11 +61,17 @@ public class Team {
         this.robots.add(robot);
     }
 
-    public void removeRobot(Robot robot){
+    public void revokeRobot(Robot robot){
         this.robots.remove(robot);
     }
 
     public boolean lose(){
         return robots.isEmpty();
     }
+
+	@Override
+	public String toString() {
+		return "Team [robots=" + robots + ", nomPays=" + nomPays
+				+ ", axisBase=" + axisBase + ", team=" + team + "]";
+	}
 }
