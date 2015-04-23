@@ -1,5 +1,7 @@
 package plateau;
 
+import robot.Robot;
+
 /**
  * @author boinc
  */
@@ -22,7 +24,7 @@ public class Cell {
     }
 
     public Robot getRobot() {
-        this.robot = robot;
+        return this.robot;
     }
 
     public int isRobot() {
@@ -30,7 +32,7 @@ public class Cell {
             return 0;
         }
 
-        return this.robot.getTeam ();
+        return this.robot.getNumberTeam();
     }
 
     public void putRobot(Robot robot) {
@@ -71,6 +73,10 @@ public class Cell {
 
     public boolean isEmpty() {
         return !( this.robot == null || this.obstacle || this.mine == 0 || this.base == 0 );
+    }
+    
+    public Robot getContent() {
+    	return this.robot;
     }
 
     public void clearCell() {
