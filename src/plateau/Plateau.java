@@ -155,7 +155,7 @@ public class Plateau {
                             results.insert (results.length (), "");
                             break;
                     }
-                } else if ( this.plateau[ i ][ j ].getContent () instanceof Piegeur ) {
+                } else if ( this.plateau[ i ][ j ].getContent () instanceof Scavenger ) {
                     switch ( this.plateau[ i ][ j ].getContent ().getTeam () ) {
                         case 1:
                             results.insert (results.length (), "P");
