@@ -166,7 +166,7 @@ public class Tank extends Robot {
                         * Constants.STRIKING_SCOPE_TANK ) - 1;
                     continue;
                 }
-                if ( isNotSameTeam(Axis axis) && valueContainsRobot(Axis axis) ) {
+                if ( isNotSameTeam(axis) && valueContainsRobot(axis) ) {
                     targetTmp.add(axis);
                 }
             } catch ( Exception e ) {
