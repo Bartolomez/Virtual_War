@@ -5,11 +5,11 @@ import plateau.Plateau;
 /**
  * @author seysn
  */
-public class Vue {
+public class View {
     private Plateau plateau;
     private Team team;
 
-    public Vue(Plateau plateau, Team team) {
+    public View(Plateau plateau, Team team) {
         this.plateau = plateau;
         this.team = team;
     }

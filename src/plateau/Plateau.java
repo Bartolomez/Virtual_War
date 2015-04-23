@@ -1,5 +1,6 @@
 package plateau;
 
+import robot.Robot;
 import config.Constants;
 
 /**
@@ -51,7 +52,7 @@ public class Plateau {
     }
 
     public int isMine(int x, int y) {
-        return this.plateau[ x ][ y ].isMine ();
+        return this.plateau[ x ][ y ].containsMine ();
     }
 
     public int isRobot(int x, int y) {
@@ -72,11 +73,11 @@ public class Plateau {
     }
 
     public void revokeRobot(Axis axis) {
-        this.plateau[ axis.getHeight () ][ axis.getWidth () ].revokeRobot ();
+        this.plateau[ axis.getX () ][ axis.getY () ].revokeRobot ();
     }
 
     public void revokeMine(Axis axis) {
-        this.plateau[ axis.getHeight () ][ axis.getWidth () ].revokeMine ();
+        this.plateau[ axis.getX () ][ axis.getY () ].revokeMine ();
     }
 
     private void initializeObstacles(double percentageObstacles) {
@@ -130,7 +131,7 @@ public class Plateau {
                             results.insert (results.length (), "");
                             break;
                     }
-                } else if ( this.plateau[ i ][ j ].getContent () instanceof Shooter ) {
+                } else if ( this.plateau[ i ][ j ].getContent() instanceof Shooter ) {
                     switch ( this.plateau[ i ][ j ].getContent ().getTeam () ) {
                         case 1:
                             results.insert (results.length (), "T");
