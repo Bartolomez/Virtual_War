@@ -32,6 +32,13 @@ public class Constants {
     public static final int DAMAGA_MINE_TANK = 6;
     public static final int ENERGY_TANK = 60;
 
+    /* Definition of a shooter by these assets */
+    public static final String IS_SHOOTER = "Tireur";
+    public static final int DAMAGE_ACTION_SHOOTER = 2;
+    public static final int DAMAGE_MOVE_SHOOTER = 1;
+    public static final int DAMAGE_SHOOT_SHOOTER = 6;
+    public static final int DAMAGA_MINE_SHOOTER = 3;
+    public static final int ENERGY_SHOOTER = 40;
 
     /* Moves */
     public static final Axis NORTH = new Axis(0, -1);
