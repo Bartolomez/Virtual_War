@@ -23,6 +23,7 @@ public class Constants {
 			"Japon", "USA", "Russie" };
 
     public static final int CARE = 2;
+    public static final int MINES_MAX = 10;
 
     /* Definition of a tank by these assets */
     public static final String IS_TANK = "Char";
@@ -36,9 +37,18 @@ public class Constants {
     public static final String IS_SHOOTER = "Tireur";
     public static final int DAMAGE_ACTION_SHOOTER = 2;
     public static final int DAMAGE_MOVE_SHOOTER = 1;
-    public static final int DAMAGE_SHOOT_SHOOTER = 6;
+    public static final int DAMAGE_SHOOT_SHOOTER = 3;
     public static final int DAMAGA_MINE_SHOOTER = 3;
     public static final int ENERGY_SHOOTER = 40;
+
+    /* Definition of a scanvenger assets */
+    public static final String IS_SCAVENGER = "Piegeur";
+    public static final int DAMAGE_SCAVENGER = 3;
+    public static final int DAMAGE_ACTION_SCAVENGER = 2;
+    public static final int DAMAGE_MOVE_SCAVENGER = 2;
+    public static final int DAMAGE_SHOOT_SCAVENGER = 2;
+    public static final int DAMAGE_MINE_SCAVENGER = 0;
+    public static final int ENERGY_SCAVENGER = 50;
 
     /* Moves */
     public static final Axis NORTH = new Axis(0, -1);
