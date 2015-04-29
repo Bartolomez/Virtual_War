@@ -3,6 +3,7 @@ package team;
 import config.Constants;
 import config.ShowFrame;
 import plateau.Axis;
+import plateau.Plateau;
 import robot.Robot;
 
 import java.util.List;
@@ -16,10 +17,13 @@ public class Team {
     private String nomPays;
     private Axis axisBase;
     private int team;
+    private View view;
 
-    public Team(Axis axisBase) {
+    public Team(Axis axisBase, Plateau plateau, int team) {
         this.axisBase = axisBase;
         this.nomPays = choosePays();
+        this.team = team;
+        this.view = new View (plateau, team);
     }
     
     public Robot chooseRobot() {
@@ -37,7 +41,7 @@ public class Team {
 	private String choosePays() {
 		ShowFrame.showFrame("Choisir pays", Constants.NAME_COUNTRY);
 		System.out.print("Choisissez un pays : ");
-        return Constants.sc.nextLine();
+        return Constants.sc.nextLine ();
     }
     
 
@@ -62,12 +66,14 @@ public class Team {
     }
 
     public void revokeRobot(Robot robot){
-        this.robots.remove(robot);
+        this.robots.remove (robot);
     }
 
     public boolean lose(){
         return robots.isEmpty();
     }
+
+    public View getView() { return this.view; }
 
 	@Override
 	public String toString() {

@@ -2,6 +2,9 @@ package plateau;
 
 import robot.Robot;
 import config.Constants;
+import robot.Scavenger;
+import robot.Shooter;
+import robot.Tank;
 
 /**
  * @author boinc
@@ -132,7 +135,7 @@ public class Plateau {
                             break;
                     }
                 } else if ( this.plateau[ i ][ j ].getContent() instanceof Shooter ) {
-                    switch ( this.plateau[ i ][ j ].getContent ().getTeam () ) {
+                    switch ( this.plateau[ i ][ j ].getContent ().getTeam ().getTeam () ) {
                         case 1:
                             results.insert (results.length (), "T");
                             break;
@@ -143,8 +146,8 @@ public class Plateau {
                             results.insert (results.length (), "");
                             break;
                     }
-                } else if ( this.plateau[ i ][ j ].getContent () instanceof Char ) {
-                    switch ( this.plateau[ i ][ j ].getContent ().getTeam () ) {
+                } else if ( this.plateau[ i ][ j ].getContent () instanceof Tank ) {
+                    switch ( this.plateau[ i ][ j ].getContent ().getTeam ().getTeam () ) {
                         case 1:
                             results.insert (results.length (), "C");
                             break;
@@ -156,7 +159,7 @@ public class Plateau {
                             break;
                     }
                 } else if ( this.plateau[ i ][ j ].getContent () instanceof Scavenger ) {
-                    switch ( this.plateau[ i ][ j ].getContent ().getTeam () ) {
+                    switch ( this.plateau[ i ][ j ].getContent ().getTeam ().getTeam () ) {
                         case 1:
                             results.insert (results.length (), "P");
                             break;
@@ -167,9 +170,9 @@ public class Plateau {
                             results.insert (results.length (), "");
                             break;
                     }
-                } else if ( this.plateau[ i ][ j ].getMine () == 1 ) {
+                } else if ( this.plateau[ i ][ j ].containsMine () == 1 ) {
                     results.insert (results.length (), "X");
-                } else if ( this.plateau[ i ][ j ].getMine () == 2 ) {
+                } else if ( this.plateau[ i ][ j ].containsMine () == 2 ) {
                     results.insert (results.length (), "x");
                 } else if ( this.plateau[ i ][ j ].isObstacle () ) {
                     results.insert (results.length (), "O");

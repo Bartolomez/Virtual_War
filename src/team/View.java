@@ -7,9 +7,9 @@ import plateau.Plateau;
  */
 public class View {
     private Plateau plateau;
-    private Team team;
+    private int team;
 
-    public View(Plateau plateau, Team team) {
+    public View(Plateau plateau, int team) {
         this.plateau = plateau;
         this.team = team;
     }

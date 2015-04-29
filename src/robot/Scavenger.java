@@ -1,5 +1,6 @@
 package robot;
 
+import action.Action;
 import config.Constants;
 import plateau.Axis;
 import team.Team;
@@ -34,11 +35,18 @@ public class Scavenger extends Robot {
         if (this.getStoredMines () <= 0) {
             return false;
         } else if ( thisCellIsEmpthy (axis)) {
-            new Mine(this);
+             mine();
             return true;
         }
 
         return false;
+    }
+
+    private void mine() {
+        this.getView ().getPlateau ().getCell (getObjective ()).putMine (this.getNumberTeam ());
+        this.looseOneMine ();
+        this.losesEnergyAfterAction ();
+
     }
 
     public void looseOneMine() {
@@ -115,7 +123,7 @@ public class Scavenger extends Robot {
                     }
                     choosen = Constants.sc.nextInt ();
                     this.setObjective (moves.get (choosen));
-                    new Mines(this);
+                    mine();
                     return null;
                 default:
                     System.err.printf ("Choix impossible");
