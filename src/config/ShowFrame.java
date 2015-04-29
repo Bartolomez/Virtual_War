@@ -26,9 +26,9 @@ public class ShowFrame {
                 max = s.length();
             }
         }
-        if (max % 2 == 0) {
+        /*if (max % 2 == 0) {
             max += 1;
-        }
+        }*/
         for (int i = 0; i < max; i++) {
             res.insert(res.length(), "-");
         }

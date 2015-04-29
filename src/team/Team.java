@@ -41,7 +41,7 @@ public class Team {
 	private String choosePays() {
 		ShowFrame.showFrame("Choisir pays", Constants.NAME_COUNTRY);
 		System.out.print("Choisissez un pays : ");
-        return Constants.sc.nextLine ();
+        return Constants.sc.nextLine();
     }
     
 
