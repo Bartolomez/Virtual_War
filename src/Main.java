@@ -22,9 +22,7 @@ public class Main {
         Plateau plateau = new Plateau(x, y, obstacle);
         Team[] teams = new Team[2];
         teams[0] = new Team(new Axis(0, 0), plateau, 1);
-        System.out.println(teams[0].getNomPays());
         teams[1] = new Team(new Axis(plateau.getLength() - 1, plateau.getWidth() - 1), plateau, 2);
-        System.out.println(teams[1].getNomPays());
         for (Team t : teams) {
             t.addRobot(new Tank(t.getView(), t));
             t.addRobot(new Scavenger(t.getView(), t));
@@ -36,7 +34,7 @@ public class Main {
         ArrayList<Robot> deadRobot = new ArrayList<Robot>();
         int count = 0;
         do {
-            System.out.printf(teams[count % 2].getView().toString() + "\n" + teams[count % 2]
+            System.out.printf(teams[count % 2].getView().getPlateau() + "\n" + teams[count % 2]
                     .getNomPays() + " c'est à votre tour ! ");
             robot = teams[count % 2].chooseRobot();
             System.out.printf(robot.getView().toString());

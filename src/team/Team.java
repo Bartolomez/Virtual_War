@@ -6,6 +6,7 @@ import plateau.Axis;
 import plateau.Plateau;
 import robot.Robot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +25,7 @@ public class Team {
         this.nomPays = choosePays();
         this.team = team;
         this.view = new View (plateau, team);
+        this.robots = new ArrayList<Robot>();
     }
     
     public Robot chooseRobot() {
