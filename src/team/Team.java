@@ -35,7 +35,8 @@ public class Team {
 			count += 1;
 		}
     	do {
-    		chosen = Integer.parseInt(Constants.sc.nextLine());
+            System.out.print("Votre choix : ");
+            chosen = Integer.parseInt(Constants.sc.nextLine());
     	} while (chosen < 1 && chosen > count);
     	return this.robots.get(chosen);
     }
