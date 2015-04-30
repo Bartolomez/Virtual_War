@@ -34,7 +34,7 @@ public class Main {
         ArrayList<Robot> deadRobot = new ArrayList<Robot>();
         int count = 0;
         do {
-            System.out.printf(teams[count % 2].getView().getPlateau() + "\n" + teams[count % 2]
+            System.out.println(teams[count % 2].getView().getPlateau() + "\n" + teams[count % 2]
                     .getNomPays() + " c'est à votre tour ! ");
             robot = teams[count % 2].chooseRobot();
             System.out.printf(robot.getView().toString());

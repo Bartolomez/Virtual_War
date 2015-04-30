@@ -136,10 +136,4 @@ public abstract class Robot {
 		return null;
 	}
 
-	@Override
-	public String toString() {
-		return "Robot{" + "axis=" + axis + ", objective=" + objective
-				+ ", view=" + view + ", team=" + team + ", energy=" + energy
-				+ '}';
-	}
 }
