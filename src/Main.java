@@ -17,7 +17,7 @@ public class Main {
         int x = Integer.parseInt(Constants.sc.nextLine());
         System.out.print("Longeur du plateau : ");
         int y = Integer.parseInt(Constants.sc.nextLine());
-        System.out.print("Pourcentage d'obstacle : ");
+        System.out.print("Pourcentage d'obstacle (de 0.0 a 1): ");
         double obstacle = Double.parseDouble(Constants.sc.nextLine());
         Plateau plateau = new Plateau(x, y, obstacle);
         Team[] teams = new Team[2];
@@ -37,6 +37,7 @@ public class Main {
             System.out.println(teams[count % 2].getView().getPlateau() + "\n" + teams[count % 2]
                     .getNomPays() + " c'est à votre tour ! ");
             robot = teams[count % 2].chooseRobot();
+            // Bug
             System.out.printf(robot.getView().toString());
             action = robot.selectedAction();
             if (action != null) {
