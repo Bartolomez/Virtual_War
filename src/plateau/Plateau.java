@@ -80,15 +80,15 @@ public class Plateau {
         while( obstacles != ( int ) ( ( this.width * this.length ) * percentageObstacles ) ) {
             x = Constants.random.nextInt( this.width );
             y = Constants.random.nextInt( this.length );
-            if( this.plateau[ y ][ x ].getBase() == 0 && !this.plateau[ y ][ x ].isObstacle() ) {
-                this.plateau[ y ][ x ].putObstacle( true );
+            if( this.plateau[ x ][ y ].getBase() == 0 && !this.plateau[ x ][ y ].isObstacle() ) {
+                this.plateau[ x ][ y ].putObstacle( true );
                 obstacles += 1;
             }
             if( x == 0 && this.plateau[ x ][ y ].isObstacle() ) {
-                this.plateau[ y ][ x ].putObstacle( false );
+                this.plateau[ x ][ y ].putObstacle( false );
                 obstacles -= 1;
-            } else if( y == this.plateau.length - 1 && this.plateau[ y ][ x ].isObstacle() ) {
-                this.plateau[ y ][ x ].putObstacle( false );
+            } else if( y == this.plateau.length - 1 && this.plateau[ x ][ y ].isObstacle() ) {
+                this.plateau[ x ][ y ].putObstacle( false );
                 obstacles -= 1;
             }
         }

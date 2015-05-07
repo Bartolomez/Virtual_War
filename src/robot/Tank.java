@@ -23,7 +23,7 @@ public class Tank extends Robot {
     public Tank(View view, Team team) {
         super(view, team);
         this.setEnergy(Constants.ENERGY_TANK);
-        this.axis = new ArrayList<Axis>();
+        this.axis = new ArrayList<>();
     }
 
     @Override public void suddenByShoot(Robot robot) {
@@ -110,8 +110,8 @@ public class Tank extends Robot {
     }
 
     private List<Axis> searchMoves() {
-        List<Axis> moves = new ArrayList<Axis>();
-        List<Axis> movesTmp = new ArrayList<Axis>();
+        List<Axis> moves = new ArrayList<>();
+        List<Axis> movesTmp = new ArrayList<>();
         moves.addAll( Constants.MOVES_TANK.stream().map( axis -> this.getAxis().add( axis ) )
             .collect( Collectors.toList() ) );
         movesTmp.addAll( moves );
@@ -146,12 +146,11 @@ public class Tank extends Robot {
     }
 
     private List<Axis> searchTarget() {
-        List<Axis> target = new ArrayList<Axis>();
-        List<Axis> targetTmp = new ArrayList<Axis>();
+        List<Axis> target = new ArrayList<>();
+        List<Axis> targetTmp = new ArrayList<>();
 
-        for (Axis axis : Constants.STRIKE_ZONE_TANK) {
-            target.add(this.getAxis().add(axis));
-        }
+        target.addAll( Constants.STRIKE_ZONE_TANK.stream().map( axis -> this.getAxis().add( axis ) )
+            .collect( Collectors.toList() ) );
 
         for (int i = 0; i < target.size(); i++) {
             Axis axis = target.get(i);

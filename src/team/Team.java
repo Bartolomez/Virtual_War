@@ -25,7 +25,7 @@ public class Team {
         this.nomPays = choosePays();
         this.team = team;
         this.view = new View (plateau, team);
-        this.robots = new ArrayList<Robot>();
+        this.robots = new ArrayList<>();
     }
     
     public Robot chooseRobot() {

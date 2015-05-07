@@ -22,7 +22,7 @@ public class Scavenger extends Robot {
     public Scavenger(View view, Team team) {
         super(view, team);
         this.setEnergy(Constants.ENERGY_SHOOTER);
-        this.axis = new ArrayList<Axis>();
+        this.axis = new ArrayList<>();
     }
 
     public int getStoredMines() {
@@ -98,8 +98,8 @@ public class Scavenger extends Robot {
             this.setEnergy(this.getEnergy() + Constants.CARE);
         }
         this.setStoredMines(Constants.MINES_MAX);
-        System.out.printf(this.getType() + " a regainé " + Constants.CARE + " PV et a remis " + ""
-                + Constants.MINES_MAX + " mines dans sont stocke\n");
+        System.out.printf( this.getType() + " a regainé " + Constants.CARE + " PV et a remis " + ""
+            + Constants.MINES_MAX + " mines dans sont stocke\n" );
     }
 
     @Override public Action selectedAction() {
@@ -107,8 +107,8 @@ public class Scavenger extends Robot {
         List<Axis> mines = initialzedMines();
         if (haveMines(mines)) {
             System.out
-                    .printf(
-                        "Vous pouvez selectionné : \n \t1 - Se deplacer \n \t2 - Miner le terrain" );
+                    .printf( "Vous pouvez selectionné : \n" + " \t1 - Se deplacer \n"
+                        + " \t2 - Miner le terrain" );
             int choosen = Constants.sc.nextInt();
             switch (choosen) {
                 case 1:
@@ -147,8 +147,8 @@ public class Scavenger extends Robot {
     }
 
     private List<Axis> searchMoves() {
-        List<Axis> moves = new ArrayList<Axis>();
-        List<Axis> movesTmp = new ArrayList<Axis>();
+        List<Axis> moves = new ArrayList<>();
+        List<Axis> movesTmp = new ArrayList<>();
         moves.addAll( Constants.MOVES_SCAVENGER.stream().map( axis -> this.getAxis().add( axis ) )
             .collect( Collectors.toList() ) );
         movesTmp.addAll( moves );
@@ -170,8 +170,8 @@ public class Scavenger extends Robot {
     }
 
     private boolean valueIsSuitable(Axis axis) {
-        return (axis.getX() >= 0 && axis.getX() < this.getView().getPlateau().getLength()
-            && axis.getY() >= 0 && axis.getY() < this.getView().getPlateau().getWidth());
+        return ( ( axis.getX() >= 0 ) && ( axis.getX() < this.getView().getPlateau().getLength() )
+            && ( axis.getY() >= 0 ) && ( axis.getY() < this.getView().getPlateau().getWidth() ) );
     }
 
     private boolean valueContainsRobot(Axis axis) {
@@ -185,12 +185,11 @@ public class Scavenger extends Robot {
     public boolean haveMines(List<Axis> mines) { return !mines.isEmpty() && this.storedMines < 0; }
 
     private List<Axis> initialzedMines() {
-        List<Axis> mines = new ArrayList<Axis>();
-        List<Axis> minesTmp = new ArrayList<Axis>();
-        for (Axis axis : Constants.MOVES_SCAVENGER) {
-            mines.add(this.getAxis().add(axis));
-        }
-        minesTmp.addAll(mines);
+        List<Axis> mines = new ArrayList<>();
+        List<Axis> minesTmp = new ArrayList<>();
+        mines.addAll( Constants.MOVES_SCAVENGER.stream().map( axis -> this.getAxis().add( axis ) )
+            .collect( Collectors.toList() ) );
+        minesTmp.addAll( mines );
         for (Axis axis : minesTmp) {
             try {
                 if (thisCellIsEmpthy(axis)) {

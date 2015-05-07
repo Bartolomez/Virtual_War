@@ -70,7 +70,7 @@ public class Constants {
     public static final int STRIKING_SCOPE_SHOOTER = 3;
     /* Subpoena of each moves to their lists */
     static {
-        MOVES_SHOOTER = new ArrayList<Axis>();
+        MOVES_SHOOTER = new ArrayList<>();
         MOVES_SHOOTER.add(NORTH);
         MOVES_SHOOTER.add(NORTH_EST);
         MOVES_SHOOTER.add(NORTH_WEST);
@@ -79,15 +79,15 @@ public class Constants {
         MOVES_SHOOTER.add(SOUTH_WEST);
         MOVES_SHOOTER.add(EST);
         MOVES_SHOOTER.add(WEST);
-        MOVES_SCAVENGER = new ArrayList<Axis>();
+        MOVES_SCAVENGER = new ArrayList<>();
         MOVES_SCAVENGER.addAll(MOVES_SHOOTER);
         /* Again only because they are hipster */
-        MOVES_TANK = new ArrayList<Axis>();
+        MOVES_TANK = new ArrayList<>();
         MOVES_TANK.add(TANK_NORTH);
         MOVES_TANK.add(TANK_SOUTH);
         MOVES_TANK.add(TANK_EST);
         MOVES_TANK.add(TANK_WEST);
-        STRIKE_ZONE_SHOOTER = new ArrayList<Axis>();
+        STRIKE_ZONE_SHOOTER = new ArrayList<>();
         for ( int i = 0; i < STRIKING_SCOPE_SHOOTER; i++ ) {
             STRIKE_ZONE_SHOOTER.add(new Axis(0, i));
         }
@@ -103,7 +103,7 @@ public class Constants {
         for ( int i = 0; i < STRIKING_SCOPE_SHOOTER; i++ ) {
             STRIKE_ZONE_SHOOTER.add(new Axis((i * -1), 0));
         }
-        STRIKE_ZONE_TANK = new ArrayList<Axis>();
+        STRIKE_ZONE_TANK = new ArrayList<>();
         for ( int i = 0; i < STRIKING_SCOPE_TANK; i++ ) {
             STRIKE_ZONE_TANK.add(new Axis(0, i));
         }

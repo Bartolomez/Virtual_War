@@ -22,7 +22,7 @@ public class Shooter extends Robot {
     public Shooter(View view, Team team) {
         super(view, team);
         this.setEnergy(Constants.ENERGY_SHOOTER);
-        this.axis = new ArrayList<Axis>();
+        this.axis = new ArrayList<>();
     }
 
     @Override public void suddenByShoot(Robot robot) {
@@ -115,22 +115,20 @@ public class Shooter extends Robot {
     }
 
     private List<Axis> searchMoves() {
-        List<Axis> moves = new ArrayList<Axis>();
-        List<Axis> movesTmp = new ArrayList<Axis>();
+        List<Axis> moves = new ArrayList<>();
+        List<Axis> movesTmp = new ArrayList<>();
         moves.addAll( Constants.MOVES_SHOOTER.stream().map( axis -> this.getAxis().add( axis ) )
             .collect( Collectors.toList() ) );
         movesTmp.addAll( moves );
-        for( Axis axis : movesTmp ) {
-            if( !this.valueIsSuitable( axis ) ) {
-                moves.remove( axis );
-            } else if( this.valueContainsRobot( axis ) ) {
-                moves.remove( axis );
+        for (Axis axis : movesTmp) {
+            if (this.valueIsSuitable(axis) || this.valueContainsRobot(axis)) {
+                moves.remove(axis);
             }
             try {
-                if( thisAxisIsObstacle( axis ) ) {
-                    moves.remove( axis );
+                if (thisAxisIsObstacle(axis)) {
+                    moves.remove(axis);
                 }
-            } catch( Exception e ) {
+            } catch (Exception e) {
 
             }
         }
@@ -152,11 +150,11 @@ public class Shooter extends Robot {
     }
 
     private List<Axis> searchTarget() {
-        List<Axis> target = new ArrayList<Axis>();
-        List<Axis> targetTmp = new ArrayList<Axis>();
-        for (Axis axis : Constants.STRIKE_ZONE_SHOOTER) {
-            target.add(this.getAxis().add(axis));
-        }
+        List<Axis> target = new ArrayList<>();
+        List<Axis> targetTmp = new ArrayList<>();
+        target.addAll(
+            Constants.STRIKE_ZONE_SHOOTER.stream().map( axis -> this.getAxis().add( axis ) )
+                .collect( Collectors.toList() ) );
         for (int i = 0; i < target.size(); i++) {
             Axis axis = target.get(i);
             try {
@@ -170,7 +168,7 @@ public class Shooter extends Robot {
                 }
             } catch (Exception e) {}
         }
-        return targetTmp;
+        return target;
     }
 
     private boolean isNotSameTeam(Axis axis) {
