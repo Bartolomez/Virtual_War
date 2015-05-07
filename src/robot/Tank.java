@@ -76,7 +76,8 @@ public class Tank extends Robot {
 
         if (!target.isEmpty()) {
             System.out.printf("Vous pouvez selectionné : \n \t1 - Se deplacer \n \t2 - Attaquer "
-                    + "une cible");
+                    + "une cible\n");
+            System.out.printf( "Votre choix : " );
             int choosen = Constants.sc.nextInt();
 
             switch (choosen) {
