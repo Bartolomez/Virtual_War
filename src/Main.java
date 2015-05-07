@@ -13,13 +13,13 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.print("Largeur du plateau : ");
+        System.out.printf("Largeur du plateau : ");
         int x = Integer.parseInt(Constants.sc.nextLine());
-        System.out.print("Longeur du plateau : ");
+        System.out.printf("Longeur du plateau : ");
         int y = Integer.parseInt( Constants.sc.nextLine() );
         double obstacle;
         do {
-            System.out.print("Pourcentage d'obstacle (de 0.1 à 0.99): ");
+            System.out.printf("Pourcentage d'obstacle (de 0.1 à 0.99): ");
             obstacle = Double.parseDouble(Constants.sc.nextLine());
         } while(!isValide( obstacle ));
         Plateau plateau = new Plateau(x, y, obstacle);
@@ -28,7 +28,7 @@ public class Main {
         int count = 0;
         do {
             if( count > 0 ) {
-                System.err.println( "Vous ne pouvez pas faire de coup d'état !!" );
+                System.err.printf( "Vous ne pouvez pas faire de coup d'état !! \n" );
             }
             teams[ 1 ] =
                 new Team( new Axis( plateau.getLength() - 1, plateau.getWidth() - 1 ), plateau, 2 );
@@ -45,10 +45,9 @@ public class Main {
         ArrayList<Robot> deadRobot = new ArrayList<Robot>();
         count = 0;
         do {
-            System.out.println(teams[count % 2].getView().getPlateau() + "\n" + teams[count % 2]
-                    .getNomPays() + " c'est à votre tour ! ");
+            System.out.printf(teams[count % 2].getView().getPlateau() + "\n" + teams[count % 2]
+                    .getNomPays() + " c'est à votre tour ! \n");
             robot = teams[count % 2].chooseRobot();
-            // Bug
             System.out.printf(robot.getView().toString());
             action = robot.selectedAction();
             if (action != null) {
