@@ -47,28 +47,28 @@ public class Plateau {
     }
 
     public boolean isObstacle( int x, int y ) {
-        return this.plateau[ x ][ y ].isObstacle();
+        return this.plateau[ y ][ x ].isObstacle();
     }
 
     public int isBase( int x, int y ) {
-        return this.plateau[ x ][ y ].getBase();
+        return this.plateau[ y ][ x ].getBase();
     }
 
     public int isMine( int x, int y ) {
-        return this.plateau[ x ][ y ].containsMine();
+        return this.plateau[ y ][ x ].containsMine();
     }
 
     public int isRobot( int x, int y ) {
-        return this.plateau[ x ][ y ].isRobot();
+        return this.plateau[ y ][ x ].isRobot();
     }
 
     public void clearCell( int x, int y ) {
-        this.plateau[ x ][ y ].clearCell();
+        this.plateau[ y ][ x ].clearCell();
     }
 
     public void putRobot( int x, int y, Robot robot ) {
-        if( !this.plateau[ x ][ y ].isObstacle() ) {
-            this.plateau[ x ][ y ].putRobot( robot );
+        if( !this.plateau[ y ][ x ].isObstacle() ) {
+            this.plateau[ y ][ x ].putRobot( robot );
         } else {
             System.err.printf(
                 "Erreur : La cellule ou vous voulez placer ce robot est un obstacle ! :-(\n" );
@@ -76,11 +76,11 @@ public class Plateau {
     }
 
     public void revokeRobot( Axis axis ) {
-        this.plateau[ axis.getX() ][ axis.getY() ].revokeRobot();
+        this.plateau[ axis.getY() ][ axis.getX() ].revokeRobot();
     }
 
     public void revokeMine( Axis axis ) {
-        this.plateau[ axis.getX() ][ axis.getY() ].revokeMine();
+        this.plateau[ axis.getY() ][ axis.getX() ].revokeMine();
     }
 
     private void initializeObstacles( double percentageObstacles ) {
@@ -90,16 +90,16 @@ public class Plateau {
             x = Constants.random.nextInt( this.width );
             y = Constants.random.nextInt( this.length );
 
-            if( this.plateau[ x ][ y ].getBase() == 0 && !this.plateau[ x ][ y ].isObstacle() ) {
-                this.plateau[ x ][ y ].putObstacle( true );
+            if( this.plateau[ y ][ x ].getBase() == 0 && !this.plateau[ y ][ x ].isObstacle() ) {
+                this.plateau[ y ][ x ].putObstacle( true );
                 obstacles += 1;
             }
 
             if( x == 0 && this.plateau[ x ][ y ].isObstacle() ) {
-                this.plateau[ x ][ y ].putObstacle( false );
+                this.plateau[ y ][ x ].putObstacle( false );
                 obstacles -= 1;
-            } else if( y == this.plateau.length - 1 && this.plateau[ x ][ y ].isObstacle() ) {
-                this.plateau[ x ][ y ].putObstacle( false );
+            } else if( y == this.plateau.length - 1 && this.plateau[ y ][ x ].isObstacle() ) {
+                this.plateau[ y ][ x ].putObstacle( false );
                 obstacles -= 1;
             }
         }
