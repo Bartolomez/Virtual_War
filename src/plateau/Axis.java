@@ -17,7 +17,7 @@ public class Axis {
     }
 
     public Axis differenceBetween(Axis axis) {
-        return new Axis (getX () - axis.getX (), getY () - axis.getY ());
+        return new Axis (axis.getX() - getX(), axis.getY() - getY());
     }
 
     public boolean equals(Object o) {

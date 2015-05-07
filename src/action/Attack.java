@@ -21,7 +21,7 @@ public class Attack extends Action {
             ( this.getRobot() );
         System.out.printf(
             "Après votre attaque la cible est tombé à " + this.getRobot().getView().getPlateau()
-                .getCell( getPosition() ).getRobot().getEnergy() + " pv" );
+                .getCell( getObjective() ).getRobot().getEnergy() + " pv" );
         this.getRobot().losesEnergyAfterAction();
     }
 
