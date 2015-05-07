@@ -9,6 +9,7 @@ import team.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author boinc
@@ -63,7 +64,7 @@ public class Scavenger extends Robot {
     }
 
     @Override public void suddenByMine() {
-        this.setEnergy(this.getEnergy() - Constants.DAMAGE_SCAVENGER);
+        this.setEnergy( this.getEnergy() - Constants.DAMAGE_SCAVENGER );
     }
 
     @Override public String getType() {
@@ -148,38 +149,40 @@ public class Scavenger extends Robot {
     private List<Axis> searchMoves() {
         List<Axis> moves = new ArrayList<Axis>();
         List<Axis> movesTmp = new ArrayList<Axis>();
-        for (Axis axis : Constants.MOVES_SCAVENGER) {
-            moves.add(this.getAxis().add(axis));
-        }
-        movesTmp.addAll(moves);
-        for (Axis axis : movesTmp) {
-            if (!this.valueIsSuitable(axis) || this.valueContainsRobot(axis)) {
-                moves.remove(axis);
+        moves.addAll( Constants.MOVES_SCAVENGER.stream().map( axis -> this.getAxis().add( axis ) )
+            .collect( Collectors.toList() ) );
+        movesTmp.addAll( moves );
+        for( Axis axis : movesTmp ) {
+            if( !this.valueIsSuitable( axis ) ) {
+                moves.remove( axis );
+            } else if( this.valueContainsRobot( axis ) ) {
+                moves.remove( axis );
             }
             try {
-                if (thisAxisIsObstacle(axis)) {
-                    moves.remove(axis);
+                if( thisAxisIsObstacle( axis ) ) {
+                    moves.remove( axis );
                 }
-            } catch (Exception e) {}
+            } catch( Exception e ) {
+
+            }
         }
         return moves;
     }
 
-    public boolean haveMines(List<Axis> mines) { return !mines.isEmpty() && this.storedMines < 0; }
-
     private boolean valueIsSuitable(Axis axis) {
-        return axis.getX() < 0 || axis.getY() < 0 || axis.getX() >= this.getView().getPlateau()
-                .getLength() || axis.getY() >= this.getView().getPlateau().getWidth();
+        return (axis.getX() >= 0 && axis.getX() < this.getView().getPlateau().getLength()
+            && axis.getY() >= 0 && axis.getY() < this.getView().getPlateau().getWidth());
     }
 
     private boolean valueContainsRobot(Axis axis) {
-        return (this.getView().getPlateau().getCell(axis).getRobot() != null) || (
-                this.getView().getPlateau().getCell(axis).isRobot() != 0);
+        return this.getView().getPlateau().getCell(axis).isRobot() != 0;
     }
 
     private boolean thisAxisIsObstacle(Axis axis) {
         return this.getView().getPlateau().getCell(axis).isObstacle();
     }
+
+    public boolean haveMines(List<Axis> mines) { return !mines.isEmpty() && this.storedMines < 0; }
 
     private List<Axis> initialzedMines() {
         List<Axis> mines = new ArrayList<Axis>();

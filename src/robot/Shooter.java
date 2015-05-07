@@ -10,6 +10,7 @@ import team.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author boinc
@@ -116,19 +117,20 @@ public class Shooter extends Robot {
     private List<Axis> searchMoves() {
         List<Axis> moves = new ArrayList<Axis>();
         List<Axis> movesTmp = new ArrayList<Axis>();
-        for (Axis axis : Constants.MOVES_SHOOTER) {
-            moves.add(this.getAxis().add(axis));
-        }
-        movesTmp.addAll(moves);
-        for (Axis axis : movesTmp) {
-            if (!this.valueIsSuitable(axis) || this.valueContainsRobot(axis)) {
-                moves.remove(axis);
+        moves.addAll( Constants.MOVES_SHOOTER.stream().map( axis -> this.getAxis().add( axis ) )
+            .collect( Collectors.toList() ) );
+        movesTmp.addAll( moves );
+        for( Axis axis : movesTmp ) {
+            if( !this.valueIsSuitable( axis ) ) {
+                moves.remove( axis );
+            } else if( this.valueContainsRobot( axis ) ) {
+                moves.remove( axis );
             }
             try {
-                if (thisAxisIsObstacle(axis)) {
-                    moves.remove(axis);
+                if( thisAxisIsObstacle( axis ) ) {
+                    moves.remove( axis );
                 }
-            } catch (Exception e) {
+            } catch( Exception e ) {
 
             }
         }

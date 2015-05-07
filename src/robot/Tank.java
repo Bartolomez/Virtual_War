@@ -10,6 +10,7 @@ import team.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author boinc
@@ -111,9 +112,8 @@ public class Tank extends Robot {
     private List<Axis> searchMoves() {
         List<Axis> moves = new ArrayList<Axis>();
         List<Axis> movesTmp = new ArrayList<Axis>();
-        for( Axis axis : Constants.MOVES_TANK ) {
-            moves.add( this.getAxis().add( axis ) );
-        }
+        moves.addAll( Constants.MOVES_TANK.stream().map( axis -> this.getAxis().add( axis ) )
+            .collect( Collectors.toList() ) );
         movesTmp.addAll( moves );
         for( Axis axis : movesTmp ) {
             if( !this.valueIsSuitable( axis ) ) {
