@@ -1,6 +1,7 @@
 package robot;
 
 import action.Action;
+import action.Move;
 import config.Constants;
 import plateau.Axis;
 import team.Team;
@@ -129,11 +130,54 @@ public abstract class Robot {
 	}
 
 	public String direction(Axis axis) {
-		return null;
+		Axis getway = this.getAxis().differenceBetween( axis );
+		if (getway.equals(Constants.TANK_NORTH)) {
+			return "NORD";
+		}
+		if (getway.equals(Constants.TANK_SOUTH)) {
+			return "SUD";
+		}
+		if (getway.equals(Constants.TANK_EST)) {
+			return "EST";
+		}
+		if (getway.equals(Constants.TANK_WEST)) {
+			return "OUEST";
+		}
+		if (getway.equals(Constants.NORTH)) {
+			return "NORD";
+		}
+		if (getway.equals(Constants.NORTH_EST)) {
+			return "NORD EST";
+		}
+		if (getway.equals(Constants.NORTH_WEST)) {
+			return "NORD OUEST";
+		}
+		if (getway.equals(Constants.SOUTH)) {
+			return "SUD";
+		}
+		if (getway.equals(Constants.SOUTH_EST)) {
+			return "SUD EST";
+		}
+		if (getway.equals(Constants.SOUTH_WEST)) {
+			return "SUD OUEST";
+		}
+		if (getway.equals(Constants.WEST)) {
+			return "EST";
+		}
+		if (getway.equals(Constants.WEST)) {
+			return "OUEST";
+		}
+		return "unknown";
 	}
 
 	public Action chosesDisplacement(List<Axis> displacement) {
-		return null;
+		int count = 0;
+		System.out.printf( "Vous pouvez vous déplacer en : \n" );
+		for( Axis axis : displacement ) {
+			System.out.printf("\t" + (++count) + ": " + direction( axis ) + "\n" );
+		}
+		System.out.printf( "Votre choix : " );
+		this.setObjective( displacement.get( Constants.sc.nextInt() ) );
+		return new Move( this );
 	}
-
 }
