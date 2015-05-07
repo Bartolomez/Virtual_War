@@ -68,7 +68,7 @@ public class Tank extends Robot {
             this.setEnergy( this.getEnergy() + Constants.CARE );
         }
 
-        System.out.printf(this.getType() + " a regainé " + Constants.CARE + " PV");
+        System.out.printf(this.getType() + " a regagné " + Constants.CARE + " PV");
     }
 
     @Override public Action selectedAction() {
@@ -76,7 +76,7 @@ public class Tank extends Robot {
         List<Axis> target = searchTarget();
 
         if (!target.isEmpty()) {
-            System.out.printf( "Vous pouvez selectionné : \n \t1 - Se deplacer \n \t2 - Attaquer "
+            System.out.printf( "Vous pouvez selectionner : \n \t1 - Se déplacer \n \t2 - Attaquer "
                 + "une cible\n" );
             System.out.printf( "Votre choix : " );
             int choosen = Constants.sc.nextInt();
@@ -102,7 +102,7 @@ public class Tank extends Robot {
 
         } else {
             System.out.printf(
-                "Aucune cible autour de vous, choisiez un déplcement dans la " + "list ci-dessous" );
+                "Aucune cible autour de vous, choisissez un déplacement dans la " + "liste ci-dessous" );
             return chosesDisplacement(moves);
         }
 
