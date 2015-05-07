@@ -66,14 +66,12 @@ public class Shooter extends Robot {
         } else {
             this.setEnergy(this.getEnergy() + Constants.CARE);
         }
-
         System.out.printf(this.getType() + " a regainé " + Constants.CARE + " PV");
     }
 
     @Override public Action selectedAction() {
         List<Axis> moves = searchMoves();
         List<Axis> target = searchTarget();
-
         if (!target.isEmpty()) {
             System.out.printf(
                 "Vous pouvez selectionné : \n \t1 - Se deplacer \n \t2 - Attaquer " + "une cible" );
@@ -95,15 +93,12 @@ public class Shooter extends Robot {
                     return new Attack(this);
                 default:
                     System.err.printf("Choix impossible");
-
             }
-
         } else {
             System.out.printf(
                 "Aucune cible autour de vous, choisiez un déplcement dans la " + "list ci-dessous" );
             return chosesDisplacement(moves);
         }
-
         return null;
     }
 
@@ -121,13 +116,10 @@ public class Shooter extends Robot {
     private List<Axis> searchMoves() {
         List<Axis> moves = new ArrayList<Axis>();
         List<Axis> movesTmp = new ArrayList<Axis>();
-
         for (Axis axis : Constants.MOVES_SHOOTER) {
             moves.add(this.getAxis().add(axis));
         }
-
         movesTmp.addAll(moves);
-
         for (Axis axis : movesTmp) {
             if (this.valueIsSuitable(axis) || this.valueContainsRobot(axis)) {
                 moves.remove(axis);
@@ -140,7 +132,6 @@ public class Shooter extends Robot {
 
             }
         }
-
         return moves;
     }
 
@@ -161,14 +152,11 @@ public class Shooter extends Robot {
     private List<Axis> searchTarget() {
         List<Axis> target = new ArrayList<Axis>();
         List<Axis> targetTmp = new ArrayList<Axis>();
-
         for (Axis axis : Constants.STRIKE_ZONE_SHOOTER) {
             target.add(this.getAxis().add(axis));
         }
-
         for (int i = 0; i < target.size(); i++) {
             Axis axis = target.get(i);
-
             try {
                 if (thisAxisIsObstacle(axis)) {
                     i = (((i + Constants.STRIKING_SCOPE_SHOOTER) / Constants.STRIKING_SCOPE_SHOOTER)
@@ -178,11 +166,8 @@ public class Shooter extends Robot {
                 if (isNotSameTeam(axis) && valueContainsRobot(axis)) {
                     targetTmp.add(axis);
                 }
-            } catch (Exception e) {
-
-            }
+            } catch (Exception e) {}
         }
-
         return target;
     }
 

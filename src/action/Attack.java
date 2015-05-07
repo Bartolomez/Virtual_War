@@ -17,10 +17,8 @@ public class Attack extends Action {
         System.out.printf ("Vous allez prendre pour cible : " +     this.getRobot ().getView ()
             .getPlateau ().getCell (getObjective ()).getRobot () + " avec une puissance de " +
             this.getRobot ().getDamageByShoot ());
-
         System.out.printf ("Après vorte attaque la cible est tombé à " + this.getRobot ().getView
             ().getPlateau ().getCell (getPosition ()).getRobot ().getEnergy () + " pv");
-
         this.getRobot ().losesEnergyAfterAction ();
     }
 

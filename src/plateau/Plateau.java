@@ -27,15 +27,7 @@ public class Plateau {
     }
 
     public Cell getCell( Axis axis ) {
-        for( Cell[] cells : this.plateau ) {
-            for( Cell cell : cells ) {
-                if( cell.equals( axis ) ) {
-                    return cell;
-                }
-            }
-        }
-
-        return null;
+        return plateau[ axis.getY() ][ axis.getX() ];
     }
 
     public int getWidth() {
@@ -89,12 +81,10 @@ public class Plateau {
         while( obstacles != ( int ) ( ( this.width * this.length ) * percentageObstacles ) ) {
             x = Constants.random.nextInt( this.width );
             y = Constants.random.nextInt( this.length );
-
             if( this.plateau[ y ][ x ].getBase() == 0 && !this.plateau[ y ][ x ].isObstacle() ) {
                 this.plateau[ y ][ x ].putObstacle( true );
                 obstacles += 1;
             }
-
             if( x == 0 && this.plateau[ x ][ y ].isObstacle() ) {
                 this.plateau[ y ][ x ].putObstacle( false );
                 obstacles -= 1;
@@ -111,7 +101,6 @@ public class Plateau {
                 tab[ i ][ j ] = new Cell( i, j );
             }
         }
-
         return tab;
     }
 

@@ -31,7 +31,6 @@ public class Cell {
         if ( this.robot == null ) {
             return 0;
         }
-
         return this.robot.getNumberTeam();
     }
 

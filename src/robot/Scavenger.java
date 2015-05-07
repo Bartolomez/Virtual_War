@@ -96,9 +96,7 @@ public class Scavenger extends Robot {
         } else {
             this.setEnergy(this.getEnergy() + Constants.CARE);
         }
-
         this.setStoredMines(Constants.MINES_MAX);
-
         System.out.printf(this.getType() + " a regainé " + Constants.CARE + " PV et a remis " + ""
                 + Constants.MINES_MAX + " mines dans sont stocke");
     }
@@ -106,13 +104,11 @@ public class Scavenger extends Robot {
     @Override public Action selectedAction() {
         List<Axis> moves = searchMoves();
         List<Axis> mines = initialzedMines();
-
         if (haveMines(mines)) {
             System.out
                     .printf(
                         "Vous pouvez selectionné : \n \t1 - Se deplacer \n \t2 - Miner le terrain" );
             int choosen = Constants.sc.nextInt();
-
             switch (choosen) {
                 case 1:
                     return chosesDisplacement(moves);
@@ -129,15 +125,12 @@ public class Scavenger extends Robot {
                     return null;
                 default:
                     System.err.printf("Choix impossible");
-
             }
-
         } else {
             System.out.printf(
                 "Aucune cible autour de vous, choisiez un déplcement dans la " + "list ci-dessous" );
             return chosesDisplacement(moves);
         }
-
         return null;
     }
 
@@ -155,13 +148,10 @@ public class Scavenger extends Robot {
     private List<Axis> searchMoves() {
         List<Axis> moves = new ArrayList<Axis>();
         List<Axis> movesTmp = new ArrayList<Axis>();
-
         for (Axis axis : Constants.MOVES_SCAVENGER) {
             moves.add(this.getAxis().add(axis));
         }
-
         movesTmp.addAll(moves);
-
         for (Axis axis : movesTmp) {
             if (this.valueIsSuitable(axis) || this.valueContainsRobot(axis)) {
                 moves.remove(axis);
@@ -170,11 +160,8 @@ public class Scavenger extends Robot {
                 if (thisAxisIsObstacle(axis)) {
                     moves.remove(axis);
                 }
-            } catch (Exception e) {
-
-            }
+            } catch (Exception e) {}
         }
-
         return moves;
     }
 
@@ -197,23 +184,17 @@ public class Scavenger extends Robot {
     private List<Axis> initialzedMines() {
         List<Axis> mines = new ArrayList<Axis>();
         List<Axis> minesTmp = new ArrayList<Axis>();
-
         for (Axis axis : Constants.MOVES_SCAVENGER) {
             mines.add(this.getAxis().add(axis));
         }
-
         minesTmp.addAll(mines);
-
         for (Axis axis : minesTmp) {
             try {
                 if (thisCellIsEmpthy(axis)) {
                     mines.remove(axis);
                 }
-            } catch (Exception e) {
-
-            }
+            } catch (Exception e) {}
         }
-
         return mines;
     }
 

@@ -14,7 +14,6 @@ public class ShowFrame {
         for (int i = 0; i < title.length(); i++) {
             res.insert(res.length(), "-");
         }
-
         System.out.println(res + "--+");
     }
 

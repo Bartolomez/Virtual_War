@@ -25,9 +25,7 @@ public class Axis {
             return true;
         if ( o == null || getClass () != o.getClass () )
             return false;
-
         Axis axis = ( Axis ) o;
-
         if ( x != axis.x )
             return false;
         return y == axis.y;
