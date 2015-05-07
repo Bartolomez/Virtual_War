@@ -28,6 +28,7 @@ public class Constants {
     /* Definition of a tank by these assets */
     public static final String IS_TANK = "Char";
     public static final int DAMAGE_ACTION_TANK = 1;
+    public static final int CAN_MOVE_TANK = 2;
     public static final int DAMAGE_MOVE_TANK = 5;
     public static final int DAMAGE_SHOOT_TANK = 6;
     public static final int DAMAGA_MINE_TANK = 6;
