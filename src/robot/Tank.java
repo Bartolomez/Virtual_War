@@ -111,19 +111,21 @@ public class Tank extends Robot {
     private List<Axis> searchMoves() {
         List<Axis> moves = new ArrayList<Axis>();
         List<Axis> movesTmp = new ArrayList<Axis>();
-        for (Axis axis : Constants.MOVES_TANK) {
-            moves.add(this.getAxis().add(axis));
+        for( Axis axis : Constants.MOVES_TANK ) {
+            moves.add( this.getAxis().add( axis ) );
         }
-        movesTmp.addAll(moves);
-        for (Axis axis : movesTmp) {
-            if (!this.valueIsSuitable(axis) || this.valueContainsRobot(axis)) {
-                moves.remove(axis);
+        movesTmp.addAll( moves );
+        for( Axis axis : movesTmp ) {
+            if( !this.valueIsSuitable( axis ) ) {
+                moves.remove( axis );
+            } else if( this.valueContainsRobot( axis ) ) {
+                moves.remove( axis );
             }
             try {
-                if (thisAxisIsObstacle(axis)) {
-                    moves.remove(axis);
+                if( thisAxisIsObstacle( axis ) ) {
+                    moves.remove( axis );
                 }
-            } catch (Exception e) {
+            } catch( Exception e ) {
 
             }
         }
@@ -131,17 +133,12 @@ public class Tank extends Robot {
     }
 
     private boolean valueIsSuitable(Axis axis) {
-        return ( axis.getX() < 0 ) || ( axis.getY() < 0 ) || ( axis.getX() >= this.getView()
-            .getPlateau().getLength() ) || ( axis.getY() >= this.getView().getPlateau()
-            .getWidth() );
+        return (axis.getX() >= 0 && axis.getX() < this.getView().getPlateau().getLength()
+            && axis.getY() >= 0 && axis.getY() < this.getView().getPlateau().getWidth());
     }
 
     private boolean valueContainsRobot(Axis axis) {
-        if (valueIsSuitable( axis )) {
-            return (this.getView().getPlateau().getCell(axis).isRobot() != this.getTeam().getTeam()) || (
-                this.getView().getPlateau().getCell(axis).isRobot() != 0);
-        }
-        return false;
+        return this.getView().getPlateau().getCell(axis).isRobot() != 0;
     }
 
     private boolean thisAxisIsObstacle(Axis axis) {
