@@ -1,7 +1,6 @@
 package robot;
 
 import action.Action;
-import action.Move;
 import config.Constants;
 import plateau.Axis;
 import team.Team;
@@ -170,14 +169,5 @@ public abstract class Robot {
 		return "unknown";
 	}
 
-	public Action chosesDisplacement(List<Axis> displacement) {
-		int count = 0;
-		System.out.printf( "Vous pouvez vous déplacer en : \n" );
-		for( Axis axis : displacement ) {
-			System.out.printf("\t" + (++count) + ": " + direction( axis ) + "\n" );
-		}
-		System.out.printf( "Votre choix : " );
-		this.setObjective( displacement.get( Constants.sc.nextInt() ) );
-		return new Move( this );
-	}
+	public abstract Action chosesDisplacement(List<Axis> displacement);
 }

@@ -1,7 +1,9 @@
 package team;
 
+import plateau.Axis;
 import plateau.Base;
 import plateau.Plateau;
+import robot.Robot;
 import robot.Scavenger;
 import robot.Shooter;
 import robot.Tank;
@@ -16,6 +18,9 @@ public class View {
     public View(Plateau plateau, int team) {
         this.plateau = plateau;
         this.team = team;
+    }
+    public void putRobot( Axis axis, Robot robot ) {
+        this.plateau.putRobot( axis.getX(), axis.getY(), robot );
     }
 
     public Plateau getPlateau() {
@@ -94,5 +99,9 @@ public class View {
         }
         results.insert (results.length (), "\n");
         return results.toString ();
+    }
+
+    public void revokeRobot( Axis axis ) {
+        this.plateau.revokeRobot( axis );
     }
 }

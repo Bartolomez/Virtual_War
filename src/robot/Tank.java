@@ -2,6 +2,7 @@ package robot;
 
 import action.Action;
 import action.Attack;
+import action.Move;
 import config.Constants;
 import plateau.Axis;
 import team.Team;
@@ -75,8 +76,8 @@ public class Tank extends Robot {
         List<Axis> target = searchTarget();
 
         if (!target.isEmpty()) {
-            System.out.printf("Vous pouvez selectionné : \n \t1 - Se deplacer \n \t2 - Attaquer "
-                    + "une cible\n");
+            System.out.printf( "Vous pouvez selectionné : \n \t1 - Se deplacer \n \t2 - Attaquer "
+                + "une cible\n" );
             System.out.printf( "Votre choix : " );
             int choosen = Constants.sc.nextInt();
 
@@ -100,8 +101,8 @@ public class Tank extends Robot {
             }
 
         } else {
-            System.out.printf("Aucune cible autour de vous, choisiez un déplcement dans la "
-                    + "list ci-dessous");
+            System.out.printf(
+                "Aucune cible autour de vous, choisiez un déplcement dans la " + "list ci-dessous" );
             return chosesDisplacement(moves);
         }
 
@@ -162,6 +163,17 @@ public class Tank extends Robot {
 
     private boolean isNotSameTeam(Axis axis) {
         return this.getView().getPlateau().getCell(axis).isRobot() != this.getTeam().getTeam();
+    }
+
+    public Action chosesDisplacement(List<Axis> displacement) {
+        int count = 0;
+        System.out.printf( "Vous pouvez vous déplacer en : \n" );
+        for( Axis axis : displacement ) {
+            System.out.printf( "\t" + ( ++count ) + ": " + axis + " " + direction( axis ) + "\n" );
+        }
+        System.out.printf( "Votre choix : " );
+        this.setObjective( displacement.get( Constants.sc.nextInt() - 1 ) );
+        return new Move( this );
     }
 
     public String toString() {

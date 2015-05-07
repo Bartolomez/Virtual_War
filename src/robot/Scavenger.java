@@ -1,6 +1,7 @@
 package robot;
 
 import action.Action;
+import action.Move;
 import config.Constants;
 import plateau.Axis;
 import team.Team;
@@ -108,7 +109,8 @@ public class Scavenger extends Robot {
 
         if (haveMines(mines)) {
             System.out
-                    .printf("Vous pouvez selectionné : \n \t1 - Se deplacer \n \t2 - Miner le terrain");
+                    .printf(
+                        "Vous pouvez selectionné : \n \t1 - Se deplacer \n \t2 - Miner le terrain" );
             int choosen = Constants.sc.nextInt();
 
             switch (choosen) {
@@ -131,12 +133,23 @@ public class Scavenger extends Robot {
             }
 
         } else {
-            System.out.printf("Aucune cible autour de vous, choisiez un déplcement dans la "
-                    + "list ci-dessous");
+            System.out.printf(
+                "Aucune cible autour de vous, choisiez un déplcement dans la " + "list ci-dessous" );
             return chosesDisplacement(moves);
         }
 
         return null;
+    }
+
+    public Action chosesDisplacement(List<Axis> displacement) {
+        int count = 0;
+        System.out.printf( "Vous pouvez vous déplacer en : \n" );
+        for( Axis axis : displacement ) {
+            System.out.printf( "\t" + ( ++count ) + ": " + direction( axis ) + "\n" );
+        }
+        System.out.printf( "Votre choix : " );
+        this.setObjective( displacement.get( Constants.sc.nextInt() - 1 ) );
+        return new Move( this );
     }
 
     private List<Axis> searchMoves() {
