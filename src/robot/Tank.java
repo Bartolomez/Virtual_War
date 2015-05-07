@@ -170,7 +170,7 @@ public class Tank extends Robot {
             }
         }
 
-        return target;
+        return targetTmp;
     }
 
     private boolean isNotSameTeam(Axis axis) {

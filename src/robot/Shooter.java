@@ -170,7 +170,7 @@ public class Shooter extends Robot {
                 }
             } catch (Exception e) {}
         }
-        return target;
+        return targetTmp;
     }
 
     private boolean isNotSameTeam(Axis axis) {
