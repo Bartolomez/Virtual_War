@@ -98,7 +98,7 @@ public class Scavenger extends Robot {
         }
         this.setStoredMines(Constants.MINES_MAX);
         System.out.printf(this.getType() + " a regainé " + Constants.CARE + " PV et a remis " + ""
-                + Constants.MINES_MAX + " mines dans sont stocke");
+                + Constants.MINES_MAX + " mines dans sont stocke\n");
     }
 
     @Override public Action selectedAction() {
@@ -153,7 +153,7 @@ public class Scavenger extends Robot {
         }
         movesTmp.addAll(moves);
         for (Axis axis : movesTmp) {
-            if (this.valueIsSuitable(axis) || this.valueContainsRobot(axis)) {
+            if (!this.valueIsSuitable(axis) || this.valueContainsRobot(axis)) {
                 moves.remove(axis);
             }
             try {

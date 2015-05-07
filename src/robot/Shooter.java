@@ -66,7 +66,7 @@ public class Shooter extends Robot {
         } else {
             this.setEnergy(this.getEnergy() + Constants.CARE);
         }
-        System.out.printf(this.getType() + " a regainé " + Constants.CARE + " PV");
+        System.out.printf(this.getType() + " a regainé " + Constants.CARE + " PV\n");
     }
 
     @Override public Action selectedAction() {
@@ -121,7 +121,7 @@ public class Shooter extends Robot {
         }
         movesTmp.addAll(moves);
         for (Axis axis : movesTmp) {
-            if (this.valueIsSuitable(axis) || this.valueContainsRobot(axis)) {
+            if (!this.valueIsSuitable(axis) || this.valueContainsRobot(axis)) {
                 moves.remove(axis);
             }
             try {

@@ -77,7 +77,6 @@ public class Plateau {
 
     private void initializeObstacles( double percentageObstacles ) {
         int obstacles = 0, x, y;
-
         while( obstacles != ( int ) ( ( this.width * this.length ) * percentageObstacles ) ) {
             x = Constants.random.nextInt( this.width );
             y = Constants.random.nextInt( this.length );

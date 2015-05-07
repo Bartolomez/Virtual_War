@@ -67,8 +67,7 @@ public class Tank extends Robot {
         } else {
             this.setEnergy( this.getEnergy() + Constants.CARE );
         }
-
-        System.out.printf(this.getType() + " a regainé " + Constants.CARE + " PV");
+        System.out.printf(this.getType() + " a regainé " + Constants.CARE + " PV\n");
     }
 
     @Override public Action selectedAction() {
@@ -110,13 +109,25 @@ public class Tank extends Robot {
     }
 
     private List<Axis> searchMoves() {
-        Axis recovery = getAxis();
-        List<Axis> list = new ArrayList<Axis>();
-        list.add( new Axis( recovery.getX() + Constants.CAN_MOVE_TANK, recovery.getY() ) );
-        list.add( new Axis( recovery.getX() - Constants.CAN_MOVE_TANK, recovery.getY() ) );
-        list.add( new Axis( recovery.getX(), recovery.getY() + Constants.CAN_MOVE_TANK ) );
-        list.add( new Axis( recovery.getX(), recovery.getY() - Constants.CAN_MOVE_TANK ) );
-        return list;
+        List<Axis> moves = new ArrayList<Axis>();
+        List<Axis> movesTmp = new ArrayList<Axis>();
+        for (Axis axis : Constants.MOVES_TANK) {
+            moves.add(this.getAxis().add(axis));
+        }
+        movesTmp.addAll(moves);
+        for (Axis axis : movesTmp) {
+            if (!this.valueIsSuitable(axis) || this.valueContainsRobot(axis)) {
+                moves.remove(axis);
+            }
+            try {
+                if (thisAxisIsObstacle(axis)) {
+                    moves.remove(axis);
+                }
+            } catch (Exception e) {
+
+            }
+        }
+        return moves;
     }
 
     private boolean valueIsSuitable(Axis axis) {
@@ -125,8 +136,11 @@ public class Tank extends Robot {
     }
 
     private boolean valueContainsRobot(Axis axis) {
-        return (this.getView().getPlateau().getCell(axis).isRobot() != this.getTeam().getTeam()) || (
+        if (!valueIsSuitable( axis )) {
+            return (this.getView().getPlateau().getCell(axis).isRobot() != this.getTeam().getTeam()) || (
                 this.getView().getPlateau().getCell(axis).isRobot() != 0);
+        }
+        return false;
     }
 
     private boolean thisAxisIsObstacle(Axis axis) {
