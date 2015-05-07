@@ -7,7 +7,7 @@ import robot.Robot;
  */
 public class Cell {
     private Axis axis;
-    private Robot robot;
+    private Robot robot = null;
     private boolean obstacle;
     private int mine = 0, base = 0;
 
