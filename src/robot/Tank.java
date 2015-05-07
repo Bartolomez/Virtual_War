@@ -131,12 +131,13 @@ public class Tank extends Robot {
     }
 
     private boolean valueIsSuitable(Axis axis) {
-        return axis.getX() < 0 || axis.getY() < 0 || axis.getX() >= this.getView().getPlateau()
-                .getLength() || axis.getY() >= this.getView().getPlateau().getWidth();
+        return ( axis.getX() < 0 ) || ( axis.getY() < 0 ) || ( axis.getX() >= this.getView()
+            .getPlateau().getLength() ) || ( axis.getY() >= this.getView().getPlateau()
+            .getWidth() );
     }
 
     private boolean valueContainsRobot(Axis axis) {
-        if (!valueIsSuitable( axis )) {
+        if (valueIsSuitable( axis )) {
             return (this.getView().getPlateau().getCell(axis).isRobot() != this.getTeam().getTeam()) || (
                 this.getView().getPlateau().getCell(axis).isRobot() != 0);
         }

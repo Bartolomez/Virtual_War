@@ -31,8 +31,7 @@ public class Team {
     public Robot chooseRobot() {
     	int count = 0, chosen;
     	for (Robot robot : this.robots) {
-			System.out.println("Choix ["+count+"] \t"+robot.toString());
-			count += 1;
+			System.out.println("Choix ["+(++count)+"] \t"+robot.toString());
 		}
     	do {
             System.out.print("Votre choix : ");
@@ -42,11 +41,25 @@ public class Team {
     }
 
 	private String choosePays() {
-		ShowFrame.showFrame("Choisir pays", Constants.NAME_COUNTRY);
-		System.out.print("Choisissez un pays : ");
-        return Constants.sc.nextLine();
+		ShowFrame.showFrame( "Choisir pays", Constants.NAME_COUNTRY );
+        String pays;
+        do {
+            System.out.print( "Choisissez un pays : " );
+            pays = Constants.sc.nextLine();
+        } while (!isInList(pays));
+        return pays;
     }
-    
+
+    private boolean isInList( String pays ) {
+        for( String str : Constants.NAME_COUNTRY ) {
+            if( str.toLowerCase().equals( pays.toLowerCase() ) ) {
+                return true;
+            }
+        }
+        System.err.printf( "Le nom que vous avez choisi n'est pas dans la litse\n" );
+        return false;
+    }
+
 
     public int getTeam() {
 		return this.team;
