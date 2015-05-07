@@ -66,6 +66,7 @@ public class Team {
 
     public void addRobot(Robot robot) {
         this.robots.add(robot);
+        this.view.getPlateau().putRobot( getAxisBase().getX(), getAxisBase().getY(), robot );
     }
 
     public void revokeRobot(Robot robot){
