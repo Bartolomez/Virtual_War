@@ -98,8 +98,8 @@ public class Scavenger extends Robot {
             this.setEnergy(this.getEnergy() + Constants.CARE);
         }
         this.setStoredMines(Constants.MINES_MAX);
-        System.out.printf( this.getType() + " a regainé " + Constants.CARE + " PV et a remis " + ""
-            + Constants.MINES_MAX + " mines dans sont stocke\n" );
+        System.out.printf(this.getType() + " a regagné " + Constants.CARE + " PV et a remis " + ""
+                + Constants.MINES_MAX + " mines dans son stock\n");
     }
 
     @Override public Action selectedAction() {
@@ -107,15 +107,15 @@ public class Scavenger extends Robot {
         List<Axis> mines = initialzedMines();
         if (haveMines(mines)) {
             System.out
-                    .printf( "Vous pouvez selectionné : \n" + " \t1 - Se deplacer \n"
-                        + " \t2 - Miner le terrain" );
+                    .printf(
+                        "Vous pouvez selectionner : \n \t1 - Se déplacer \n \t2 - Miner le terrain" );
             int choosen = Constants.sc.nextInt();
             switch (choosen) {
                 case 1:
                     return chosesDisplacement(moves);
                 case 2:
                     int count = 0;
-                    System.out.printf("Vous pouvez miner les positions suivante : ");
+                    System.out.printf("Vous pouvez miner les positions suivantes : ");
 
                     for (Axis axis : moves) {
                         System.out.printf((count++) + " : " + axis);
@@ -129,7 +129,7 @@ public class Scavenger extends Robot {
             }
         } else {
             System.out.printf(
-                "Aucune cible autour de vous, choisiez un déplcement dans la " + "list ci-dessous" );
+                "Aucune cible autour de vous, choisissez un déplacement dans la " + "liste ci-dessous" );
             return chosesDisplacement(moves);
         }
         return null;
