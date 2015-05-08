@@ -9,17 +9,18 @@ import robot.Tank;
 import team.Team;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Main {
 
-    public static void main(String[] args) {
-        System.out.printf("Largeur du plateau : ");
+    public static void main(String[] args) throws Exception {
+        System.out.printf( "Largeur du plateau : " );
         int x = Integer.parseInt(Constants.sc.nextLine());
-        System.out.printf("Longeur du plateau : ");
+        System.out.printf( "Longeur du plateau : " );
         int y = Integer.parseInt( Constants.sc.nextLine() );
         double obstacle;
         do {
-            System.out.printf("Pourcentage d'obstacle (de 0.1 à 0.99): ");
+            System.out.printf( "Pourcentage d'obstacle (de 0.1 à 0.99): " );
             obstacle = Double.parseDouble(Constants.sc.nextLine());
         } while(!isValide( obstacle ));
         Plateau plateau = new Plateau(x, y, obstacle);
@@ -42,7 +43,7 @@ public class Main {
         boolean end = false;
         Robot robot;
         Action action;
-        ArrayList<Robot> deadRobot = new ArrayList<Robot>();
+        ArrayList<Robot> deadRobot = new ArrayList<>();
         count = 0;
         do {
             System.out.printf(teams[count % 2].getView().getPlateau() + "\n" + teams[count % 2]
@@ -58,17 +59,10 @@ public class Main {
                 if (t.lose()) {
                     end = !end;
                 }
-                for (Robot r : t.getRobots()) {
-                    if (r.isDead()) {
-                        deadRobot.add(r);
-                    }
-                }
+                deadRobot.addAll( t.getRobots().stream().filter( r -> r.isDead() )
+                    .collect( Collectors.toList() ) );
             }
-            for (Robot r : teams[count % 2].getRobots()) {
-                if (r.isBased()) {
-                    r.isHeals();
-                }
-            }
+            teams[ count % 2 ].getRobots().stream().filter( r -> r.isBased() ).forEach( r -> r.isHeals() );
             if (!deadRobot.isEmpty()) {
                 for (Robot r : deadRobot) {
                     r.revoke();

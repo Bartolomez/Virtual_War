@@ -10,6 +10,7 @@ import team.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author boinc
@@ -22,7 +23,7 @@ public class Tank extends Robot {
     public Tank(View view, Team team) {
         super(view, team);
         this.setEnergy(Constants.ENERGY_TANK);
-        this.axis = new ArrayList<Axis>();
+        this.axis = new ArrayList<>();
     }
 
     @Override public void suddenByShoot(Robot robot) {
@@ -67,8 +68,7 @@ public class Tank extends Robot {
         } else {
             this.setEnergy( this.getEnergy() + Constants.CARE );
         }
-
-        System.out.printf(this.getType() + " a regagné " + Constants.CARE + " PV");
+        System.out.printf(this.getType() + " a regagné " + Constants.CARE + " PV\n");
     }
 
     @Override public Action selectedAction() {
@@ -102,7 +102,7 @@ public class Tank extends Robot {
 
         } else {
             System.out.printf(
-                "Aucune cible autour de vous, choisissez un déplacement dans la " + "liste ci-dessous" );
+                "Aucune cible autour de vous, choisissez un déplacement dans la liste ci-dessous" );
             return chosesDisplacement(moves);
         }
 
@@ -110,23 +110,35 @@ public class Tank extends Robot {
     }
 
     private List<Axis> searchMoves() {
-        Axis recovery = getAxis();
-        List<Axis> list = new ArrayList<Axis>();
-        list.add( new Axis( recovery.getX() + Constants.CAN_MOVE_TANK, recovery.getY() ) );
-        list.add( new Axis( recovery.getX() - Constants.CAN_MOVE_TANK, recovery.getY() ) );
-        list.add( new Axis( recovery.getX(), recovery.getY() + Constants.CAN_MOVE_TANK ) );
-        list.add( new Axis( recovery.getX(), recovery.getY() - Constants.CAN_MOVE_TANK ) );
-        return list;
+        List<Axis> moves = new ArrayList<>();
+        List<Axis> movesTmp = new ArrayList<>();
+        moves.addAll( Constants.MOVES_TANK.stream().map( axis -> this.getAxis().add( axis ) )
+            .collect( Collectors.toList() ) );
+        movesTmp.addAll( moves );
+        for( Axis axis : movesTmp ) {
+            if( !this.valueIsSuitable( axis ) ) {
+                moves.remove( axis );
+            } else if( this.valueContainsRobot( axis ) ) {
+                moves.remove( axis );
+            }
+            try {
+                if( thisAxisIsObstacle( axis ) ) {
+                    moves.remove( axis );
+                }
+            } catch( Exception e ) {
+
+            }
+        }
+        return moves;
     }
 
     private boolean valueIsSuitable(Axis axis) {
-        return axis.getX() < 0 || axis.getY() < 0 || axis.getX() >= this.getView().getPlateau()
-                .getLength() || axis.getY() >= this.getView().getPlateau().getWidth();
+        return (axis.getX() >= 0 && axis.getX() < this.getView().getPlateau().getLength()
+            && axis.getY() >= 0 && axis.getY() < this.getView().getPlateau().getWidth());
     }
 
     private boolean valueContainsRobot(Axis axis) {
-        return (this.getView().getPlateau().getCell(axis).isRobot() != this.getTeam().getTeam()) || (
-                this.getView().getPlateau().getCell(axis).isRobot() != 0);
+        return this.getView().getPlateau().getCell(axis).isRobot() != 0;
     }
 
     private boolean thisAxisIsObstacle(Axis axis) {
@@ -134,12 +146,11 @@ public class Tank extends Robot {
     }
 
     private List<Axis> searchTarget() {
-        List<Axis> target = new ArrayList<Axis>();
-        List<Axis> targetTmp = new ArrayList<Axis>();
+        List<Axis> target = new ArrayList<>();
+        List<Axis> targetTmp = new ArrayList<>();
 
-        for (Axis axis : Constants.STRIKE_ZONE_TANK) {
-            target.add(this.getAxis().add(axis));
-        }
+        target.addAll( Constants.STRIKE_ZONE_TANK.stream().map( axis -> this.getAxis().add( axis ) )
+            .collect( Collectors.toList() ) );
 
         for (int i = 0; i < target.size(); i++) {
             Axis axis = target.get(i);
@@ -158,7 +169,7 @@ public class Tank extends Robot {
             }
         }
 
-        return target;
+        return targetTmp;
     }
 
     private boolean isNotSameTeam(Axis axis) {

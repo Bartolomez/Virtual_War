@@ -27,15 +27,7 @@ public class Plateau {
     }
 
     public Cell getCell( Axis axis ) {
-        for( Cell[] cells : this.plateau ) {
-            for( Cell cell : cells ) {
-                if( cell.equals( axis ) ) {
-                    return cell;
-                }
-            }
-        }
-
-        return null;
+        return plateau[ axis.getY() ][ axis.getX() ];
     }
 
     public int getWidth() {
@@ -47,28 +39,28 @@ public class Plateau {
     }
 
     public boolean isObstacle( int x, int y ) {
-        return this.plateau[ x ][ y ].isObstacle();
+        return this.plateau[ y ][ x ].isObstacle();
     }
 
     public int isBase( int x, int y ) {
-        return this.plateau[ x ][ y ].getBase();
+        return this.plateau[ y ][ x ].getBase();
     }
 
     public int isMine( int x, int y ) {
-        return this.plateau[ x ][ y ].containsMine();
+        return this.plateau[ y ][ x ].containsMine();
     }
 
     public int isRobot( int x, int y ) {
-        return this.plateau[ x ][ y ].isRobot();
+        return this.plateau[ y ][ x ].isRobot();
     }
 
     public void clearCell( int x, int y ) {
-        this.plateau[ x ][ y ].clearCell();
+        this.plateau[ y ][ x ].clearCell();
     }
 
     public void putRobot( int x, int y, Robot robot ) {
-        if( !this.plateau[ x ][ y ].isObstacle() ) {
-            this.plateau[ x ][ y ].putRobot( robot );
+        if( !this.plateau[ y ][ x ].isObstacle() ) {
+            this.plateau[ y ][ x ].putRobot( robot );
         } else {
             System.err.printf(
                 "Erreur : La cellule ou vous voulez placer ce robot est un obstacle ! :-(\n" );
@@ -76,25 +68,22 @@ public class Plateau {
     }
 
     public void revokeRobot( Axis axis ) {
-        this.plateau[ axis.getX() ][ axis.getY() ].revokeRobot();
+        this.plateau[ axis.getY() ][ axis.getX() ].revokeRobot();
     }
 
     public void revokeMine( Axis axis ) {
-        this.plateau[ axis.getX() ][ axis.getY() ].revokeMine();
+        this.plateau[ axis.getY() ][ axis.getX() ].revokeMine();
     }
 
     private void initializeObstacles( double percentageObstacles ) {
         int obstacles = 0, x, y;
-
         while( obstacles != ( int ) ( ( this.width * this.length ) * percentageObstacles ) ) {
             x = Constants.random.nextInt( this.width );
             y = Constants.random.nextInt( this.length );
-
             if( this.plateau[ x ][ y ].getBase() == 0 && !this.plateau[ x ][ y ].isObstacle() ) {
                 this.plateau[ x ][ y ].putObstacle( true );
                 obstacles += 1;
             }
-
             if( x == 0 && this.plateau[ x ][ y ].isObstacle() ) {
                 this.plateau[ x ][ y ].putObstacle( false );
                 obstacles -= 1;
@@ -111,7 +100,6 @@ public class Plateau {
                 tab[ i ][ j ] = new Cell( i, j );
             }
         }
-
         return tab;
     }
 

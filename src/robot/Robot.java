@@ -130,6 +130,7 @@ public abstract class Robot {
 
 	public String direction(Axis axis) {
 		Axis getway = this.getAxis().differenceBetween( axis );
+		getway = axis.differenceBetween(this.getAxis());
 		if (getway.equals(Constants.TANK_NORTH)) {
 			return "NORD";
 		}

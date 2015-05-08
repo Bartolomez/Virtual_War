@@ -21,7 +21,8 @@ public abstract class Action {
     }
 
     public Action(Robot robot) {
-        this(robot, null);
+        this.robot = robot;
+        this.objective = robot.getObjective();
     }
 
     public Robot getRobot() {
