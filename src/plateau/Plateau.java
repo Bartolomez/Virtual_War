@@ -100,6 +100,8 @@ public class Plateau {
                 tab[ i ][ j ] = new Cell( i, j );
             }
         }
+        tab[0][0] = new Base( 0, 0, 1 );
+        tab[tab.length - 1][tab.length - 1] = new Base( tab.length - 1, tab.length - 1, 2 );
         return tab;
     }
 

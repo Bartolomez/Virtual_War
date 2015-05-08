@@ -86,7 +86,7 @@ public class Shooter extends Robot {
                     System.out.printf( "Vous pouvez attaquer : " );
 
                     for( Axis axis : target ) {
-                        System.out.printf( ( count++ ) + " : " + axis + " " + direction( axis ) );
+                        System.out.printf( ( count++ ) + " : " + axis + " " + axis );
                     }
                     choosen = Constants.sc.nextInt();
                     this.setObjective( target.get( choosen ) );
@@ -107,7 +107,7 @@ public class Shooter extends Robot {
         int count = 0;
         System.out.printf( "Vous pouvez vous déplacer en : \n" );
         for( Axis axis : displacement ) {
-            System.out.printf( "\t" + ( ++count ) + ": " + direction( axis ) + "\n" );
+            System.out.printf( "\t" + ( ++count ) + ": " + axis + "\n" );
         }
         System.out.printf( "Votre choix : " );
         this.setObjective( displacement.get( Constants.sc.nextInt() - 1 ) );

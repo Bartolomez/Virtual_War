@@ -1,5 +1,5 @@
 import action.Action;
-import config.Constants;
+import config.Input;
 import plateau.Axis;
 import plateau.Plateau;
 import robot.Robot;
@@ -14,15 +14,10 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        System.out.printf( "Largeur du plateau : " );
-        int x = Integer.parseInt(Constants.sc.nextLine());
-        System.out.printf( "Longeur du plateau : " );
-        int y = Integer.parseInt( Constants.sc.nextLine() );
+        int x = Input.readInt( "Largeur du plateau : " );
+        int y = Input.readInt( "Longeur du plateau : " );
         double obstacle;
-        do {
-            System.out.printf( "Pourcentage d'obstacle (de 0.1 à 0.99): " );
-            obstacle = Double.parseDouble(Constants.sc.nextLine());
-        } while(!isValide( obstacle ));
+        obstacle = Input.readDouble("Pourcentage d'obstacle (de 0.1 à 0.99): ", 0.0, 0.99);
         Plateau plateau = new Plateau(x, y, obstacle);
         Team[] teams = new Team[2];
         teams[0] = new Team(new Axis(0, 0), plateau, 1);
@@ -76,8 +71,5 @@ public class Main {
         return nomPays.equals( nomPays1 );
     }
 
-    private static boolean isValide( double obstacle ) {
-        return obstacle >= 0.1 && obstacle <= 0.99;
-    }
 
 }

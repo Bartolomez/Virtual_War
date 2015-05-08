@@ -139,7 +139,7 @@ public class Scavenger extends Robot {
         int count = 0;
         System.out.printf( "Vous pouvez vous déplacer en : \n" );
         for( Axis axis : displacement ) {
-            System.out.printf( "\t" + ( ++count ) + ": " + direction( axis ) + "\n" );
+            System.out.printf( "\t" + ( ++count ) + ": " + axis + "\n" );
         }
         System.out.printf( "Votre choix : " );
         this.setObjective( displacement.get( Constants.sc.nextInt() - 1 ) );
@@ -182,7 +182,7 @@ public class Scavenger extends Robot {
         return this.getView().getPlateau().getCell(axis).isObstacle();
     }
 
-    public boolean haveMines(List<Axis> mines) { return !mines.isEmpty() && this.storedMines < 0; }
+    public boolean haveMines(List<Axis> mines) { return !mines.isEmpty() && this.storedMines > 0; }
 
     private List<Axis> initialzedMines() {
         List<Axis> mines = new ArrayList<>();

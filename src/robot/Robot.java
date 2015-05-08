@@ -83,7 +83,7 @@ public abstract class Robot {
 
 	public boolean isBased() {
 		return this.axis.equals(new Axis(calculateAxisXByTeam(),
-				calculateAxisYByTeam()));
+			calculateAxisYByTeam()));
 	}
 
 	public abstract void suddenByShoot(Robot robot);
@@ -108,66 +108,24 @@ public abstract class Robot {
 
 	private int calculateAxisXByTeam() {
 		switch (this.team.getTeam()) {
-		case Constants.FIRST_TEAM:
-			return 0;
-		case Constants.SECOND_TEAM:
-			return view.getPlateau().getWidth() - 1;
-		default:
-			return -1;
+			case Constants.FIRST_TEAM:
+				return 0;
+			case Constants.SECOND_TEAM:
+				return view.getPlateau().getWidth() - 1;
+			default:
+				return -1;
 		}
 	}
 
 	private int calculateAxisYByTeam() {
 		switch (this.team.getTeam()) {
-		case Constants.FIRST_TEAM:
-			return 0;
-		case Constants.SECOND_TEAM:
-			return view.getPlateau().getLength() - 1;
-		default:
-			return -1;
+			case Constants.FIRST_TEAM:
+				return 0;
+			case Constants.SECOND_TEAM:
+				return view.getPlateau().getLength() - 1;
+			default:
+				return -1;
 		}
-	}
-
-	public String direction(Axis axis) {
-		Axis getway = this.getAxis().differenceBetween( axis );
-		getway = axis.differenceBetween(this.getAxis());
-		if (getway.equals(Constants.TANK_NORTH)) {
-			return "NORD";
-		}
-		if (getway.equals(Constants.TANK_SOUTH)) {
-			return "SUD";
-		}
-		if (getway.equals(Constants.TANK_EST)) {
-			return "EST";
-		}
-		if (getway.equals(Constants.TANK_WEST)) {
-			return "OUEST";
-		}
-		if (getway.equals(Constants.NORTH)) {
-			return "NORD";
-		}
-		if (getway.equals(Constants.NORTH_EST)) {
-			return "NORD EST";
-		}
-		if (getway.equals(Constants.NORTH_WEST)) {
-			return "NORD OUEST";
-		}
-		if (getway.equals(Constants.SOUTH)) {
-			return "SUD";
-		}
-		if (getway.equals(Constants.SOUTH_EST)) {
-			return "SUD EST";
-		}
-		if (getway.equals(Constants.SOUTH_WEST)) {
-			return "SUD OUEST";
-		}
-		if (getway.equals(Constants.WEST)) {
-			return "EST";
-		}
-		if (getway.equals(Constants.WEST)) {
-			return "OUEST";
-		}
-		return "unknown";
 	}
 
 	public abstract Action chosesDisplacement(List<Axis> displacement);
