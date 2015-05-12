@@ -94,6 +94,7 @@ public class Plateau {
         }
     }
 
+
     private Cell[][] initializePlateau( Cell[][] tab ) {
         for( int i = 0; i < tab.length; i++ ) {
             for( int j = 0; j < tab[ 0 ].length; j++ ) {
@@ -101,7 +102,7 @@ public class Plateau {
             }
         }
         tab[0][0] = new Base( 0, 0, 1 );
-        tab[tab.length - 1][tab.length - 1] = new Base( tab.length - 1, tab.length - 1, 2 );
+        tab[tab.length - 1][tab[0].length - 1] = new Base( tab.length - 1, tab[0].length - 1, 2 );
         return tab;
     }
 
