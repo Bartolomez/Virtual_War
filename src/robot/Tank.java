@@ -4,6 +4,7 @@ import action.Action;
 import action.Attack;
 import action.Move;
 import config.Constants;
+import config.Input;
 import plateau.Axis;
 import team.Team;
 import team.View;
@@ -182,8 +183,7 @@ public class Tank extends Robot {
         for( Axis axis : displacement ) {
             System.out.printf( "\t" + ( ++count ) + ": " + axis + "\n" );
         }
-        System.out.printf( "Votre choix : " );
-        this.setObjective( displacement.get( Constants.sc.nextInt() - 1 ) );
+        this.setObjective( displacement.get( Input.readInt( "Votre choix : " ) - 1));
         return new Move( this );
     }
 

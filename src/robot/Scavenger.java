@@ -3,6 +3,7 @@ package robot;
 import action.Action;
 import action.Move;
 import config.Constants;
+import config.Input;
 import plateau.Axis;
 import team.Team;
 import team.View;
@@ -106,15 +107,17 @@ public class Scavenger extends Robot {
         List<Axis> moves = searchMoves();
         List<Axis> mines = initialzedMines();
         if (haveMines(mines)) {
-            System.out
-                    .printf(
-                        "Vous pouvez selectionner : \n \t1 - Se déplacer \n \t2 - Miner le terrain" );
-            int choosen = Constants.sc.nextInt();
+            int count = 0;
+            System.out.printf(
+                        "Vous pouvez selectionner : \n "
+                            + "\t["+(++count)+"] Se déplacer \n "
+                            + "\t["+(++count)+"] Miner le terrain\n");
+            int choosen = Input.readInt( "Votre choix : ", 0, 1 ) - 1;
             switch (choosen) {
                 case 1:
                     return chosesDisplacement(moves);
                 case 2:
-                    int count = 0;
+                    count = 0;
                     System.out.printf("Vous pouvez miner les positions suivantes : ");
 
                     for (Axis axis : moves) {
@@ -125,7 +128,7 @@ public class Scavenger extends Robot {
                     mine();
                     return null;
                 default:
-                    System.err.printf("Choix impossible");
+                    System.err.printf("Choix impossible\n");
             }
         } else {
             System.out.printf(
@@ -141,8 +144,7 @@ public class Scavenger extends Robot {
         for( Axis axis : displacement ) {
             System.out.printf( "\t" + ( ++count ) + ": " + axis + "\n" );
         }
-        System.out.printf( "Votre choix : " );
-        this.setObjective( displacement.get( Constants.sc.nextInt() - 1 ) );
+        this.setObjective( displacement.get( Input.readInt( "Votre choix : " ) - 1));
         return new Move( this );
     }
 
