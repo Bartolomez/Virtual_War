@@ -14,12 +14,14 @@ import java.util.List;
  * @author seysn
  * @author boinc
  */
+
 public class Team {
     private List<Robot> robots;
     private String nomPays;
     private Axis axisBase;
     private int team;
     private View view;
+    private boolean isIa;
 
     public Team( Axis axisBase, Plateau plateau, int team ) {
         this.axisBase = axisBase;
@@ -27,6 +29,7 @@ public class Team {
         this.team = team;
         this.view = new View( plateau, team );
         this.robots = new ArrayList<>();
+        this.isIa = false;
     }
 
     public Robot chooseRobot() {
@@ -37,6 +40,7 @@ public class Team {
         do {
             chosen = Input.readInt( "Votre choix : " ) - 1;
         } while( chosen < 1 && chosen > count );
+
         return this.robots.get( chosen );
     }
 
@@ -97,5 +101,13 @@ public class Team {
     @Override public String toString() {
         return "Team [robots=" + robots + ", nomPays=" + nomPays + ", axisBase=" + axisBase
             + ", team=" + team + "]";
+    }
+
+    public boolean isIa() {
+        return this.isIa;
+    }
+
+    public void setIsIa( boolean isIa ) {
+        this.isIa = isIa;
     }
 }
