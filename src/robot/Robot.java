@@ -13,6 +13,8 @@ import java.util.List;
  */
 
 public abstract class Robot {
+	// TODO : Nom des robots en français
+
 	private Axis axis, objective;
 	private View view;
 	private Team team;
