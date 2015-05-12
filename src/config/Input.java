@@ -71,6 +71,7 @@ public class Input {
     }
 
     public static double readDouble(double borderA, double borderB) {
+
         while (true) {
             try {
                 double foo = Double.parseDouble( Constants.sc.nextLine() );
