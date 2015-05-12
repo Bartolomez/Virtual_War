@@ -8,6 +8,8 @@ import robot.Robot;
  */
 
 public abstract class Action {
+    // TODO : ArrayOutOfBounds si on entre une action non prédefinie
+
     private Axis axis;
     private Axis objective;
     private Robot robot;
