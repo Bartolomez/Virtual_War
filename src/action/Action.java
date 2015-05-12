@@ -12,8 +12,6 @@ public abstract class Action {
     private Axis objective;
     private Robot robot;
 
-    public Action() { }
-
     public Action(Robot robot, Axis objective) {
         this.robot = robot;
         this.objective = objective;
