@@ -19,7 +19,7 @@ public class Main {
         double obstacle;
         obstacle = Input.readDouble("Pourcentage d'obstacle (de 0.1 à 0.99): ", 0.0, 0.99);
         Plateau plateau = new Plateau(x, y, obstacle);
-        Team[] teams = new Team[2];
+        Team[] teams = new Team[ 2 ];
         teams[0] = new Team(new Axis(0, 0), plateau, 1);
         int count = 0;
         do {
@@ -29,8 +29,8 @@ public class Main {
             teams[ 1 ] =
                 new Team( new Axis( plateau.getLength() - 1, plateau.getWidth() - 1 ), plateau, 2 );
             count += 1;
-        } while (sameCountry(teams[0].getNomPays(), teams[1].getNomPays()));
-        for (Team t : teams) {
+        } while (sameCountry( teams[0].getNomPays(), teams[1].getNomPays()));
+        for (Team t : teams ) {
             t.addRobot(new Tank(t.getView(), t));
             t.addRobot(new Scavenger(t.getView(), t));
             t.addRobot(new Shooter(t.getView(), t));
@@ -41,7 +41,7 @@ public class Main {
         ArrayList<Robot> deadRobot = new ArrayList<>();
         count = 0;
         do {
-            System.out.printf(teams[count % 2].getView().getPlateau() + "\n" + teams[count % 2]
+            System.out.printf( teams[count % 2].getView().getPlateau() + "\n" + teams[count % 2]
                     .getNomPays() + " c'est à votre tour ! \n");
             robot = teams[count % 2].chooseRobot();
             System.out.printf(robot.getView().toString());
@@ -50,7 +50,7 @@ public class Main {
                 action.doSomething();
             }
             count += 1;
-            for (Team t : teams) {
+            for (Team t : teams ) {
                 if (t.lose()) {
                     end = !end;
                 }
