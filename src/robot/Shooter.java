@@ -4,6 +4,7 @@ import action.Action;
 import action.Attack;
 import action.Move;
 import config.Constants;
+import config.Input;
 import plateau.Axis;
 import team.Team;
 import team.View;
@@ -67,7 +68,7 @@ public class Shooter extends Robot {
         } else {
             this.setEnergy( this.getEnergy() + Constants.CARE );
         }
-        System.out.printf(this.getType() + " a regagné " + Constants.CARE + " PV");
+        System.out.printf(this.getType() + " a regagné " + Constants.CARE + " PV\n");
     }
 
     @Override public Action selectedAction() {
@@ -75,7 +76,8 @@ public class Shooter extends Robot {
         List<Axis> target = searchTarget();
         if( !target.isEmpty() ) {
             System.out.printf(
-                "Vous pouvez selectionner : \n \t1 - Se déplacer \n \t2 - Attaquer " + "une cible" );
+                "Vous pouvez selectionner : \n \t1 - Se déplacer \n \t2 - Attaquer " + "une "
+                    + "cible\n" );
             int choosen = Constants.sc.nextInt();
 
             switch( choosen ) {
@@ -109,8 +111,7 @@ public class Shooter extends Robot {
         for( Axis axis : displacement ) {
             System.out.printf( "\t" + ( ++count ) + ": " + axis + "\n" );
         }
-        System.out.printf( "Votre choix : " );
-        this.setObjective( displacement.get( Constants.sc.nextInt() - 1 ) );
+        this.setObjective( displacement.get( Input.readInt("Votre choix : ") - 1));
         return new Move( this );
     }
 
