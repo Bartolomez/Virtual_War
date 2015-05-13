@@ -5,6 +5,7 @@ import action.Attack;
 import action.Move;
 import config.Constants;
 import config.Input;
+import config.ShowFrame;
 import plateau.Axis;
 import team.Team;
 import team.View;
@@ -76,8 +77,8 @@ public class Shooter extends Robot {
         List<Axis> target = searchTarget();
         if( !target.isEmpty() ) {
             System.out.printf(
-                "Vous pouvez selectionner : \n \t1 - Se déplacer \n \t2 - Attaquer " + "une "
-                    + "cible\n" );
+                    "Vous pouvez selectionner : \n \t1 - Se déplacer \n \t2 - Attaquer " + "une "
+                            + "cible\n");
             int choosen = Constants.sc.nextInt();
 
             switch( choosen ) {
@@ -98,20 +99,26 @@ public class Shooter extends Robot {
                     System.err.printf( "Choix impossible" );
             }
         } else {
-            System.out.printf(
-                "Aucune cible autour de vous, choisissez un déplacement dans la liste ci-dessous" );
+            System.out.println(
+                    "Aucune cible autour de vous, choisissez un déplacement dans la liste ci-dessous");
             return chosesDisplacement(moves);
         }
         return null;
     }
 
     public Action chosesDisplacement( List<Axis> displacement ) {
-        int count = 0;
+        int count = 0, chosen;
         System.out.printf( "Vous pouvez vous déplacer en : \n" );
         for( Axis axis : displacement ) {
             System.out.printf( "\t" + ( ++count ) + ": " + axis + "\n" );
         }
-        this.setObjective( displacement.get( Input.readInt("Votre choix : ") - 1));
+        do {
+            chosen = Input.readInt("Votre choix : ") - 1;
+            if(chosen < 0 || chosen >= count){
+                ShowFrame.showErr("Erreur : Valeur incorrecte !");
+            }
+        } while( chosen < 0 || chosen >= count );
+        this.setObjective( displacement.get( chosen ));
         return new Move( this );
     }
 

@@ -39,7 +39,10 @@ public class Team {
         }
         do {
             chosen = Input.readInt( "Votre choix : " ) - 1;
-        } while( chosen < 1 && chosen > count );
+            if(chosen < 0 || chosen >= count){
+                ShowFrame.showErr("Erreur : Valeur incorrecte !");
+            }
+        } while( chosen < 0 || chosen >= count );
 
         return this.robots.get( chosen );
     }
