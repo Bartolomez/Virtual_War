@@ -188,7 +188,7 @@ public class Tank extends Robot {
     }
 
     public String toString() {
-        return "Tank [" + super.getAxis().getX() + "," + super.getAxis().getY() + "] Energy:"
+        return "Char [" + super.getAxis().getX() + "," + super.getAxis().getY() + "] Energy:"
                 + getEnergy();
     }
 }

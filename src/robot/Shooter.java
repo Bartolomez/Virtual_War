@@ -179,7 +179,7 @@ public class Shooter extends Robot {
     }
 
     public String toString() {
-        return "Shooter [" +
+        return "Tireur [" +
             super.getAxis().getX() + "," + super.getAxis().getY() + "] Energy:" + getEnergy();
     }
 }

@@ -211,7 +211,7 @@ public class Scavenger extends Robot {
     }
 
     public String toString() {
-        return "Scavenger [" + super.getAxis().getX() + "," + super.getAxis().getY() + "] Energy:"
+        return "Piégeur [" + super.getAxis().getX() + "," + super.getAxis().getY() + "] Energy:"
                 + getEnergy();
     }
 }
