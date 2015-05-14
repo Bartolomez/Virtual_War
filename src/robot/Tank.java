@@ -5,6 +5,7 @@ import action.Attack;
 import action.Move;
 import config.Constants;
 import config.Input;
+import config.ShowFrame;
 import plateau.Axis;
 import team.Team;
 import team.View;
@@ -65,9 +66,9 @@ public class Tank extends Robot {
 
     @Override public void isHeals() {
         if ((this.getEnergy() + Constants.CARE) > Constants.ENERGY_TANK) {
-            this.setEnergy( Constants.ENERGY_TANK );
+            this.setEnergy(Constants.ENERGY_TANK);
         } else {
-            this.setEnergy( this.getEnergy() + Constants.CARE );
+            this.setEnergy(this.getEnergy() + Constants.CARE);
         }
         System.out.printf(this.getType() + " a regagné " + Constants.CARE + " PV\n");
     }
@@ -101,7 +102,7 @@ public class Tank extends Robot {
             }
 
         } else {
-            System.out.printf(
+            System.out.println(
                 "Aucune cible autour de vous, choisissez un déplacement dans la liste ci-dessous" );
             return chosesDisplacement(moves);
         }
@@ -194,12 +195,18 @@ public class Tank extends Robot {
     }
 
     public Action chosesDisplacement(List<Axis> displacement) {
-        int count = 0;
+        int count = 0, chosen;
         System.out.printf( "Vous pouvez vous déplacer en : \n" );
         for( Axis axis : displacement ) {
             System.out.printf( "\t" + ( ++count ) + ": " + axis + "\n" );
         }
-        this.setObjective( displacement.get( Input.readInt( "Votre choix : " ) - 1));
+        do {
+            chosen = Input.readInt( "Votre choix : " ) - 1;
+            if(chosen < 0 || chosen >= count){
+                ShowFrame.showErr("Erreur : Valeur incorrecte !");
+            }
+        } while( chosen < 0 || chosen >= count );
+        this.setObjective( displacement.get( chosen ));
         return new Move( this );
     }
 
@@ -209,7 +216,7 @@ public class Tank extends Robot {
     }
 
     public String toString() {
-        return "Tank [" + super.getAxis().getX() + "," + super.getAxis().getY() + "] Energy:"
+        return "Char [" + super.getAxis().getX() + "," + super.getAxis().getY() + "] Energy:"
                 + getEnergy();
     }
 }

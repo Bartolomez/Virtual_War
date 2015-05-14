@@ -4,6 +4,7 @@ import action.Action;
 import action.Move;
 import config.Constants;
 import config.Input;
+import config.ShowFrame;
 import plateau.Axis;
 import team.Team;
 import team.View;
@@ -132,7 +133,7 @@ public class Scavenger extends Robot {
             }
         } else {
             System.out.printf( "Aucune cible autour de vous, choisissez un déplacement dans la "
-                + "liste ci-dessous" );
+                + "liste ci-dessous\n" );
             return chosesDisplacement(moves);
         }
         return null;
@@ -162,12 +163,18 @@ public class Scavenger extends Robot {
     }
 
     public Action chosesDisplacement(List<Axis> displacement) {
-        int count = 0;
+        int count = 0, chosen;
         System.out.printf( "Vous pouvez vous déplacer en : \n" );
         for( Axis axis : displacement ) {
             System.out.printf( "\t" + ( ++count ) + ": " + axis + "\n" );
         }
-        this.setObjective( displacement.get( Input.readInt( "Votre choix : " ) - 1));
+        do {
+            chosen = Input.readInt( "Votre choix : " ) - 1;
+            if(chosen < 0 || chosen >= count){
+                ShowFrame.showErr("Erreur : Valeur incorrecte !");
+            }
+        } while( chosen < 0 || chosen >= count );
+        this.setObjective( displacement.get( chosen ));
         return new Move( this );
     }
 
@@ -234,7 +241,7 @@ public class Scavenger extends Robot {
     }
 
     public String toString() {
-        return "Scavenger [" + super.getAxis().getX() + "," + super.getAxis().getY() + "] Energy:"
+        return "Piégeur [" + super.getAxis().getX() + "," + super.getAxis().getY() + "] Energy:"
                 + getEnergy();
     }
 }

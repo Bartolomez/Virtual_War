@@ -38,6 +38,6 @@ public class Axis {
     }
 
     @Override public String toString() {
-        return "vers [" + x + ", " + y +"] ";
+        return "[" + x + ", " + y +"] ";
     }
 }
