@@ -68,6 +68,7 @@ public class Constants {
     /* Striking scope */
     public static final int STRIKING_SCOPE_TANK = 10;
     public static final int STRIKING_SCOPE_SHOOTER = 3;
+    public static final int STRIKING_SCOPE_SCAVENGER = 1;
     /* Subpoena of each moves to their lists */
     static {
         MOVES_SHOOTER = new ArrayList<>();
