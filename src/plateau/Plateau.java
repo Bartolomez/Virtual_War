@@ -6,6 +6,9 @@ import robot.Scavenger;
 import robot.Shooter;
 import robot.Tank;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author boinc
  */
@@ -76,22 +79,52 @@ public class Plateau {
     }
 
     private void initializeObstacles( double percentageObstacles ) {
-        int obstacles = 0, x, y;
-        while( obstacles != ( int ) ( ( this.width * this.length ) * percentageObstacles ) ) {
+        List<Axis> unusable =
+            searchPath( new Axis( 0, 0 ), new Axis( this.length - 1, this.width - 1 ) );
+        int x, y, obstacles = 0;
+        int count = 0;
+        while( obstacles != ( int ) ( ( this.width * this.length ) * percentageObstacles ) &&
+            (++count) <= Integer.MAX_VALUE ) {
             x = Constants.random.nextInt( this.width );
             y = Constants.random.nextInt( this.length );
-            if( this.plateau[ x ][ y ].getBase() == 0 && !this.plateau[ x ][ y ].isObstacle() ) {
-                this.plateau[ x ][ y ].putObstacle( true );
+            if( this.plateau[ y ][ x ].getBase() == 0 && !this.plateau[ y ][ x ].isObstacle() &&
+                !unusable.contains( new Axis( x, y ) ) ) {
+                this.plateau[ y ][ x ].putObstacle( true );
                 obstacles += 1;
             }
-            if( x == 0 && this.plateau[ x ][ y ].isObstacle() ) {
-                this.plateau[ x ][ y ].putObstacle( false );
-                obstacles -= 1;
-            } else if( y == this.plateau.length - 1 && this.plateau[ x ][ y ].isObstacle() ) {
-                this.plateau[ x ][ y ].putObstacle( false );
-                obstacles -= 1;
+        }
+
+    }
+
+    private List<Axis> searchPath( Axis source, Axis dest ) {
+        List<Axis> nodes = new ArrayList<>();
+        nodes.add( source );
+        Axis tmp = source;
+        while( !tmp.equals( dest ) ) {
+            System.out.printf( nodes.toString() + "\n" );
+            if( tmp.getX() != dest.getX() && tmp.getY() != dest.getY() ) {
+                switch( Constants.random.nextInt(2) ) {
+                    case 0:
+                        tmp = tmp.add( new Axis( 0, 1 ));
+                        nodes.add( tmp );
+                        break;
+                    case 1:
+                        tmp = tmp.add( new Axis( 1, 0 ) );
+                        nodes.add( tmp );
+                        break;
+                    default:
+                        System.err.println( "OMG TES NUL" );
+                        break;
+                }
+            } else if (tmp.getX() == dest.getX() ) {
+                tmp = tmp.add( new Axis( 0, 1 ) );
+                nodes.add( tmp );
+            } else {
+                tmp = tmp.add( new Axis( 1, 0 ) );
+                nodes.add( tmp );
             }
         }
+        return nodes;
     }
 
 
@@ -101,8 +134,9 @@ public class Plateau {
                 tab[ i ][ j ] = new Cell( i, j );
             }
         }
-        tab[0][0] = new Base( 0, 0, 1 );
-        tab[tab.length - 1][tab[0].length - 1] = new Base( tab.length - 1, tab[0].length - 1, 2 );
+        tab[ 0 ][ 0 ] = new Base( 0, 0, 1 );
+        tab[ tab.length - 1 ][ tab[ 0 ].length - 1 ] =
+            new Base( tab.length - 1, tab[ 0 ].length - 1, 2 );
         return tab;
     }
 
