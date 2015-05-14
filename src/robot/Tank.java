@@ -75,7 +75,6 @@ public class Tank extends Robot {
     @Override public Action selectedAction() {
         List<Axis> moves = searchMoves();
         List<Axis> target = searchTarget();
-
         if (!target.isEmpty()) {
             System.out.printf( "Vous pouvez selectionner : \n \t1 - Se déplacer \n \t2 - Attaquer "
                 + "une cible\n" );
@@ -107,6 +106,23 @@ public class Tank extends Robot {
             return chosesDisplacement(moves);
         }
 
+        return null;
+    }
+
+    @Override public Action selectActionForIa() {
+        List<Axis> moves = searchMoves();
+        List<Axis> target = searchTarget();
+        if( !target.isEmpty() ) {
+            switch( Constants.random.nextInt(2) ) {
+                case 0:
+                    return chooseDisplacementForIa( moves );
+                case 1:
+                    this.setObjective( target.get( Constants.random.nextInt( target.size() - 1 ) ) );
+                    return new Attack( this );
+            }
+        } else {
+            return chooseDisplacementForIa( moves );
+        }
         return null;
     }
 
@@ -184,6 +200,11 @@ public class Tank extends Robot {
             System.out.printf( "\t" + ( ++count ) + ": " + axis + "\n" );
         }
         this.setObjective( displacement.get( Input.readInt( "Votre choix : " ) - 1));
+        return new Move( this );
+    }
+
+    public Action chooseDisplacementForIa(List<Axis> displacement) {
+        this.setObjective( displacement.get( Constants.random.nextInt(displacement.size() - 1) ) );
         return new Move( this );
     }
 

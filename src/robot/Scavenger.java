@@ -131,11 +131,34 @@ public class Scavenger extends Robot {
                     System.err.printf("Choix impossible\n");
             }
         } else {
-            System.out.printf(
-                "Aucune cible autour de vous, choisissez un déplacement dans la " + "liste ci-dessous" );
+            System.out.printf( "Aucune cible autour de vous, choisissez un déplacement dans la "
+                + "liste ci-dessous" );
             return chosesDisplacement(moves);
         }
         return null;
+    }
+
+    @Override public Action selectActionForIa() {
+        List<Axis> moves = searchMoves();
+        List<Axis> mines = initialzedMines();
+        if (haveMines(mines)) {
+            switch (Constants.random.nextInt(2)) {
+                case 0:
+                    return chooseDisplacementForIa(moves);
+                case 1:
+                    this.setObjective(moves.get(moves.size()-1));
+                    mine();
+                    return null;
+            }
+        } else {
+            return chooseDisplacementForIa( moves );
+        }
+        return null;
+    }
+
+    public Action chooseDisplacementForIa(List<Axis> displacement) {
+        this.setObjective( displacement.get( Constants.random.nextInt(displacement.size() - 1) ) );
+        return new Move( this );
     }
 
     public Action chosesDisplacement(List<Axis> displacement) {

@@ -105,6 +105,28 @@ public class Shooter extends Robot {
         return null;
     }
 
+    @Override public Action selectActionForIa() {
+        List<Axis> moves = searchMoves();
+        List<Axis> target = searchTarget();
+        if( !target.isEmpty() ) {
+            switch( Constants.random.nextInt(2) ) {
+                case 0:
+                    return chooseDisplacementForIa( moves );
+                case 1:
+                    this.setObjective( target.get( Constants.random.nextInt( target.size() - 1 ) ) );
+                    return new Attack( this );
+            }
+        } else {
+            return chooseDisplacementForIa( moves );
+        }
+        return null;
+    }
+
+    public Action chooseDisplacementForIa(List<Axis> displacement) {
+        this.setObjective( displacement.get( Constants.random.nextInt(displacement.size() - 1) ) );
+        return new Move( this );
+    }
+
     public Action chosesDisplacement( List<Axis> displacement ) {
         int count = 0;
         System.out.printf( "Vous pouvez vous déplacer en : \n" );

@@ -108,6 +108,8 @@ public abstract class Robot {
 
 	public abstract Action selectedAction();
 
+	public abstract Action selectActionForIa();
+
 	private int calculateAxisXByTeam() {
 		switch (this.team.getTeam()) {
 			case Constants.FIRST_TEAM:
