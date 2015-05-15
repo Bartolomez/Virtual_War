@@ -32,6 +32,15 @@ public class Team {
         this.isIa = false;
     }
 
+    public Team( Axis axisBase, Plateau plateau, int team, String nomPays ) {
+        this.axisBase = axisBase;
+        this.nomPays = nomPays;
+        this.team = team;
+        this.view = new View( plateau, team );
+        this.robots = new ArrayList<>();
+        this.isIa = false;
+    }
+
     public Robot chooseRobot() {
         int count = 0, chosen;
         for( Robot robot : this.robots ) {
