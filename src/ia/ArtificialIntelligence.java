@@ -15,44 +15,49 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * @author seysn
  * @author boinc.
  */
 
-public class ArtificialIntelligence {
-    private String      nomPays;
-    private Axis        axisBase;
-    private View        view;
-    private Team        team;
-    private List<Robot> robots;
+public class ArtificialIntelligence extends Team {
+
+    public static int nbRobots;
 
     public ArtificialIntelligence(Axis axisBase, Plateau plateau, int team) {
-        this.nomPays = choseNomPays();
-        this.axisBase = axisBase;
-        this.view = new View(plateau, team);
-        this.team = new Team(axisBase, plateau, team);
-        this.robots = choseRobots();
+        super(axisBase, plateau, team);
+        super.setNomPays(choseNomPays());
+        robots = chooseRobots();
+        setIsIa(true);
     }
 
     public ArtificialIntelligence(Axis axisBase, Plateau plateau, int team, String nomPays) {
-        this.nomPays = choseNomPays(nomPays);
-        this.axisBase = axisBase;
-        this.view = new View(plateau, team);
-        this.team = new Team(axisBase, plateau, team, nomPays);
-        this.robots = choseRobots();
+        super(axisBase, plateau, team, nomPays);
+        robots = chooseRobots();
+        setIsIa(true);
     }
 
-    private List<Robot> choseRobots() {
+    private List<Robot> chooseRobots() {
         List<Robot> robots = new ArrayList<>();
-        while (robots.size() != 5) {
+        int t = 0, sc = 0, sh = 0;
+        while (robots.size() != nbRobots) {
             switch (Constants.random.nextInt(3)) {
                 case 0:
-                    robots.add(new Tank(this.view,this.team));
+                    if (t < 2) {
+                        robots.add(new Tank(getView(), this));
+                        t++;
+                    }
                     break;
                 case 1:
-                    robots.add(new Scavenger(this.view,this.team));
+                    if (sc < 2) {
+                        robots.add(new Scavenger(getView(), this));
+                        sc++;
+                    }
                     break;
                 case 2:
-                    robots.add(new Shooter(this.view,this.team));
+                    if (sh < 2) {
+                        robots.add(new Shooter(getView(), this));
+                        sh++;
+                    }
                     break;
             }
         }
@@ -81,15 +86,11 @@ public class ArtificialIntelligence {
         return robots;
     }
 
-    public String getNomPays() {
-        return nomPays;
-    }
-
     public boolean lose() {
         return robots.isEmpty();
     }
 
-    public View getView() {
-        return this.view;
+    public String toString() {
+        return "IA " + super.toString();
     }
 }

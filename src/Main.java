@@ -1,4 +1,5 @@
 import action.Action;
+import config.Constants;
 import config.Input;
 import ia.ArtificialIntelligence;
 import plateau.Axis;
@@ -27,17 +28,19 @@ public class Main {
         switch( Input.readInt("Votre choix : ", 1, 3) - 1 ) {
             case 0:
                 ArtificialIntelligence[] ia = new ArtificialIntelligence[2];
+                ArtificialIntelligence.nbRobots = Constants.random.nextInt(3) + 3; // RENVOIE TOUJOURS 5 JE SAIS PAS POURQUOI
                 ia[0] = new ArtificialIntelligence( new Axis( 0, 0 ), plateau, 1 );
                 ia[1] = new ArtificialIntelligence( new Axis( plateau.getLength() - 1, plateau
-                    .getWidth() - 1 ), plateau, 2, ia[0].getNomPays() );
+                    .getWidth() - 1 ), plateau, 2);
                 boolean end = false;
                 Robot robot;
                 Action action;
                 ArrayList<Robot> deadRobot = new ArrayList<>(  );
                 int count = 0;
                 do {
-                    System.out.printf( ia[count % 2].getView().getPlateau() + "\n" + ia[count %
-                        2].getNomPays() + " Joue" );
+                    System.out.println(
+                            ia[count % 2].getView().getPlateau() + "\n" + ia[count % 2].getNomPays()
+                                    + " Joue");
                     robot = ia[count % 2].chooseRobot();
                     System.out.printf( robot.getView().toString() );
                     action = robot.selectActionForIa();
@@ -60,12 +63,13 @@ public class Main {
                         }
                         deadRobot.clear();
                     }
+                    System.out.println("< APPUYEZ SUR ENTREE POUR CONTINUER >");
+                    Constants.sc.nextLine();
                 } while( !end );
                 break;
             case 1:
                 break;
             case 2:
-                System.out.printf( "OH lol" );
                 Team[] teams = new Team[ 2 ];
                 teams[0] = new Team(new Axis(0, 0), plateau, 1);
                 count = 0;
