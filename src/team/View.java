@@ -29,11 +29,16 @@ public class View {
     }
 
     @Override public String toString() {
-        StringBuilder results = new StringBuilder( "+" );
+        StringBuilder results = new StringBuilder("    ");
+        int cpt = 0;
+        for( int i = 0; i < this.plateau.getWidth(); i++)
+            results.insert(results.length(), cpt++ +"   ");
+        cpt = 0;
+        results.insert(results.length(), "\n  +");
         for( int i = 0; i < this.plateau.getWidth(); i++ )
             results.insert( results.length(), "---+" );
         for( int j = 0; j < this.plateau.getLength(); j++ ) {
-            results.insert( results.length(), "\n| " );
+            results.insert( results.length(), "\n"+ cpt++ +" | " );
             for( int i = 0; i < this.plateau.getWidth(); i++ ) {
                 if( this.plateau.getCell( i, j ) instanceof Base ) {
                     switch( this.plateau.getCell( i, j ).getBase() ) {
@@ -92,7 +97,7 @@ public class View {
                 }
                 results.insert( results.length(), " | " );
             }
-            results.insert( results.length(), "\n+" );
+            results.insert( results.length(), "\n  +" );
             for( int i = 0; i < this.plateau.getWidth(); i++ )
                 results.insert( results.length(), "---+" );
         }
