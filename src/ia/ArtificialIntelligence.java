@@ -25,7 +25,6 @@ public class ArtificialIntelligence extends Team {
 
     public ArtificialIntelligence(Axis axisBase, Plateau plateau, int team) {
         super(axisBase, plateau, team);
-        super.setNomPays(choseNomPays());
         robots = chooseRobots();
         setIsIa(true);
     }
