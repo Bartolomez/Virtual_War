@@ -206,11 +206,13 @@ public class Tank extends Robot {
                 ShowFrame.showErr("Erreur : Valeur incorrecte !");
             }
         } while( chosen < 0 || chosen >= count );
+        this.losesEnergyAfterMove();
         this.setObjective( displacement.get( chosen ));
         return new Move( this );
     }
 
     public Action chooseDisplacementForIa(List<Axis> displacement) {
+        this.losesEnergyAfterMove();
         this.setObjective( displacement.get( Constants.random.nextInt(displacement.size() - 1) ) );
         return new Move( this );
     }
