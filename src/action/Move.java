@@ -30,7 +30,7 @@ public class Move extends Action {
         if( this.getRobot().getView().getPlateau().getCell( objective ).containsMine() > 0 ) {
             this.getRobot().suddenByMine();
             this.getRobot().getView().getPlateau().getCell( objective ).revokeMine();
-            System.out.printf( "Il y avais une mine dans cette cellule :-(" );
+            System.out.println( "Il y avait une mine dans cette cellule :-(" );
         }
     }
 }
