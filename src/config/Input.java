@@ -1,9 +1,16 @@
 package config;
 
 /**
+ * Le classe Input gere les entrees de l utilisateur.
+ * 
  * @author boinc
  */
 public class Input {
+	
+	/**
+	 * Lit un entier entre par l utilisateur.
+	 * @return Un entier, qui correspond a l entier entre par l utilisateur.
+	 */
     public static int readInt() {
         while (true) {
             try {
@@ -14,6 +21,11 @@ public class Input {
         }
     }
 
+    /**
+     * Lit un entier entre par l utilisateur.
+     * @param message - Le message que l on souhaite afficher avant demander l entier.
+     * @return Un entier, qui correspond a l entier entre par l utilisateur.
+     */
     public static int readInt(String message) {
         while (true) {
             try {
@@ -28,6 +40,12 @@ public class Input {
         }
     }
 
+    /**
+     * Lit un entier entre par l utilisateur.
+     * @param borderA - La borne inferieure de l intervalle.
+     * @param borderB - La borne exterieure de l intervalle.
+     * @return Un entier, qui correspond a l entier entre par l utilisateur.
+     */
     public static int readInt(int borderA, int borderB) {
         while (true) {
             try {
@@ -42,6 +60,13 @@ public class Input {
         }
     }
 
+    /**
+     * Lit un entier entre par l utilisateur.
+     * @param message - Le message que l on souhaite afficher avant demander l entier.
+     * @param borderA - La borne inferieure de l intervalle.
+     * @param borderB - La borne exterieure de l intervalle.
+     * @return Un entier, qui correspond a l entier entre par l utilisateur.
+     */
     public static int readInt(String message, int borderA, int borderB) {
         while (true) {
             try {
@@ -60,6 +85,10 @@ public class Input {
         }
     }
 
+    /**
+	 * Lit un decimal entre par l utilisateur.
+	 * @return Un decimal, qui correspond au decimal entre par l utilisateur.
+	 */
     public static double readDouble() {
         while (true) {
             try {
@@ -70,6 +99,12 @@ public class Input {
         }
     }
 
+    /**
+     * Lit un decimal entre par l utilisateur.
+     * @param borderA - La borne inferieure de l intervalle.
+     * @param borderB - La borne exterieure de l intervalle.
+     * @return Un decimal, qui correspond au decimal entre par l utilisateur.
+     */
     public static double readDouble(double borderA, double borderB) {
 
         while (true) {
@@ -84,6 +119,11 @@ public class Input {
         }
     }
 
+    /**
+     * Lit un decimal entre par l utilisateur.
+     * @param message - Le message que l on souhaite afficher avant demander le decimal.
+     * @return Un decimal, qui correspond au decimal entre par l utilisateur.
+     */
     public static double readDouble(String message) {
         while (true) {
             try {
@@ -98,6 +138,13 @@ public class Input {
         }
     }
 
+    /**
+     * Lit un decimal entre par l utilisateur.
+     * @param message - Le message que l on souhaite afficher avant demander le decimal.
+     * @param borderA - La borne inferieure de l intervalle.
+     * @param borderB - La borne exterieure de l intervalle.
+     * @return Un decimal, qui correspond au decimal entre par l utilisateur.
+     */
     public static double readDouble(String message, double borderA, double borderB) {
         while (true) {
             try {

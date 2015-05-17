@@ -1,10 +1,16 @@
 package config;
 
 /**
+ * La classe ShowFrame gere l affichage.
+ * 
  * @author seysn
  */
 public class ShowFrame {
 
+	/**
+	 * Affiche un titre.
+	 * @param title - Le titre que l on souhaite afficher.
+	 */
     public static void showTitle(String title) {
         StringBuilder res = new StringBuilder("+--");
         for (int i = 0; i < title.length(); i++) {
@@ -17,6 +23,11 @@ public class ShowFrame {
         System.out.println(res + "--+");
     }
 
+    /**
+     * Affiche un titre et un contenu dans un tableau.
+     * @param title - Le titre du tableau.
+     * @param content - Le contenu du tableau.
+     */
     public static void showFrame(String title, String[] content) {
         int max = title.length();
         StringBuilder res = new StringBuilder("+-");
@@ -60,6 +71,10 @@ public class ShowFrame {
         System.out.println(res);
     }
 
+    /**
+     * Affiche une erreur. 
+     * @param err - Le message d erreur que l on souhaite afficher.
+     */
     public static void showErr(String err) {
         System.err.println(err);
         try {

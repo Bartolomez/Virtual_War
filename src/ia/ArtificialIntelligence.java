@@ -99,8 +99,8 @@ public class ArtificialIntelligence extends Team {
 
     /**
      * Choisis une action pour l IA.
-     * @param borderA - Un entier.
-     * @param borderB - Un deuxieme entier.
+     * @param borderA - La borne inferieur de l intervalle.
+     * @param borderB - La borne exterieur de l intervalle.
      * @return Une entier qui correspond a une action choisie aleatoirement pour l IA.
      */
     public int chooseAction(int borderA, int borderB) {
