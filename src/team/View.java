@@ -9,21 +9,40 @@ import robot.Shooter;
 import robot.Tank;
 
 /**
+ * La classe View permet de creer une vue et de gerer celle ci.
+ * 
  * @author seysn
  */
 public class View {
+	
+	/** Le plateau sur laquelle intervient la vue. */
     private Plateau plateau;
+    /** L equipe sur laquelle intervient la vue. */
     private int team;
 
+    /**
+     * Construit un objet View avec le plateau et l equipe sur lesquels la vue intervient passes en parametre.
+     * @param plateau - Le plateau sur laquelle intervient la vue.
+     * @param team - L equipe sur laquelle intervient la vue.
+     */
     public View( Plateau plateau, int team ) {
         this.plateau = plateau;
         this.team = team;
     }
 
+    /**
+     * Permet d'ajouter un Robot a une vue.
+     * @param axis - La coordonnee a laquelle on souhaite ajouter un robot.
+     * @param robot - Le robot que l on souhaite ajouter a la vue.
+     */
     public void putRobot( Axis axis, Robot robot ) {
         this.plateau.putRobot( axis.getX(), axis.getY(), robot );
     }
 
+    /**
+     * Retourne le plateau sur laquelle intervient la vue.
+     * @return Une instance de Plateau, qui correspond au plateau sur laquelle la vue est effective.
+     */
     public Plateau getPlateau() {
         return plateau;
     }
@@ -105,6 +124,10 @@ public class View {
         return results.toString();
     }
 
+    /**
+     * Supprime un robot du plateau.
+     * @param axis - La coordonnee ou l on souhaite enlever un robot.
+     */
     public void revokeRobot( Axis axis ) {
         this.plateau.revokeRobot( axis );
     }
