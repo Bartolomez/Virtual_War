@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 /**
+ * La classe Main permet de lancer l application.
+ * 
  * @author boinc
  * @author seysn
  */

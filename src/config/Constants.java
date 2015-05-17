@@ -8,6 +8,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
+ * La classe Constants regroupe les constantes utilisees dans le jeu.
+ * 
  * @author boinc
  */
 
