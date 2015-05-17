@@ -123,7 +123,8 @@ public class Shooter extends Robot {
                 case 0:
                     return chooseDisplacementForIa( moves );
                 case 1:
-                    this.setObjective( target.get( Constants.random.nextInt( target.size() - 1 ) ) );
+                    this.setObjective( target.get( Constants.random.nextInt( target.size() - 1 )
+                    ) );
                     return new Attack( this );
             }
         } else {
