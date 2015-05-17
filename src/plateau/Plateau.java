@@ -101,7 +101,7 @@ public class Plateau {
         nodes.add( source );
         Axis tmp = source;
         while( !tmp.equals( dest ) ) {
-            System.out.printf( nodes.toString() + "\n" );
+            //System.out.printf( nodes.toString() + "\n" );
             if( tmp.getX() != dest.getX() && tmp.getY() != dest.getY() ) {
                 switch( Constants.random.nextInt(2) ) {
                     case 0:
@@ -141,11 +141,16 @@ public class Plateau {
     }
 
     @Override public String toString() {
-        StringBuilder results = new StringBuilder( "+" );
+        StringBuilder results = new StringBuilder("    ");
+        int cpt = 0;
+        for( int i = 0; i < this.width; i++)
+            results.insert(results.length(), cpt++ +"   ");
+        cpt = 0;
+        results.insert(results.length(), "\n  +");
         for( int i = 0; i < this.width; i++ )
             results.insert( results.length(), "---+" );
         for( int j = 0; j < this.length; j++ ) {
-            results.insert( results.length(), "\n| " );
+            results.insert( results.length(), "\n"+ cpt++ +" | " );
             for( int i = 0; i < this.width; i++ ) {
                 if( this.plateau[ i ][ j ] instanceof Base ) {
                     switch( this.plateau[ i ][ j ].getBase() ) {
@@ -206,11 +211,16 @@ public class Plateau {
                 }
                 results.insert( results.length(), " | " );
             }
-            results.insert( results.length(), "\n+" );
+            results.insert( results.length(), "\n  +" );
             for( int i = 0; i < this.width; i++ )
                 results.insert( results.length(), "---+" );
         }
         results.insert( results.length(), "\n" );
         return results.toString();
+    }
+
+    public static void main(String[] args) {
+        Plateau p = new Plateau(10,5,0);
+        System.out.println(p);
     }
 }

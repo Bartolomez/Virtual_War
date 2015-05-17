@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 public class Team {
-    private List<Robot> robots;
+    protected List<Robot> robots;
     private String nomPays;
     private Axis axisBase;
     private int team;
@@ -26,6 +26,15 @@ public class Team {
     public Team( Axis axisBase, Plateau plateau, int team ) {
         this.axisBase = axisBase;
         this.nomPays = choosePays();
+        this.team = team;
+        this.view = new View( plateau, team );
+        this.robots = new ArrayList<>();
+        this.isIa = false;
+    }
+
+    public Team( Axis axisBase, Plateau plateau, int team, String nomPays ) {
+        this.axisBase = axisBase;
+        this.nomPays = nomPays;
         this.team = team;
         this.view = new View( plateau, team );
         this.robots = new ArrayList<>();
@@ -63,7 +72,7 @@ public class Team {
                 return true;
             }
         }
-        System.err.printf( "Le nom que vous avez choisi n'est pas dans la litse\n" );
+        System.err.printf( "Le nom que vous avez choisi n'est pas dans la liste\n" );
         return false;
     }
 
@@ -74,6 +83,10 @@ public class Team {
 
     public String getNomPays() {
         return nomPays;
+    }
+
+    public void setNomPays(String nomPays) {
+        this.nomPays = nomPays;
     }
 
     public List<Robot> getRobots() {
@@ -102,8 +115,8 @@ public class Team {
     }
 
     @Override public String toString() {
-        return "Team [robots=" + robots + ", nomPays=" + nomPays + ", axisBase=" + axisBase
-            + ", team=" + team + "]";
+        return "Team " + team + "[ robots=" + robots + ", nomPays=" + nomPays + ", axisBase=" + axisBase
+            + "]";
     }
 
     public boolean isIa() {
