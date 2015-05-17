@@ -14,27 +14,50 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * La classe Scavenger permet de creer un Piegeur et d effectuer des actions sur ce dernier.
+ * 
  * @author boinc
  */
 
 public class Scavenger extends Robot {
+	
+	/** La liste de coordonnee du Piegeur */
     private List<Axis> axis;
+    /** Le nombre de mine du Robot */
     private int storedMines = Constants.MINES_MAX;
 
+    /**
+     * Construit un objet Scavenger avec la vue et l equipe passees en parametre.
+     * @param view - La vue du Piegeur.
+     * @param team - L equipe du Piegeur.
+     */
     public Scavenger(View view, Team team) {
         super(view, team);
         this.setEnergy(Constants.ENERGY_SHOOTER);
         this.axis = new ArrayList<>();
     }
 
+    /**
+     * Retourne le nombre de mine en stock du Piegeur.
+     * @return Un entier qui correspond au nombre de mine dans le stock du Piegeur.
+     */
     public int getStoredMines() {
         return storedMines;
     }
 
+    /**
+     * Met a jour le nombre de mine dans le stock du Piegeur.
+     * @param storedMines - Le nouveau nombre de mine dans le stock du Piegeur.
+     */
     public void setStoredMines(int storedMines) {
         this.storedMines = storedMines;
     }
 
+    /**
+     * Ajoute une mine dans une cellule si elle est vide.
+     * @param axis - La coordonnee ou sera posee la mine.
+     * @return Un booleen, qui est vrai si la mine a ete posee, faux dans le cas contraire.
+     */
     public boolean putMine(Axis axis) {
         if (this.getStoredMines() <= 0) {
             return false;
@@ -53,6 +76,9 @@ public class Scavenger extends Robot {
 
     }
 
+    /**
+     * Enleve une mine du stock du Piegeur.
+     */
     public void looseOneMine() {
         this.storedMines = this.storedMines - 1;
     }
@@ -157,11 +183,21 @@ public class Scavenger extends Robot {
         return null;
     }
 
+    /**
+     * Choisis un deplacement pour l ordinateur.
+     * @param displacement - La liste des coordonnees ou le Piegeur peut se deplacer.
+     * @return Une instance de Action, qui correspond a un deplacement.
+     */
     public Action chooseDisplacementForIa(List<Axis> displacement) {
         this.setObjective( displacement.get( Constants.random.nextInt(displacement.size() - 1) ) );
         return new Move( this );
     }
 
+    /**
+     * Permet au joueur de choisir un deplacement pour son Piegeur.
+     * @param displacement - La liste des coordonnes ou le Piegeur peut se deplacer.
+     * @return Une instance de Action, qui correspond a un deplacement.
+     */
     public Action chosesDisplacement(List<Axis> displacement) {
         int count = 0, chosen;
         System.out.printf( "Vous pouvez vous déplacer en : \n" );
@@ -214,6 +250,11 @@ public class Scavenger extends Robot {
         return this.getView().getPlateau().getCell(axis).isObstacle();
     }
 
+    /**
+     * Retourne un booleen qui est vrai si le Piegeur a encore des mines en jeu ou en stock, faux dans le cas contraire.
+     * @param mines - La liste des mines posees par le Piegeur.
+     * @return Un booleen, qui est vrai si le Piegeur a encore des mines en jeu ou en stock.
+     */
     public boolean haveMines(List<Axis> mines) { return !mines.isEmpty() && this.storedMines > 0; }
 
     private List<Axis> initialzedMines() {
@@ -240,6 +281,10 @@ public class Scavenger extends Robot {
         return this.getView().getPlateau().getCell(axis).isRobot() != this.getTeam().getTeam();
     }
 
+    /**
+     * Retourne une chaine de caracteres pour l objet Scavenger.
+     * @return Une chaine de caracteres pour l'objet Scavenger.
+     */
     public String toString() {
         return "Piégeur [" + super.getAxis().getX() + "," + super.getAxis().getY() + "] Energy:"
                 + getEnergy();
