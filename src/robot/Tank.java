@@ -213,7 +213,8 @@ public class Tank extends Robot {
 
     public Action chooseDisplacementForIa(List<Axis> displacement) {
         this.losesEnergyAfterMove();
-        this.setObjective( displacement.get( Constants.random.nextInt(displacement.size() - 1) ) );
+        // renvois négatif de temps en temps
+        this.setObjective( displacement.get( (Constants.random.nextInt(displacement.size()))));
         return new Move( this );
     }
 
