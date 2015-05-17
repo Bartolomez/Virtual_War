@@ -101,7 +101,7 @@ public class Shooter extends Robot {
         } else {
             System.out.println(
                     "Aucune cible autour de vous, choisissez un déplacement dans la liste ci-dessous");
-            return chosesDisplacement(moves);
+            return chosesDisplacement( moves );
         }
         return null;
     }
@@ -124,7 +124,7 @@ public class Shooter extends Robot {
     }
 
     public Action chooseDisplacementForIa(List<Axis> displacement) {
-        this.setObjective( displacement.get( Constants.random.nextInt(displacement.size() - 1) ) );
+        this.setObjective( displacement.get( Constants.random.nextInt( displacement.size() - 1 ) ) );
         return new Move( this );
     }
 
@@ -140,7 +140,7 @@ public class Shooter extends Robot {
                 ShowFrame.showErr("Erreur : Valeur incorrecte !");
             }
         } while( chosen < 0 || chosen >= count );
-        this.setObjective( displacement.get( chosen ));
+        this.setObjective( displacement.get( chosen ) );
         return new Move( this );
     }
 
@@ -200,7 +200,7 @@ public class Shooter extends Robot {
             } catch( Exception e ) {
             }
         }
-        return target;
+        return targetTmp;
     }
 
     private boolean isNotSameTeam( Axis axis ) {
