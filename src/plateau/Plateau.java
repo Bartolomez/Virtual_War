@@ -10,13 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * La classe Plateau permet de creer un plateau et de gerer ce dernier.
+ * 
  * @author boinc
  */
 
 public class Plateau {
+	/**Le plateau de jeu*/
     private Cell[][] plateau;
+    /**Les dimensions du tableau.*/
     private int x, y, length, width;
 
+    /**
+     * Construit un objet Plateau avec la longueur, la largeur et le pourcentage d obstacle passes en parametre.
+     * @param length - La longueur du plateau.
+     * @param width - La largeur du plateau.
+     * @param percentageObstacles - Le pourcentage d obstacle.
+     */
     public Plateau( int length, int width, double percentageObstacles ) {
         this.length = length;
         this.width = width;
@@ -25,42 +35,96 @@ public class Plateau {
         initializeObstacles( percentageObstacles );
     }
 
+    /**
+     * Retourne une cellule du plateau.
+     * @param x - L abscisse de la cellule souhaitee.
+     * @param y - L ordonnee de la cellule souhaitee.
+     * @return Une instance de Cell, qui correspond a une Cellule du plateau.
+     */
     public Cell getCell( int x, int y ) {
         return this.plateau[ x ][ y ];
     }
 
+    /**
+     * Retourne une cellule du plateau.
+     * @param axis - La coordonnee de la cellule souhaitee.
+     * @return Une instance de Cell, qui correspond a une Cellule du plateau.
+     */
     public Cell getCell( Axis axis ) {
         return plateau[ axis.getY() ][ axis.getX() ];
     }
 
+    /**
+     * Retourne la largeur du plateau.
+     * @return Un entier, qui correspond a la largeur du plateau.
+     */
     public int getWidth() {
         return this.width;
     }
 
+    /**
+     * Retourne la longueur du plateau.
+     * @return Un entier, qui correspond a la longueur du plateau.
+     */
     public int getLength() {
         return this.length;
     }
 
+    /**
+     * Retourne un boolean qui indique si la cellule est un obstacle ou non.
+     * @param x - L abscisse de la Cellule.
+     * @param y - L ordonnee de la Cellule.
+     * @return Un booleen, qui est vrai si la cellule est un obstacle, faux dans le cas contraire.
+     */
     public boolean isObstacle( int x, int y ) {
         return this.plateau[ y ][ x ].isObstacle();
     }
 
+    /**
+     * Retourne un boolean qui indique si la cellule est une base ou non.
+     * @param x - L abscisse de la Cellule.
+     * @param y - L ordonnee de la Cellule.
+     * @return Un booleen, qui est vrai si la cellule est une base, faux dans le cas contraire.
+     */
     public int isBase( int x, int y ) {
         return this.plateau[ y ][ x ].getBase();
     }
 
+    /**
+     * Retourne un boolean qui indique si la cellule est une mine ou non.
+     * @param x - L abscisse de la Cellule.
+     * @param y - L ordonnee de la Cellule.
+     * @return Un booleen, qui est vrai si la cellule est une mine, faux dans le cas contraire.
+     */
     public int isMine( int x, int y ) {
         return this.plateau[ y ][ x ].containsMine();
     }
 
+    /**
+     * Retourne un boolean qui indique si la cellule contient un robot ou non.
+     * @param x - L abscisse de la Cellule.
+     * @param y - L ordonnee de la Cellule.
+     * @return Un booleen, qui est vrai si la cellule contient un robot, faux dans le cas contraire.
+     */
     public int isRobot( int x, int y ) {
         return this.plateau[ y ][ x ].isRobot();
     }
 
+    /**
+     * Vide une cellule du plateau.
+     * @param x - L abscisse de la cellule.
+     * @param y - L ordonnee de la cellule.
+     */
     public void clearCell( int x, int y ) {
         this.plateau[ y ][ x ].clearCell();
     }
 
+    /**
+     * Ajoute un Robot dans une cellule du plateau.
+     * @param x - l abscisse de la cellule ou l on souhaite ajouter un robot.
+     * @param y - l ordonnee de la cellule ou l on souhaite ajouter un robot.
+     * @param robot - Le robot que l'on souhaite ajouter dans la cellule.
+     */
     public void putRobot( int x, int y, Robot robot ) {
         if( !this.plateau[ y ][ x ].isObstacle() ) {
             this.plateau[ y ][ x ].putRobot( robot );
@@ -70,10 +134,18 @@ public class Plateau {
         }
     }
 
+    /**
+     * Enleve un robot d une Cellule.
+     * @param axis - La coordonnee de la cellule dans laquelle on souhaite enlever un robot.
+     */
     public void revokeRobot( Axis axis ) {
         this.plateau[ axis.getY() ][ axis.getX() ].revokeRobot();
     }
 
+    /**
+     * Enleve une mine d une Cellule.
+     * @param axis - La coordonnee de la cellule dans laquelle on souhaite enlever une mine.
+     */
     public void revokeMine( Axis axis ) {
         this.plateau[ axis.getY() ][ axis.getX() ].revokeMine();
     }

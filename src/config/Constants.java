@@ -43,7 +43,7 @@ public class Constants {
     public static final int DAMAGE_MOVE_SCAVENGER = 2;
     public static final int DAMAGE_SHOOT_SCAVENGER = 2;
     public static final int DAMAGE_MINE_SCAVENGER = 0;
-    public static final int ENERGY_SCAVENGER = 50;
+    public static final int ENERGY_SCAVENGER = 40;
     /* Moves */
     public static final Axis NORTH = new Axis(0, -1);
     public static final Axis NORTH_EST = new Axis(1, -1);

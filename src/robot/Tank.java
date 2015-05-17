@@ -219,6 +219,7 @@ public class Tank extends Robot {
                 ShowFrame.showErr("Erreur : Valeur incorrecte !");
             }
         } while( chosen < 0 || chosen >= count );
+        this.losesEnergyAfterMove();
         this.setObjective( displacement.get( chosen ));
         return new Move( this );
     }
@@ -229,7 +230,9 @@ public class Tank extends Robot {
      * @return Une instance de Action, qui correspond a un deplacement.
      */
     public Action chooseDisplacementForIa(List<Axis> displacement) {
-        this.setObjective( displacement.get( Constants.random.nextInt(displacement.size() - 1) ) );
+        this.losesEnergyAfterMove();
+        // renvois négatif de temps en temps
+        this.setObjective( displacement.get( (Constants.random.nextInt(displacement.size()))));
         return new Move( this );
     }
 

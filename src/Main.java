@@ -256,10 +256,10 @@ public class Main {
                             end = true;
                         }
                         deadRobot.addAll(t.getRobots().stream().filter(r -> r.isDead())
-                                .collect(Collectors.toList()));
+                                .collect( Collectors.toList() ));
                     }
                     teams[count % 2].getRobots().stream().filter(r -> r.isBased())
-                            .forEach(r -> r.isHeals());
+                            .forEach( r -> r.isHeals() );
                     if (!deadRobot.isEmpty()) {
                         for (Robot r : deadRobot) {
                             r.revoke();
