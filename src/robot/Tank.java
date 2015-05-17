@@ -85,8 +85,8 @@ public class Tank extends Robot {
         List<Axis> moves = searchMoves();
         List<Axis> target = searchTarget();
         if (!target.isEmpty()) {
-            System.out.printf( "Vous pouvez selectionner : \n \t1 - Se déplacer \n \t2 - Attaquer "
-                + "une cible\n" );
+            System.out.printf("Vous pouvez selectionner : \n \t1 - Se déplacer \n \t2 - Attaquer "
+                    + "une cible\n");
             System.out.printf( "Votre choix : " );
             int choosen = Constants.sc.nextInt();
 
@@ -111,7 +111,7 @@ public class Tank extends Robot {
 
         } else {
             System.out.println(
-                "Aucune cible autour de vous, choisissez un déplacement dans la liste ci-dessous" );
+                    "Aucune cible autour de vous, choisissez un déplacement dans la liste ci-dessous");
             return chosesDisplacement(moves);
         }
 
@@ -126,7 +126,11 @@ public class Tank extends Robot {
                 case 0:
                     return chooseDisplacementForIa( moves );
                 case 1:
-                    this.setObjective( target.get( Constants.random.nextInt( target.size() - 1 ) ) );
+                    if (target.size()==1){
+                        this.setObjective(target.get(0));
+                    } else {
+                        this.setObjective(target.get(Constants.random.nextInt( target.size() - 1 ) ) );
+                    }
                     return new Attack( this );
             }
         } else {
