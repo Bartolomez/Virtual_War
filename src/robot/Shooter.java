@@ -15,12 +15,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * La classe Shooter permet de creer un Tireur et d effectuer des actions sur ce dernier.
+ * 
  * @author boinc
  */
 
 public class Shooter extends Robot {
+	
+	/** La liste de coordonnee du Tireur. */
     private List<Axis> axis;
 
+    /**
+     * Construit un objet Shooter avec la vue et l equipe passees en parametre.
+     * @param view - La vue du Tireur.
+     * @param team - L equipe du Tireur.
+     */
     public Shooter( View view, Team team ) {
         super( view, team );
         this.setEnergy( Constants.ENERGY_SHOOTER );
@@ -123,11 +132,21 @@ public class Shooter extends Robot {
         return null;
     }
 
+    /**
+     * Choisis un deplacement pour l ordinateur.
+     * @param displacement - La liste des coordonnees ou le Tireur peut se deplacer.
+     * @return Une instance de Action, qui correspond a un deplacement.
+     */
     public Action chooseDisplacementForIa(List<Axis> displacement) {
         this.setObjective( displacement.get( Constants.random.nextInt(displacement.size() - 1) ) );
         return new Move( this );
     }
 
+    /**
+     * Permet au joueur de choisir un deplacement pour son Tireur.
+     * @param displacement - La liste des coordonnes ou le Tireur peut se deplacer.
+     * @return Une instance de Action, qui correspond a un deplacement.
+     */
     public Action chosesDisplacement( List<Axis> displacement ) {
         int count = 0, chosen;
         System.out.printf( "Vous pouvez vous déplacer en : \n" );
@@ -207,6 +226,10 @@ public class Shooter extends Robot {
         return this.getView().getPlateau().getCell( axis ).isRobot() != this.getTeam().getTeam();
     }
 
+    /**
+     * Retourne une chaine de caracteres pour l objet Shooter.
+     * @return Une chaine de caracteres pour l'objet Shooter.
+     */
     public String toString() {
         return "Tireur [" +
             super.getAxis().getX() + "," + super.getAxis().getY() + "] Energy:" + getEnergy();

@@ -9,12 +9,12 @@ import team.View;
 import java.util.List;
 
 /**
+ * La classe Robot permet de creer un Robot et d effectuer des actions sur ce dernier.
+ * 
  * @author boinc
  */
 
 public abstract class Robot {
-	
-	//TODO: La Javadoc des deux dernieres fonctions non abstraites.
 
 	/** Les coordonnees du robot et celle de l objectif de son deplacement.*/
 	private Axis axis, objective;
@@ -155,26 +155,68 @@ public abstract class Robot {
 			calculateAxisYByTeam()));
 	}
 
+	/**
+     * Met a jour l energie du Robot apres qu il ait subit les degats d un ennemi.
+     * @param robot - Le Robot qui inflige des degats au Robot cible.
+     */
 	public abstract void suddenByShoot(Robot robot);
 
+	/**
+	 * Met a jour l energie du Robot apres qu il ait subit les degats d une mine.
+	 */
 	public abstract void suddenByMine();
 
+	/**
+	 * Retoune le Type du Robot.
+	 * @return Une chaine de caracteres, qui correspond au Type du Robot.
+	 */
 	public abstract String getType();
 
+	/**
+	 * Retourne les dommages qu inflige un Robot.
+	 * @return Un entier, qui correspond aux dommages infliges par un Robot.
+	 */
 	public abstract int getDamageByAction();
 
+	/**
+	 * Retourne les dommages qu inflige un Robot quand il tire.
+	 * @return Un entier, qui correspond aux dommages infliges par un Robot quand il tire.
+	 */
 	public abstract int getDamageByShoot();
 
+	/**
+	 * Retourne les dommages infliges a un Robot quand il se deplace. 
+	 * @return Un entier, qui correspond aux dommages que s inflige un Robot quand il se deplace.
+	 */
 	public abstract int getDamageByMove();
 
+	/**
+	 * Retourne les dommages que s inflige un Robot quand il passe sur une Mine.
+	 * @return Un entier, qui correspond aux dommages infliges au Robot quand il passe sur une Mine.
+	 */
 	public abstract int getDamageByMine();
 
+	/**
+	 * Retourne la liste des deplacements possibles pour un Robot.
+	 * @return Une liste de coordonnees, qui correspond au deplacement possible du Robot.
+	 */
 	public abstract List<Axis> getMoves();
 
+	/**
+	 * Soigne le Robot s il est en base.
+	 */
 	public abstract void isHeals();
 
+	/**
+	 * Retourne l action selectionnee par le joueur.
+	 * @return Une instance de Action, qui correspond a l Action selectionnee par le Joueur.
+	 */
 	public abstract Action selectedAction();
 
+	/**
+	 * Retourne une action qui est choisie aleatoirement pour le Robot.
+	 * @return Une instance de Action, qui correspond a l Action selectionnee aleatoirement pour le Robot.
+	 */
 	public abstract Action selectActionForIa();
 
 	private int calculateAxisXByTeam() {
@@ -199,5 +241,10 @@ public abstract class Robot {
 		}
 	}
 
+	/**
+	 * Choisis un deplacement pour le Robot. 
+	 * @param displacement - La liste des deplacements possibles pour le Robot.
+	 * @return Une instance de Action, qui correspond au deplacement choisis par le Joueur.
+	 */
 	public abstract Action chosesDisplacement(List<Axis> displacement);
 }
