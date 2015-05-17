@@ -16,17 +16,20 @@ import java.util.stream.Collectors;
 
 /**
  * La classe Shooter permet de creer un Tireur et d effectuer des actions sur ce dernier.
- * 
+ *
  * @author boinc
  */
 
 public class Shooter extends Robot {
-	
-	/** La liste de coordonnee du Tireur. */
+
+    /**
+     * La liste de coordonnee du Tireur.
+     */
     private List<Axis> axis;
 
     /**
      * Construit un objet Shooter avec la vue et l equipe passees en parametre.
+     *
      * @param view - La vue du Tireur.
      * @param team - L equipe du Tireur.
      */
@@ -78,7 +81,7 @@ public class Shooter extends Robot {
         } else {
             this.setEnergy( this.getEnergy() + Constants.CARE );
         }
-        System.out.printf(this.getType() + " a regagné " + Constants.CARE + " PV\n");
+        System.out.printf( this.getType() + " a regagné " + Constants.CARE + " PV\n" );
     }
 
     @Override public Action selectedAction() {
@@ -86,8 +89,8 @@ public class Shooter extends Robot {
         List<Axis> target = searchTarget();
         if( !target.isEmpty() ) {
             System.out.printf(
-                    "Vous pouvez selectionner : \n \t1 - Se déplacer \n \t2 - Attaquer " + "une "
-                            + "cible\n");
+                "Vous pouvez selectionner : \n \t1 - Se déplacer \n \t2 - Attaquer " + "une "
+                    + "cible\n" );
             int choosen = Constants.sc.nextInt();
 
             switch( choosen ) {
@@ -109,7 +112,7 @@ public class Shooter extends Robot {
             }
         } else {
             System.out.println(
-                    "Aucune cible autour de vous, choisissez un déplacement dans la liste ci-dessous");
+                "Aucune cible autour de vous, choisissez un déplacement dans la liste ci-dessous" );
             return chosesDisplacement( moves );
         }
         return null;
@@ -119,12 +122,16 @@ public class Shooter extends Robot {
         List<Axis> moves = searchMoves();
         List<Axis> target = searchTarget();
         if( !target.isEmpty() ) {
-            switch( Constants.random.nextInt(2) ) {
+            switch( Constants.random.nextInt( 2 ) ) {
                 case 0:
                     return chooseDisplacementForIa( moves );
                 case 1:
-                    this.setObjective( target.get( Constants.random.nextInt( target.size() - 1 )
-                    ) );
+                    if( target.size() == 1 ) {
+                        this.setObjective( target.get( 0 ) );
+                    } else {
+                        this.setObjective(
+                            target.get( Constants.random.nextInt( target.size() - 1 ) ) );
+                    }
                     return new Attack( this );
             }
         } else {
@@ -135,16 +142,19 @@ public class Shooter extends Robot {
 
     /**
      * Choisis un deplacement pour l ordinateur.
+     *
      * @param displacement - La liste des coordonnees ou le Tireur peut se deplacer.
      * @return Une instance de Action, qui correspond a un deplacement.
      */
-    public Action chooseDisplacementForIa(List<Axis> displacement) {
-        this.setObjective( displacement.get( Constants.random.nextInt( displacement.size() - 1 ) ) );
+    public Action chooseDisplacementForIa( List<Axis> displacement ) {
+        this.setObjective(
+            displacement.get( Constants.random.nextInt( displacement.size() - 1 ) ) );
         return new Move( this );
     }
 
     /**
      * Permet au joueur de choisir un deplacement pour son Tireur.
+     *
      * @param displacement - La liste des coordonnes ou le Tireur peut se deplacer.
      * @return Une instance de Action, qui correspond a un deplacement.
      */
@@ -155,9 +165,9 @@ public class Shooter extends Robot {
             System.out.printf( "\t" + ( ++count ) + ": " + axis + "\n" );
         }
         do {
-            chosen = Input.readInt("Votre choix : ") - 1;
-            if(chosen < 0 || chosen >= count){
-                ShowFrame.showErr("Erreur : Valeur incorrecte !");
+            chosen = Input.readInt( "Votre choix : " ) - 1;
+            if( chosen < 0 || chosen >= count ) {
+                ShowFrame.showErr( "Erreur : Valeur incorrecte !" );
             }
         } while( chosen < 0 || chosen >= count );
         this.setObjective( displacement.get( chosen ) );
@@ -229,6 +239,7 @@ public class Shooter extends Robot {
 
     /**
      * Retourne une chaine de caracteres pour l objet Shooter.
+     *
      * @return Une chaine de caracteres pour l'objet Shooter.
      */
     public String toString() {
