@@ -31,6 +31,14 @@ public class ShowPlateau extends JPanel {
                 } else if (p.getCell(i, j).isObstacle()) {
                     list.add(new MyCell(tailleCase * i, tailleCase * j, tailleCase, tailleCase,
                             "Obstacle"));
+                } else if (p.getCell(i, j).getRobot() != null
+                        && p.getCell(i, j).getRobot().getTeam().getTeam() == 1) {
+                    list.add(new MyCell(tailleCase * i, tailleCase * j, tailleCase, tailleCase,
+                            "Robot1"));
+                } else if (p.getCell(i, j).getRobot() != null
+                        && p.getCell(i, j).getRobot().getTeam().getTeam() == 2) {
+                    list.add(new MyCell(tailleCase * i, tailleCase * j, tailleCase, tailleCase,
+                            "Robot2"));
                 } else {
                     list.add(new MyCell(tailleCase * i, tailleCase * j, tailleCase, tailleCase,
                             null));
@@ -48,19 +56,13 @@ public class ShowPlateau extends JPanel {
                 graphics.setColor(new Color(0x0EFF00));
             } else if (c.isVide()) {
                 graphics.setColor(new Color(0xFFFFFF));
+            } else if (c.isRobotTeam1()) {
+                graphics.setColor(new Color(0x1500FF));
+            } else if (c.isRobotTeam2()) {
+                graphics.setColor(new Color(0xDD0C00));
             }
             graphics.fillRect(c.posX, c.posY, c.sizeX, c.sizeY);
         }
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Test");
-        Plateau pl = new Plateau(10, 10, 0.2);
-        frame.add(new ShowPlateau(pl));
-        System.out.println(pl);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
     }
 }
 
@@ -83,9 +85,7 @@ class MyCell {
 
     public boolean isObstacle() { return type == "Obstacle"; }
 
-    public boolean isShooter() { return type == "Shooter"; }
+    public boolean isRobotTeam1() { return type == "Robot1"; }
 
-    public boolean isTank() { return type == "Tank"; }
-
-    public boolean isScavenger() { return type == "Scavenger"; }
+    public boolean isRobotTeam2() { return type == "Robot2"; }
 }
