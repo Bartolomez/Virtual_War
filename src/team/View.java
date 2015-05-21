@@ -10,20 +10,25 @@ import robot.Tank;
 
 /**
  * La classe View permet de creer une vue et de gerer celle ci.
- * 
+ *
  * @author seysn
  */
 public class View {
-	
-	/** Le plateau sur laquelle intervient la vue. */
+
+    /**
+     * Le plateau sur laquelle intervient la vue.
+     */
     private Plateau plateau;
-    /** L equipe sur laquelle intervient la vue. */
+    /**
+     * L equipe sur laquelle intervient la vue.
+     */
     private int team;
 
     /**
      * Construit un objet View avec le plateau et l equipe sur lesquels la vue intervient passes en parametre.
+     *
      * @param plateau - Le plateau sur laquelle intervient la vue.
-     * @param team - L equipe sur laquelle intervient la vue.
+     * @param team    - L equipe sur laquelle intervient la vue.
      */
     public View( Plateau plateau, int team ) {
         this.plateau = plateau;
@@ -32,7 +37,8 @@ public class View {
 
     /**
      * Permet d'ajouter un Robot a une vue.
-     * @param axis - La coordonnee a laquelle on souhaite ajouter un robot.
+     *
+     * @param axis  - La coordonnee a laquelle on souhaite ajouter un robot.
      * @param robot - Le robot que l on souhaite ajouter a la vue.
      */
     public void putRobot( Axis axis, Robot robot ) {
@@ -41,6 +47,7 @@ public class View {
 
     /**
      * Retourne le plateau sur laquelle intervient la vue.
+     *
      * @return Une instance de Plateau, qui correspond au plateau sur laquelle la vue est effective.
      */
     public Plateau getPlateau() {
@@ -48,16 +55,16 @@ public class View {
     }
 
     @Override public String toString() {
-        StringBuilder results = new StringBuilder("    ");
+        StringBuilder results = new StringBuilder( "    " );
         int cpt = 0;
-        for( int i = 0; i < this.plateau.getWidth(); i++)
-            results.insert(results.length(), cpt++ +"   ");
+        for( int i = 0; i < this.plateau.getWidth(); i++ )
+            results.insert( results.length(), cpt++ + "   " );
         cpt = 0;
-        results.insert(results.length(), "\n  +");
+        results.insert( results.length(), "\n  +" );
         for( int i = 0; i < this.plateau.getWidth(); i++ )
             results.insert( results.length(), "---+" );
         for( int j = 0; j < this.plateau.getLength(); j++ ) {
-            results.insert( results.length(), "\n"+ cpt++ +" | " );
+            results.insert( results.length(), "\n" + cpt++ + " | " );
             for( int i = 0; i < this.plateau.getWidth(); i++ ) {
                 if( this.plateau.getCell( i, j ) instanceof Base ) {
                     switch( this.plateau.getCell( i, j ).getBase() ) {
@@ -126,6 +133,7 @@ public class View {
 
     /**
      * Supprime un robot du plateau.
+     *
      * @param axis - La coordonnee ou l on souhaite enlever un robot.
      */
     public void revokeRobot( Axis axis ) {

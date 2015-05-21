@@ -5,16 +5,17 @@ import robot.Robot;
 
 /**
  * La classe Move permet de creer un deplacement.
- * 
+ *
  * @author boinc
  */
 
 public class Move extends Action {
 
-	/**
-	 * Construit un objet Move avec le robot passe en parametre.
-	 * @param robot - Le robot qui se deplace.
-	 */
+    /**
+     * Construit un objet Move avec le robot passe en parametre.
+     *
+     * @param robot - Le robot qui se deplace.
+     */
     public Move( Robot robot ) {
         super( robot );
     }

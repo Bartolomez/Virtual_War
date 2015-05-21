@@ -11,20 +11,25 @@ import java.util.List;
 
 /**
  * La classe Plateau permet de creer un plateau et de gerer ce dernier.
- * 
+ *
  * @author boinc
  */
 
 public class Plateau {
-	/**Le plateau de jeu*/
+    /**
+     * Le plateau de jeu
+     */
     private Cell[][] plateau;
-    /**Les dimensions du tableau.*/
+    /**
+     * Les dimensions du tableau.
+     */
     private int x, y, length, width;
 
     /**
      * Construit un objet Plateau avec la longueur, la largeur et le pourcentage d obstacle passes en parametre.
-     * @param length - La longueur du plateau.
-     * @param width - La largeur du plateau.
+     *
+     * @param length              - La longueur du plateau.
+     * @param width               - La largeur du plateau.
      * @param percentageObstacles - Le pourcentage d obstacle.
      */
     public Plateau( int length, int width, double percentageObstacles ) {
@@ -35,8 +40,14 @@ public class Plateau {
         initializeObstacles( percentageObstacles );
     }
 
+    public static void main( String[] args ) {
+        Plateau p = new Plateau( 10, 5, 0 );
+        System.out.println( p );
+    }
+
     /**
      * Retourne une cellule du plateau.
+     *
      * @param x - L abscisse de la cellule souhaitee.
      * @param y - L ordonnee de la cellule souhaitee.
      * @return Une instance de Cell, qui correspond a une Cellule du plateau.
@@ -47,6 +58,7 @@ public class Plateau {
 
     /**
      * Retourne une cellule du plateau.
+     *
      * @param axis - La coordonnee de la cellule souhaitee.
      * @return Une instance de Cell, qui correspond a une Cellule du plateau.
      */
@@ -56,6 +68,7 @@ public class Plateau {
 
     /**
      * Retourne la largeur du plateau.
+     *
      * @return Un entier, qui correspond a la largeur du plateau.
      */
     public int getWidth() {
@@ -64,6 +77,7 @@ public class Plateau {
 
     /**
      * Retourne la longueur du plateau.
+     *
      * @return Un entier, qui correspond a la longueur du plateau.
      */
     public int getLength() {
@@ -72,6 +86,7 @@ public class Plateau {
 
     /**
      * Retourne un boolean qui indique si la cellule est un obstacle ou non.
+     *
      * @param x - L abscisse de la Cellule.
      * @param y - L ordonnee de la Cellule.
      * @return Un booleen, qui est vrai si la cellule est un obstacle, faux dans le cas contraire.
@@ -82,6 +97,7 @@ public class Plateau {
 
     /**
      * Retourne un boolean qui indique si la cellule est une base ou non.
+     *
      * @param x - L abscisse de la Cellule.
      * @param y - L ordonnee de la Cellule.
      * @return Un booleen, qui est vrai si la cellule est une base, faux dans le cas contraire.
@@ -92,6 +108,7 @@ public class Plateau {
 
     /**
      * Retourne un boolean qui indique si la cellule est une mine ou non.
+     *
      * @param x - L abscisse de la Cellule.
      * @param y - L ordonnee de la Cellule.
      * @return Un booleen, qui est vrai si la cellule est une mine, faux dans le cas contraire.
@@ -102,6 +119,7 @@ public class Plateau {
 
     /**
      * Retourne un boolean qui indique si la cellule contient un robot ou non.
+     *
      * @param x - L abscisse de la Cellule.
      * @param y - L ordonnee de la Cellule.
      * @return Un booleen, qui est vrai si la cellule contient un robot, faux dans le cas contraire.
@@ -112,6 +130,7 @@ public class Plateau {
 
     /**
      * Vide une cellule du plateau.
+     *
      * @param x - L abscisse de la cellule.
      * @param y - L ordonnee de la cellule.
      */
@@ -121,8 +140,9 @@ public class Plateau {
 
     /**
      * Ajoute un Robot dans une cellule du plateau.
-     * @param x - l abscisse de la cellule ou l on souhaite ajouter un robot.
-     * @param y - l ordonnee de la cellule ou l on souhaite ajouter un robot.
+     *
+     * @param x     - l abscisse de la cellule ou l on souhaite ajouter un robot.
+     * @param y     - l ordonnee de la cellule ou l on souhaite ajouter un robot.
      * @param robot - Le robot que l'on souhaite ajouter dans la cellule.
      */
     public void putRobot( int x, int y, Robot robot ) {
@@ -136,6 +156,7 @@ public class Plateau {
 
     /**
      * Enleve un robot d une Cellule.
+     *
      * @param axis - La coordonnee de la cellule dans laquelle on souhaite enlever un robot.
      */
     public void revokeRobot( Axis axis ) {
@@ -144,6 +165,7 @@ public class Plateau {
 
     /**
      * Enleve une mine d une Cellule.
+     *
      * @param axis - La coordonnee de la cellule dans laquelle on souhaite enlever une mine.
      */
     public void revokeMine( Axis axis ) {
@@ -155,8 +177,8 @@ public class Plateau {
             searchPath( new Axis( 0, 0 ), new Axis( this.length - 1, this.width - 1 ) );
         int x, y, obstacles = 0;
         int count = 0;
-        while( obstacles != ( int ) ( ( this.width * this.length ) * percentageObstacles ) &&
-            (++count) <= Integer.MAX_VALUE ) {
+        while( obstacles != ( int ) ( ( this.width * this.length ) * percentageObstacles )
+            && ( ++count ) <= Integer.MAX_VALUE ) {
             x = Constants.random.nextInt( this.width );
             y = Constants.random.nextInt( this.length );
             if( this.plateau[ y ][ x ].getBase() == 0 && !this.plateau[ y ][ x ].isObstacle() &&
@@ -175,9 +197,9 @@ public class Plateau {
         while( !tmp.equals( dest ) ) {
             //System.out.printf( nodes.toString() + "\n" );
             if( tmp.getX() != dest.getX() && tmp.getY() != dest.getY() ) {
-                switch( Constants.random.nextInt(2) ) {
+                switch( Constants.random.nextInt( 2 ) ) {
                     case 0:
-                        tmp = tmp.add( new Axis( 0, 1 ));
+                        tmp = tmp.add( new Axis( 0, 1 ) );
                         nodes.add( tmp );
                         break;
                     case 1:
@@ -188,7 +210,7 @@ public class Plateau {
                         System.err.println( "OMG TES NUL" );
                         break;
                 }
-            } else if (tmp.getX() == dest.getX() ) {
+            } else if( tmp.getX() == dest.getX() ) {
                 tmp = tmp.add( new Axis( 0, 1 ) );
                 nodes.add( tmp );
             } else {
@@ -198,7 +220,6 @@ public class Plateau {
         }
         return nodes;
     }
-
 
     private Cell[][] initializePlateau( Cell[][] tab ) {
         for( int i = 0; i < tab.length; i++ ) {
@@ -213,16 +234,16 @@ public class Plateau {
     }
 
     @Override public String toString() {
-        StringBuilder results = new StringBuilder("    ");
+        StringBuilder results = new StringBuilder( "    " );
         int cpt = 0;
-        for( int i = 0; i < this.width; i++)
-            results.insert(results.length(), cpt++ +"   ");
+        for( int i = 0; i < this.width; i++ )
+            results.insert( results.length(), cpt++ + "   " );
         cpt = 0;
-        results.insert(results.length(), "\n  +");
+        results.insert( results.length(), "\n  +" );
         for( int i = 0; i < this.width; i++ )
             results.insert( results.length(), "---+" );
         for( int j = 0; j < this.length; j++ ) {
-            results.insert( results.length(), "\n"+ cpt++ +" | " );
+            results.insert( results.length(), "\n" + cpt++ + " | " );
             for( int i = 0; i < this.width; i++ ) {
                 if( this.plateau[ i ][ j ] instanceof Base ) {
                     switch( this.plateau[ i ][ j ].getBase() ) {
@@ -289,10 +310,5 @@ public class Plateau {
         }
         results.insert( results.length(), "\n" );
         return results.toString();
-    }
-
-    public static void main(String[] args) {
-        Plateau p = new Plateau(10,5,0);
-        System.out.println(p);
     }
 }
