@@ -4,6 +4,8 @@ import plateau.Plateau;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +17,19 @@ public class ShowPlateau extends JPanel {
     private List<MyCell> list       = new ArrayList<>();
     private int          tailleCase = 30;
     private Plateau p;
+    private Robot selected;
 
     public ShowPlateau(Plateau p) {
         this.p = p;
         init();
         this.setPreferredSize(new Dimension(tailleCase * p.getLength(), tailleCase * p.getWidth()));
+        this.addMouseListener(new MouseAdapter() {
+            @Override public void mouseClicked(MouseEvent event) {
+                for (MyCell c : list) {
+
+                }
+            }
+        });
     }
 
     private void init() {
@@ -61,31 +71,27 @@ public class ShowPlateau extends JPanel {
             } else if (c.isRobotTeam2()) {
                 graphics.setColor(new Color(0xDD0C00));
             }
-            graphics.fillRect(c.posX, c.posY, c.sizeX, c.sizeY);
+            graphics.fillRect((int)c.getX(), (int)c.getY(), (int)c.getHeight(), (int)c.getWidth());
         }
     }
 }
 
 
-class MyCell {
-    public int posX, posY, sizeX, sizeY;
+class MyCell extends Rectangle {
     public String type;
 
     public MyCell(int posX, int posY, int sizeX, int sizeY, String type) {
-        this.posX = posX;
-        this.posY = posY;
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
+        super(posX, posY, sizeX, sizeY);
         this.type = type;
     }
 
     public boolean isVide() { return type == null; }
 
-    public boolean isBase() { return type == "Base"; }
+    public boolean isBase() { return type.equals("Base"); }
 
-    public boolean isObstacle() { return type == "Obstacle"; }
+    public boolean isObstacle() { return type.equals("Obstacle"); }
 
-    public boolean isRobotTeam1() { return type == "Robot1"; }
+    public boolean isRobotTeam1() { return type.equals("Robot1"); }
 
-    public boolean isRobotTeam2() { return type == "Robot2"; }
+    public boolean isRobotTeam2() { return type.equals("Robot2"); }
 }
