@@ -1,6 +1,7 @@
 package frame;
 
 import plateau.Plateau;
+import robot.Robot;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ public class ShowPlateau extends JPanel {
     private List<MyCell> list       = new ArrayList<>();
     private int          tailleCase = 30;
     private Plateau p;
-    private Robot selected;
+    private Robot   selected;
 
     public ShowPlateau(Plateau p) {
         this.p = p;
@@ -26,7 +27,14 @@ public class ShowPlateau extends JPanel {
         this.addMouseListener(new MouseAdapter() {
             @Override public void mouseClicked(MouseEvent event) {
                 for (MyCell c : list) {
-
+                    if (c.contains(event.getX(), event.getY()) && c.isRobotTeam1() || c
+                            .isRobotTeam2()) {
+                        selected =
+                                p.getCell((int) c.getX() / tailleCase, (int) c.getY() / tailleCase)
+                                        .getRobot();
+                    } else {
+                        selected = null;
+                    }
                 }
             }
         });
@@ -53,7 +61,6 @@ public class ShowPlateau extends JPanel {
                     list.add(new MyCell(tailleCase * i, tailleCase * j, tailleCase, tailleCase,
                             null));
                 }
-
             }
         }
     }
@@ -71,8 +78,13 @@ public class ShowPlateau extends JPanel {
             } else if (c.isRobotTeam2()) {
                 graphics.setColor(new Color(0xDD0C00));
             }
-            graphics.fillRect((int)c.getX(), (int)c.getY(), (int)c.getHeight(), (int)c.getWidth());
+            graphics.fillRect((int) c.getX(), (int) c.getY(), (int) c.getHeight(),
+                    (int) c.getWidth());
         }
+    }
+
+    public Robot getSelectedRobot() {
+        return selected;
     }
 }
 
