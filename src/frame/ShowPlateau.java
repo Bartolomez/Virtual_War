@@ -59,7 +59,7 @@ public class ShowPlateau extends JPanel {
                             "Robot2"));
                 } else {
                     list.add(new MyCell(tailleCase * i, tailleCase * j, tailleCase, tailleCase,
-                            null));
+                            "Vide"));
                 }
             }
         }
@@ -97,7 +97,7 @@ class MyCell extends Rectangle {
         this.type = type;
     }
 
-    public boolean isVide() { return type == null; }
+    public boolean isVide() { return type.equals("Vide"); }
 
     public boolean isBase() { return type.equals("Base"); }
 
