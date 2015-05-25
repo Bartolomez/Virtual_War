@@ -10,25 +10,23 @@ import java.awt.event.MouseEvent;
  */
 public class Menu extends JFrame {
 
-    JFrame regle;
+    public JFrame regle;
+    public JButton jouer;
 
     public Menu() {
         regle = new Regles();
         setTitle("Menu");
         init();
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
     private void init() {
         JPanel p = new JPanel();
-        JButton jouer = new JButton("Jouer");
-        jouer.addMouseListener(new MouseAdapter() {
-            @Override public void mouseClicked(MouseEvent event) {
-                // TODO
-            }
-        });
+        jouer = new JButton("Jouer");
         p.add(jouer);
 
         JButton regles = new JButton("Regles du jeu");
