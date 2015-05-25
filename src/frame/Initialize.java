@@ -4,8 +4,6 @@ import config.Constants;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 
 /**
@@ -21,9 +19,11 @@ public class Initialize extends JFrame {
 
     public Initialize() {
         init();
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Initialisation de la partie");
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
@@ -69,6 +69,7 @@ public class Initialize extends JFrame {
         team2.add(new JLabel("Type"));
         team2.add(type2);
         pays2 = new JComboBox(Constants.NAME_COUNTRY);
+        pays2.setSelectedIndex(1);
         team2.add(new JLabel("Pays"));
         team2.add(pays2);
         team2.setBorder(
@@ -89,14 +90,81 @@ public class Initialize extends JFrame {
         valider = new JButton("Valider");
         panelValider.add(valider);
         retour = new JButton("Retour");
-        retour.addMouseListener(new MouseAdapter() {
-            @Override public void mouseClicked(MouseEvent event) {
-                System.exit(0);
-            }
-        });
         panelValider.add(retour);
         add(panelValider, BorderLayout.SOUTH);
 
+    }
+
+    /**
+     * Liste toutes les erreurs possibles pour les valeurs rentrées par l'utilisateur
+     *
+     * @return boolean
+     */
+    public boolean canStart() {
+        boolean b = true;
+        if (Integer.parseInt(this.haut.getText()) < 3
+                || Integer.parseInt(this.larg.getText()) < 3) {
+            JOptionPane.showMessageDialog(null,
+                    "La hauteur et la largeur du plateau doivent être supérieures ou égales à 3",
+                    "Erreur", JOptionPane.ERROR_MESSAGE);
+            b = false;
+        } else if (Integer.parseInt(this.pourc.getText()) < 0
+                || Integer.parseInt(this.pourc.getText()) > 100) {
+            JOptionPane.showMessageDialog(null, "La valeur du pourcentage d'obstacle est incorrect",
+                    "Erreur", JOptionPane.ERROR_MESSAGE);
+            b = false;
+        } else if (Integer.parseInt(this.nbScavenger1.getText()) < 0
+                || Integer.parseInt(this.nbScavenger1.getText()) > 2) {
+            JOptionPane.showMessageDialog(null,
+                    "Le nombre de piegeur pour l'équipe 1 doit être compris entre 0 et 2", "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
+            b = false;
+        } else if (Integer.parseInt(this.nbScavenger2.getText()) < 0
+                || Integer.parseInt(this.nbScavenger2.getText()) > 2) {
+            JOptionPane.showMessageDialog(null,
+                    "Le nombre de piegeur pour l'équipe 2 doit être compris entre 0 et 2", "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
+            b = false;
+        } else if (Integer.parseInt(this.nbShooter1.getText()) < 0
+                || Integer.parseInt(this.nbShooter1.getText()) > 2) {
+            JOptionPane.showMessageDialog(null,
+                    "Le nombre de tireur pour l'équipe 1 doit être compris entre 0 et 2", "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
+            b = false;
+        } else if (Integer.parseInt(this.nbShooter2.getText()) < 0
+                || Integer.parseInt(this.nbShooter2.getText()) > 2) {
+            JOptionPane.showMessageDialog(null,
+                    "Le nombre de tireur pour l'équipe 2 doit être compris entre 0 et 2", "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
+            b = false;
+        } else if (Integer.parseInt(this.nbTank1.getText()) < 0
+                || Integer.parseInt(this.nbTank1.getText()) > 2) {
+            JOptionPane.showMessageDialog(null,
+                    "Le nombre de char pour l'équipe 1 doit être compris entre 0 et 2", "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
+            b = false;
+        } else if (Integer.parseInt(this.nbTank2.getText()) < 0
+                || Integer.parseInt(this.nbTank2.getText()) > 2) {
+            JOptionPane.showMessageDialog(null,
+                    "Le nombre de char pour l'équipe 2 doit être compris entre 0 et 2", "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
+            b = false;
+        } else if ((Integer.parseInt(this.nbTank1.getText()) + Integer
+                .parseInt(this.nbShooter1.getText()) + Integer
+                .parseInt(this.nbScavenger1.getText())) != (Integer.parseInt(this.nbTank2.getText())
+                + Integer.parseInt(this.nbShooter2.getText()) + Integer
+                .parseInt(this.nbScavenger2.getText()))) {
+            JOptionPane
+                    .showMessageDialog(null, "Les deux équipes n'ont pas le même nombre de robots",
+                            "Erreur", JOptionPane.ERROR_MESSAGE);
+            b = false;
+        } else if (this.pays1.getSelectedItem().equals(this.pays2.getSelectedItem())) {
+            JOptionPane
+                    .showMessageDialog(null, "Les deux équipes ne peuvent pas avoir le même pays",
+                            "Erreur", JOptionPane.ERROR_MESSAGE);
+            b = false;
+        }
+        return b;
     }
 
     public static void main(String[] args) {
