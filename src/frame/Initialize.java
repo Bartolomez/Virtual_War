@@ -45,6 +45,7 @@ public class Initialize extends JFrame {
 
         JPanel team1 = new JPanel(new GridLayout(0, 2));
         type1 = new JComboBox(new String[] {"Ordinateur", "Joueur"});
+        type1.setSelectedIndex(1);
         team1.add(new JLabel("Type"));
         team1.add(type1);
         pays1 = new JComboBox(Constants.NAME_COUNTRY);
@@ -66,6 +67,7 @@ public class Initialize extends JFrame {
 
         JPanel team2 = new JPanel(new GridLayout(0, 2));
         type2 = new JComboBox(new String[] {"Ordinateur", "Joueur"});
+        type2.setSelectedIndex(1);
         team2.add(new JLabel("Type"));
         team2.add(type2);
         pays2 = new JComboBox(Constants.NAME_COUNTRY);
