@@ -214,7 +214,7 @@ public class Scavenger extends Robot {
         return new Move( this );
     }
 
-    private List<Axis> searchMoves() {
+    public List<Axis> searchMoves() {
         List<Axis> moves = new ArrayList<>();
         List<Axis> movesTmp = new ArrayList<>();
         moves.addAll( Constants.MOVES_SCAVENGER.stream().map( axis -> this.getAxis().add( axis ) )

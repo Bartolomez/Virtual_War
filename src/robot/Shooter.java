@@ -174,7 +174,7 @@ public class Shooter extends Robot {
         return new Move( this );
     }
 
-    private List<Axis> searchMoves() {
+    public List<Axis> searchMoves() {
         List<Axis> moves = new ArrayList<>();
         List<Axis> movesTmp = new ArrayList<>();
         moves.addAll( Constants.MOVES_SHOOTER.stream().map( axis -> this.getAxis().add( axis ) )
@@ -209,7 +209,7 @@ public class Shooter extends Robot {
         return this.getView().getPlateau().getCell( axis ).isObstacle();
     }
 
-    private List<Axis> searchTarget() {
+    public List<Axis> searchTarget() {
         List<Axis> target = new ArrayList<>();
         List<Axis> targetTmp = new ArrayList<>();
         target.addAll(

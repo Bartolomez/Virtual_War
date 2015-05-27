@@ -277,4 +277,6 @@ public abstract class Robot {
      * @return Une instance de Action, qui correspond au deplacement choisis par le Joueur.
      */
     public abstract Action chosesDisplacement( List<Axis> displacement );
+
+    public abstract List<Axis> searchMoves();
 }
