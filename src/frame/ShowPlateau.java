@@ -64,12 +64,12 @@ public class ShowPlateau extends JFrame {
                         info.setText("Vous avez selectionné un Robot");
                         selected = pane.p.getCell((int) c.getX() / pane.tailleCase,
                                 (int) c.getY() / pane.tailleCase).getRobot();
-                        addButtons(selected);
+                        addButtons(selected, getContentPane());
                         repaint();
                     } else if (c.contains(event.getX(), event.getY()) && c.isBaseTeam1()) {
                         selected = null;
                         info.setText("Vous avez selectionné votre Base");
-                        addButtons();
+                        addButtons(getContentPane());
                         repaint();
                     } else if (c.contains(event.getX(), event.getY()) && c.isBaseTeam2()) {
                         selected = null;
@@ -91,7 +91,7 @@ public class ShowPlateau extends JFrame {
         this.title.setText("[Tour " + tour + "] " + name);
     }
 
-    public static void addButtons() {
+    public static void addButtons(Container f) {
         for (Robot r : teamCourante.getRobots()) {
             if (r.getAxis().equals(teamCourante.getAxisBase())) {
                 buttons.add(new JButton(r.getType() + " Energie : " + r.getEnergy()));
@@ -99,23 +99,30 @@ public class ShowPlateau extends JFrame {
                 buttons.get(buttons.size() - 1).addMouseListener(new MouseAdapter() {
                     @Override public void mouseClicked(MouseEvent event) {
                         selected = r;
-                        addButtons(r);
+                        addButtons(r, f);
                     }
                 });
             }
         }
     }
 
-    public static void addButtons(Robot r) {
+    public static void addButtons(Robot r, Container f) {
+        if (!buttons.isEmpty()) {
+            for (JButton b : buttons) {
+                footer.remove(b);
+            }
+            buttons = new ArrayList<JButton>();
+        }
         for (Axis a : r.searchMoves()) {
             buttons.add(new JButton("Deplacement vers " + a));
             footer.add(buttons.get(buttons.size() - 1));
             buttons.get(buttons.size() - 1).addMouseListener(new MouseAdapter() {
                 @Override public void mouseClicked(MouseEvent event) {
-                    System.out.println("lol");
+                    System.out.println("test");
                 }
             });
         }
+        f.repaint();
     }
 
     public static void setTeamCourante(Team teamCourante) {
