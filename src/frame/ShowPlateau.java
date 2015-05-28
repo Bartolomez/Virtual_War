@@ -21,6 +21,7 @@ public class ShowPlateau extends JFrame {
     public static  JPanel       footer;
     public         PanelPlateau pane;
     public static  Robot        selected;
+    public static  Action       action;
     private static Team         teamCourante;
     public static ArrayList<JButton> buttons = new ArrayList<>();
     private static JPanel paneButtons;
@@ -44,13 +45,19 @@ public class ShowPlateau extends JFrame {
         add(title, BorderLayout.NORTH);
         add(pane, BorderLayout.CENTER);
         footer = new JPanel();
+        footer.setLayout(new GridLayout(0, 1));
         JLabel info = new JLabel();
-        paneButtons = new JPanel();
         footer.add(info);
-        footer.add(paneButtons);
         footer.setPreferredSize(new Dimension(100, 100));
         pane.addMouseListener(new MouseAdapter() {
             @Override public void mouseClicked(MouseEvent event) {
+                if (!buttons.isEmpty()) {
+                    for (JButton b : buttons) {
+                        footer.remove(b);
+                    }
+                    buttons = new ArrayList<JButton>();
+                    repaint();
+                }
                 for (MyCell c : pane.list) {
                     if (c.contains(event.getX(), event.getY()) && (c.isRobotTeam1() || c
                             .isRobotTeam2())) {
@@ -85,13 +92,10 @@ public class ShowPlateau extends JFrame {
     }
 
     public static void addButtons() {
-        for (JButton b : buttons) {
-            buttons.remove(b);
-        }
         for (Robot r : teamCourante.getRobots()) {
             if (r.getAxis().equals(teamCourante.getAxisBase())) {
                 buttons.add(new JButton(r.getType() + " Energie : " + r.getEnergy()));
-                paneButtons.add(buttons.get(buttons.size() - 1));
+                footer.add(buttons.get(buttons.size() - 1));
                 buttons.get(buttons.size() - 1).addMouseListener(new MouseAdapter() {
                     @Override public void mouseClicked(MouseEvent event) {
                         selected = r;
@@ -103,21 +107,19 @@ public class ShowPlateau extends JFrame {
     }
 
     public static void addButtons(Robot r) {
-        for (JButton b : buttons) {
-            buttons.remove(b);
-        }
         for (Axis a : r.searchMoves()) {
             buttons.add(new JButton("Deplacement vers " + a));
+            footer.add(buttons.get(buttons.size() - 1));
+            buttons.get(buttons.size() - 1).addMouseListener(new MouseAdapter() {
+                @Override public void mouseClicked(MouseEvent event) {
+                    System.out.println("lol");
+                }
+            });
         }
     }
 
     public static void setTeamCourante(Team teamCourante) {
         ShowPlateau.teamCourante = teamCourante;
-    }
-
-    public static void main(String[] args) {
-        ShowPlateau s = new ShowPlateau(new Plateau(10, 10, 0.2));
-        s.changeTitle(3, "France");
     }
 }
 
