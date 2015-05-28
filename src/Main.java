@@ -5,6 +5,9 @@ import ia.ArtificialIntelligence;
 import plateau.Axis;
 import plateau.Plateau;
 import robot.Robot;
+import robot.Scavenger;
+import robot.Shooter;
+import robot.Tank;
 import team.Team;
 
 import java.awt.event.MouseAdapter;
@@ -43,7 +46,7 @@ public class Main {
                 if (init.canStart()) {
                     p = new Plateau(Integer.parseInt(init.haut.getText()),
                             Integer.parseInt(init.larg.getText()),
-                            Double.parseDouble(init.pourc.getText())/ 100);
+                            Double.parseDouble(init.pourc.getText()) / 100);
                     if (init.type1.getSelectedItem().equals("Ordinateur")) {
                         teams[0] = new ArtificialIntelligence(new Axis(0, 0), p, 1,
                                 String.valueOf(init.pays1.getSelectedItem()));
@@ -60,6 +63,19 @@ public class Main {
                         teams[1] = new Team(new Axis(p.getLength() - 1, p.getWidth() - 1), p, 2,
                                 String.valueOf(init.pays1.getSelectedItem()));
                     }
+                    for (int i = 0; i < Integer.parseInt(init.nbShooter1.getText()); i++)
+                        teams[0].addRobot(new Shooter(teams[0].getView(), teams[0]));
+                    for (int i = 0; i < Integer.parseInt(init.nbShooter2.getText()); i++)
+                        teams[1].addRobot(new Shooter(teams[1].getView(), teams[1]));
+                    for (int i = 0; i < Integer.parseInt(init.nbTank1.getText()); i++)
+                        teams[0].addRobot(new Tank(teams[0].getView(), teams[0]));
+                    for (int i = 0; i < Integer.parseInt(init.nbTank2.getText()); i++)
+                        teams[1].addRobot(new Tank(teams[1].getView(), teams[1]));
+                    for (int i = 0; i < Integer.parseInt(init.nbScavenger1.getText()); i++)
+                        teams[0].addRobot(new Scavenger(teams[0].getView(), teams[0]));
+                    for (int i = 0; i < Integer.parseInt(init.nbScavenger2.getText()); i++)
+                        teams[1].addRobot(new Scavenger(teams[1].getView(), teams[1]));
+
                     launchGame();
                     init.dispose();
                 }
@@ -80,26 +96,25 @@ public class Main {
         ShowPlateau pane = new ShowPlateau(p);
         ArrayList<Robot> deadRobot = new ArrayList<>();
 
-        do {
-            pane.changeTitle(count + 1, teams[count % 2].getNomPays());
-            pane.setTeamCourante(teams[count%2]);
-            count += 1;
-            for (Team t : teams) {
-                if (t.lose()) {
-                    end = true;
-                }
-                deadRobot.addAll(t.getRobots().stream().filter(r -> r.isDead())
-                        .collect(Collectors.toList()));
+
+        pane.setTeamCourante(teams[count % 2]);
+        pane.changeTitle(count + 1, teams[count % 2].getNomPays());
+
+        count += 1;
+        for (Team t : teams) {
+            if (t.lose()) {
+                end = true;
             }
-            teams[count % 2].getRobots().stream().filter(r -> r.isBased())
-                    .forEach(r -> r.isHeals());
-            if (!deadRobot.isEmpty()) {
-                for (Robot r : deadRobot) {
-                    r.revoke();
-                }
-                deadRobot.clear();
+            deadRobot.addAll(t.getRobots().stream().filter(r -> r.isDead())
+                    .collect(Collectors.toList()));
+        }
+        teams[count % 2].getRobots().stream().filter(r -> r.isBased()).forEach(r -> r.isHeals());
+        if (!deadRobot.isEmpty()) {
+            for (Robot r : deadRobot) {
+                r.revoke();
             }
-        } while (!end);
+            deadRobot.clear();
+        }
     }
 
 }
