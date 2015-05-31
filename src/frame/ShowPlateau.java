@@ -122,8 +122,7 @@ public class ShowPlateau extends JFrame {
             });
             footer.add(buttons.get(buttons.size() - 1));
         }
-        footer.repaint();
-        f.repaint();
+        footer.revalidate();
     }
 
     public static void setTeamCourante(Team teamCourante) {
