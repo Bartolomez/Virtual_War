@@ -17,20 +17,21 @@ import java.util.List;
  * @author seysn
  */
 public class ShowPlateau extends JFrame {
-    public         JLabel       title;
-    public static  JPanel       footer;
-    public         PanelPlateau pane;
-    public static  Robot        selected;
-    public static  Action       action;
-    private static Team         teamCourante;
+    public        JLabel       title;
+    public        PanelPlateau pane;
+    public static Component    contentPane;
+    public static JPanel       footer;
+    public static Robot        selected;
+    public static Action       action;
     public static ArrayList<JButton> buttons = new ArrayList<>();
-    private static JPanel paneButtons;
+    private static Team teamCourante;
 
     public ShowPlateau(Plateau p) {
         setTitle("Jeu");
         setResizable(false);
         pane = new PanelPlateau(p);
         init();
+        contentPane = getContentPane();
         pack();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -48,7 +49,7 @@ public class ShowPlateau extends JFrame {
         footer.setLayout(new GridLayout(0, 1));
         JLabel info = new JLabel();
         footer.add(info);
-        footer.setPreferredSize(new Dimension(100, 100));
+        footer.setPreferredSize(new Dimension(100, 125));
         pane.addMouseListener(new MouseAdapter() {
             @Override public void mouseClicked(MouseEvent event) {
                 if (!buttons.isEmpty()) {
@@ -95,33 +96,33 @@ public class ShowPlateau extends JFrame {
         for (Robot r : teamCourante.getRobots()) {
             if (r.getAxis().equals(teamCourante.getAxisBase())) {
                 buttons.add(new JButton(r.getType() + " Energie : " + r.getEnergy()));
-                footer.add(buttons.get(buttons.size() - 1));
                 buttons.get(buttons.size() - 1).addMouseListener(new MouseAdapter() {
                     @Override public void mouseClicked(MouseEvent event) {
                         selected = r;
                         addButtons(r, f);
                     }
                 });
+                footer.add(buttons.get(buttons.size() - 1));
             }
         }
     }
 
     public static void addButtons(Robot r, Container f) {
-        if (!buttons.isEmpty()) {
-            for (JButton b : buttons) {
-                footer.remove(b);
-            }
-            buttons = new ArrayList<JButton>();
+        int cpt = footer.getComponentCount();
+        for (int i = 0; i < cpt; i++) {
+            footer.remove(0);
         }
+        footer.add(new JLabel("Action du robot " + selected.getType()));
         for (Axis a : r.searchMoves()) {
             buttons.add(new JButton("Deplacement vers " + a));
-            footer.add(buttons.get(buttons.size() - 1));
             buttons.get(buttons.size() - 1).addMouseListener(new MouseAdapter() {
                 @Override public void mouseClicked(MouseEvent event) {
                     System.out.println("test");
                 }
             });
+            footer.add(buttons.get(buttons.size() - 1));
         }
+        footer.repaint();
         f.repaint();
     }
 
