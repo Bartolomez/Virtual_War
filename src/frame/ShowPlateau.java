@@ -21,7 +21,8 @@ import java.util.List;
  * @author seysn
  */
 public class ShowPlateau extends JFrame {
-    public        JLabel       title;
+    public static int count = 1;
+    public static JLabel       title;
     public static PanelPlateau pane;
     public static Component    contentPane;
     public static JPanel       footer;
@@ -46,6 +47,11 @@ public class ShowPlateau extends JFrame {
         title = new JLabel();
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setPreferredSize(new Dimension(30, 30));
+        title.addMouseListener(new MouseAdapter() {
+            @Override public void mouseClicked(MouseEvent event) {
+                System.out.println(footer.getComponentCount());
+            }
+        });
         setLayout(new BorderLayout());
         add(title, BorderLayout.NORTH);
         add(pane, BorderLayout.WEST);
@@ -63,7 +69,7 @@ public class ShowPlateau extends JFrame {
                         footer.remove(b);
                     }
                     buttons = new ArrayList<JButton>();
-                    repaint();
+                    footer.revalidate();
                 }
                 for (MyCell c : pane.list) {
                     if (c.contains(event.getX(), event.getY()) && (
@@ -84,7 +90,7 @@ public class ShowPlateau extends JFrame {
                         repaint();
                     } else if (c.contains(event.getX(), event.getY()) && (
                             (c.isBaseTeam1() && teamCourante.getTeam() == Constants.FIRST_TEAM) || (
-                                    c.isRobotTeam2()
+                                    c.isBaseTeam2()
                                             && teamCourante.getTeam() == Constants.SECOND_TEAM))) {
                         selected = null;
                         info.setText("Vous avez selectionné votre Base");
@@ -97,7 +103,8 @@ public class ShowPlateau extends JFrame {
                         selected = null;
                         info.setText("Vous avez selectionné la Base adverse");
                         repaint();
-                    } else if (c.contains(event.getX(), event.getY()) && (c.isMineTeam1() || c.isMineTeam2())) {
+                    } else if (c.contains(event.getX(), event.getY()) && (c.isMineTeam1() || c
+                            .isMineTeam2())) {
                         selected = null;
                         info.setText("Vous avez selectionné une Mine");
                         repaint();
@@ -113,8 +120,8 @@ public class ShowPlateau extends JFrame {
         add(footer, BorderLayout.EAST);
     }
 
-    public void changeTitle(int tour, String name) {
-        this.title.setText("[Tour " + tour + "] " + name);
+    public static void changeTitle(int tour, String name) {
+        title.setText("[Tour " + tour + "] " + name);
     }
 
     public static void addButtons(Container f) {
@@ -133,10 +140,7 @@ public class ShowPlateau extends JFrame {
     }
 
     public static void addButtons(Robot r, Container f) {
-        int cpt = footer.getComponentCount();
-        for (int i = 0; i < cpt; i++) {
-            footer.remove(0);
-        }
+        resetAction(false);
         footer.add(new JLabel("Action du robot " + selected.getType()));
         for (Axis a : r.searchMoves()) {
             buttons.add(new JButton("Deplacement vers " + a));
@@ -145,6 +149,10 @@ public class ShowPlateau extends JFrame {
                     action = new Move(r, a);
                     action.doSomething();
                     pane.repaint();
+                    switchTeam();
+                    resetAction(true);
+                    changeTitle(++count, teamCourante.getNomPays());
+                    footer.revalidate();
                 }
             });
             footer.add(buttons.get(buttons.size() - 1));
@@ -161,6 +169,19 @@ public class ShowPlateau extends JFrame {
         Team t = teamCourante;
         teamCourante = waitingTeam;
         waitingTeam = t;
+    }
+
+    public static void resetAction(boolean b) {
+        int cpt = footer.getComponentCount();
+        for (int i = 0; i < cpt; i++) {
+            footer.remove(0);
+        }
+        if (b) {
+            JLabel label = new JLabel("Vous n'avez rien selectionné");
+            label.setHorizontalAlignment(JLabel.CENTER);
+            footer.add(label);
+        }
+        footer.revalidate();
     }
 }
 
