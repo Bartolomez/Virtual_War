@@ -46,12 +46,14 @@ public class ShowPlateau extends JFrame {
         title.setPreferredSize(new Dimension(30, 30));
         setLayout(new BorderLayout());
         add(title, BorderLayout.NORTH);
-        add(pane, BorderLayout.CENTER);
+        add(pane, BorderLayout.WEST);
         footer = new JPanel();
         footer.setLayout(new GridLayout(0, 1));
         JLabel info = new JLabel();
         footer.add(info);
-        footer.setPreferredSize(new Dimension(100, 125));
+        footer.setBorder(BorderFactory
+                .createTitledBorder(BorderFactory.createLineBorder(new Color(0)), "Actions"));
+        footer.setPreferredSize(new Dimension(400, 125));
         pane.addMouseListener(new MouseAdapter() {
             @Override public void mouseClicked(MouseEvent event) {
                 if (!buttons.isEmpty()) {
@@ -62,19 +64,34 @@ public class ShowPlateau extends JFrame {
                     repaint();
                 }
                 for (MyCell c : pane.list) {
-                    if (c.contains(event.getX(), event.getY()) && (c.isRobotTeam1() || c
-                            .isRobotTeam2())) {
+                    if (c.contains(event.getX(), event.getY()) && (
+                            (c.isRobotTeam1() && teamCourante.getTeam() == Constants.FIRST_TEAM)
+                                    || (c.isRobotTeam2()
+                                    && teamCourante.getTeam() == Constants.SECOND_TEAM))) {
                         info.setText("Vous avez selectionné un Robot");
                         selected = pane.p.getCell((int) c.getX() / pane.tailleCase,
                                 (int) c.getY() / pane.tailleCase).getRobot();
                         addButtons(selected, getContentPane());
                         repaint();
-                    } else if (c.contains(event.getX(), event.getY()) && c.isBaseTeam1()) {
+                    } else if (c.contains(event.getX(), event.getY()) && (
+                            (c.isRobotTeam1() && teamCourante.getTeam() == Constants.SECOND_TEAM)
+                                    || (c.isRobotTeam2()
+                                    && teamCourante.getTeam() == Constants.FIRST_TEAM))) {
+                        info.setText("Vous avez selectionné un Robot ennemi");
+                        selected = null;
+                        repaint();
+                    } else if (c.contains(event.getX(), event.getY()) && (
+                            (c.isBaseTeam1() && teamCourante.getTeam() == Constants.FIRST_TEAM) || (
+                                    c.isRobotTeam2()
+                                            && teamCourante.getTeam() == Constants.SECOND_TEAM))) {
                         selected = null;
                         info.setText("Vous avez selectionné votre Base");
                         addButtons(getContentPane());
                         repaint();
-                    } else if (c.contains(event.getX(), event.getY()) && c.isBaseTeam2()) {
+                    } else if (c.contains(event.getX(), event.getY()) && (
+                            (c.isBaseTeam2() && teamCourante.getTeam() == Constants.FIRST_TEAM) || (
+                                    c.isBaseTeam1()
+                                            && teamCourante.getTeam() == Constants.SECOND_TEAM))) {
                         selected = null;
                         info.setText("Vous avez selectionné la Base adverse");
                         repaint();
@@ -87,7 +104,7 @@ public class ShowPlateau extends JFrame {
                 }
             }
         });
-        add(footer, BorderLayout.SOUTH);
+        add(footer, BorderLayout.EAST);
     }
 
     public void changeTitle(int tour, String name) {
