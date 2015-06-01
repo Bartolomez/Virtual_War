@@ -13,7 +13,6 @@ import team.Team;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 /**
  * La classe Main permet de lancer l application.
@@ -95,13 +94,10 @@ public class Main {
         boolean end = false;
         ShowPlateau pane = new ShowPlateau(p);
         ArrayList<Robot> deadRobot = new ArrayList<>();
-
-
         pane.setTeamCourante(teams[count % 2]);
         pane.changeTitle(count + 1, teams[count % 2].getNomPays());
 
-        count += 1;
-        for (Team t : teams) {
+        /*for (Team t : teams) {
             if (t.lose()) {
                 end = true;
             }
@@ -114,7 +110,7 @@ public class Main {
                 r.revoke();
             }
             deadRobot.clear();
-        }
+        }*/
     }
 
 }
