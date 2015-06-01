@@ -1,5 +1,7 @@
 package frame;
 
+import action.Action;
+import action.Move;
 import config.Constants;
 import plateau.Axis;
 import plateau.Plateau;
@@ -18,7 +20,7 @@ import java.util.List;
  */
 public class ShowPlateau extends JFrame {
     public        JLabel       title;
-    public        PanelPlateau pane;
+    public static PanelPlateau pane;
     public static Component    contentPane;
     public static JPanel       footer;
     public static Robot        selected;
@@ -117,7 +119,12 @@ public class ShowPlateau extends JFrame {
             buttons.add(new JButton("Deplacement vers " + a));
             buttons.get(buttons.size() - 1).addMouseListener(new MouseAdapter() {
                 @Override public void mouseClicked(MouseEvent event) {
-                    System.out.println("test");
+                    action = new Move(r, a);
+                    action.doSomething();
+                    System.out.println(pane.p);
+                    pane.revalidate();
+                    pane.repaint();
+                    f.repaint();
                 }
             });
             footer.add(buttons.get(buttons.size() - 1));
@@ -139,11 +146,15 @@ class PanelPlateau extends JPanel {
 
     public PanelPlateau(Plateau p) {
         this.p = p;
-        init();
         this.setPreferredSize(new Dimension(tailleCase * p.getLength(), tailleCase * p.getWidth()));
     }
 
     private void init() {
+        if (!list.isEmpty()) {
+            for (int i = 0; i < list.size(); i++) {
+                list.remove(0);
+            }
+        }
         for (int i = 0; i < p.getLength(); i++) {
             for (int j = 0; j < p.getWidth(); j++) {
                 if (p.getCell(i, j).getBase() == Constants.FIRST_TEAM) {
@@ -172,6 +183,7 @@ class PanelPlateau extends JPanel {
     }
 
     @Override protected void paintComponent(Graphics graphics) {
+        init();
         for (MyCell c : list) {
             if (c.isObstacle()) {
                 graphics.setColor(new Color(0));
