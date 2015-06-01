@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Classe principale qui contient les elements graphiques du jeu et qui le fait tourner
+ *
  * @author seysn
  */
 public class ShowPlateau extends JFrame {
@@ -26,7 +28,7 @@ public class ShowPlateau extends JFrame {
     public static Robot        selected;
     public static Action       action;
     public static ArrayList<JButton> buttons = new ArrayList<>();
-    private static Team teamCourante;
+    private static Team teamCourante, waitingTeam;
 
     public ShowPlateau(Plateau p) {
         setTitle("Jeu");
@@ -146,8 +148,15 @@ public class ShowPlateau extends JFrame {
         footer.revalidate();
     }
 
-    public static void setTeamCourante(Team teamCourante) {
+    public static void setTeamCourante(Team teamCourante, Team waitingTeam) {
         ShowPlateau.teamCourante = teamCourante;
+        ShowPlateau.waitingTeam =  waitingTeam;
+    }
+
+    public static void switchTeam() {
+        Team t = teamCourante;
+        teamCourante = waitingTeam;
+        waitingTeam = t;
     }
 }
 

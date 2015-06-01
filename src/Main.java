@@ -94,7 +94,7 @@ public class Main {
         boolean end = false;
         ShowPlateau pane = new ShowPlateau(p);
         ArrayList<Robot> deadRobot = new ArrayList<>();
-        pane.setTeamCourante(teams[count % 2]);
+        pane.setTeamCourante(teams[count % 2], teams[(count+1) % 2]);
         pane.changeTitle(count + 1, teams[count % 2].getNomPays());
 
         /*for (Team t : teams) {
