@@ -97,6 +97,10 @@ public class ShowPlateau extends JFrame {
                         selected = null;
                         info.setText("Vous avez selectionné la Base adverse");
                         repaint();
+                    } else if (c.contains(event.getX(), event.getY()) && (c.isMineTeam1() || c.isMineTeam2())) {
+                        selected = null;
+                        info.setText("Vous avez selectionné une Mine");
+                        repaint();
                     } else if (c.contains(event.getX(), event.getY()) && (c.isVide() || c
                             .isObstacle())) {
                         selected = null;
@@ -150,7 +154,7 @@ public class ShowPlateau extends JFrame {
 
     public static void setTeamCourante(Team teamCourante, Team waitingTeam) {
         ShowPlateau.teamCourante = teamCourante;
-        ShowPlateau.waitingTeam =  waitingTeam;
+        ShowPlateau.waitingTeam = waitingTeam;
     }
 
     public static void switchTeam() {
@@ -197,6 +201,12 @@ class PanelPlateau extends JPanel {
                         && p.getCell(i, j).getRobot().getTeam().getTeam() == 2) {
                     list.add(new MyCell(tailleCase * i, tailleCase * j, tailleCase, tailleCase,
                             "Robot2"));
+                } else if (p.getCell(i, j).containsMine() == Constants.FIRST_TEAM) {
+                    list.add(new MyCell(tailleCase * i, tailleCase * j, tailleCase, tailleCase,
+                            "Mine1"));
+                } else if (p.getCell(i, j).containsMine() == Constants.SECOND_TEAM) {
+                    list.add(new MyCell(tailleCase * i, tailleCase * j, tailleCase, tailleCase,
+                            "Mine2"));
                 } else {
                     list.add(new MyCell(tailleCase * i, tailleCase * j, tailleCase, tailleCase,
                             "Vide"));
@@ -218,6 +228,8 @@ class PanelPlateau extends JPanel {
                 graphics.setColor(new Color(0x1500FF));
             } else if (c.isRobotTeam2()) {
                 graphics.setColor(new Color(0xDD0C00));
+            } else if (c.isMineTeam1() || c.isMineTeam2()) {
+                graphics.setColor(new Color(0x636363));
             }
             graphics.fillRect((int) c.getX(), (int) c.getY(), (int) c.getHeight(),
                     (int) c.getWidth());
@@ -246,4 +258,8 @@ class MyCell extends Rectangle {
     public boolean isRobotTeam1() { return type.equals("Robot1"); }
 
     public boolean isRobotTeam2() { return type.equals("Robot2"); }
+
+    public boolean isMineTeam1() { return type.equals("Mine1"); }
+
+    public boolean isMineTeam2() { return type.equals("Mine2"); }
 }
