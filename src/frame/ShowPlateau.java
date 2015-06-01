@@ -121,10 +121,7 @@ public class ShowPlateau extends JFrame {
                 @Override public void mouseClicked(MouseEvent event) {
                     action = new Move(r, a);
                     action.doSomething();
-                    System.out.println(pane.p);
-                    pane.revalidate();
                     pane.repaint();
-                    f.repaint();
                 }
             });
             footer.add(buttons.get(buttons.size() - 1));
