@@ -20,6 +20,10 @@ public class Move extends Action {
         super( robot );
     }
 
+    public Move( Robot robot, Axis objective) {
+        super(robot, objective);
+    }
+
     @Override public void doSomething() {
         travelTo( getObjective() );
     }
