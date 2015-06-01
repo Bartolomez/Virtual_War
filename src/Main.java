@@ -57,10 +57,10 @@ public class Main {
                     if (init.type2.getSelectedItem().equals("Ordinateur")) {
                         teams[1] = new ArtificialIntelligence(
                                 new Axis(p.getLength() - 1, p.getWidth() - 1), p, 2,
-                                String.valueOf(init.pays1.getSelectedItem()));
+                                String.valueOf(init.pays2.getSelectedItem()));
                     } else {
                         teams[1] = new Team(new Axis(p.getLength() - 1, p.getWidth() - 1), p, 2,
-                                String.valueOf(init.pays1.getSelectedItem()));
+                                String.valueOf(init.pays2.getSelectedItem()));
                     }
                     for (int i = 0; i < Integer.parseInt(init.nbShooter1.getText()); i++)
                         teams[0].addRobot(new Shooter(teams[0].getView(), teams[0]));
@@ -94,7 +94,7 @@ public class Main {
         boolean end = false;
         ShowPlateau pane = new ShowPlateau(p);
         ArrayList<Robot> deadRobot = new ArrayList<>();
-        pane.setTeamCourante(teams[count % 2], teams[(count+1) % 2]);
+        pane.setTeamCourante(teams[0], teams[1]);
         pane.changeTitle(count + 1, teams[count % 2].getNomPays());
 
         /*for (Team t : teams) {
