@@ -199,9 +199,7 @@ class PanelPlateau extends JPanel {
 
     private void init() {
         if (!list.isEmpty()) {
-            for (int i = 0; i < list.size(); i++) {
-                list.remove(0);
-            }
+            list.clear();
         }
         for (int i = 0; i < p.getLength(); i++) {
             for (int j = 0; j < p.getWidth(); j++) {
