@@ -26,6 +26,7 @@ public class ShowPlateau extends JFrame {
     public static PanelPlateau pane;
     public static Component    contentPane;
     public static JPanel       footer;
+    public static JLabel       info;
     public static Robot        selected;
     public static Action       action;
     public static ArrayList<JButton> buttons = new ArrayList<>();
@@ -57,7 +58,8 @@ public class ShowPlateau extends JFrame {
         add(pane, BorderLayout.WEST);
         footer = new JPanel();
         footer.setLayout(new GridLayout(0, 1));
-        JLabel info = new JLabel();
+        info = new JLabel();
+        info.setHorizontalAlignment(JLabel.CENTER);
         footer.add(info);
         footer.setBorder(BorderFactory
                 .createTitledBorder(BorderFactory.createLineBorder(new Color(0)), "Actions"));
@@ -141,7 +143,7 @@ public class ShowPlateau extends JFrame {
 
     public static void addButtons(Robot r, Container f) {
         resetAction(false);
-        footer.add(new JLabel("Action du robot " + selected.getType()));
+        info.setText("Action du robot " + selected.getType());
         for (Axis a : r.searchMoves()) {
             buttons.add(new JButton("Deplacement vers " + a));
             buttons.get(buttons.size() - 1).addMouseListener(new MouseAdapter() {
@@ -173,13 +175,11 @@ public class ShowPlateau extends JFrame {
 
     public static void resetAction(boolean b) {
         int cpt = footer.getComponentCount();
-        for (int i = 0; i < cpt; i++) {
-            footer.remove(0);
+        for (int i = 1; i < cpt; i++) {
+            footer.remove(1);
         }
         if (b) {
-            JLabel label = new JLabel("Vous n'avez rien selectionné");
-            label.setHorizontalAlignment(JLabel.CENTER);
-            footer.add(label);
+            info.setText("Vous n'avez rien selectionné");
         }
         footer.revalidate();
     }
