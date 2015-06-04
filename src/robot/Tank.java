@@ -247,6 +247,10 @@ public class Tank extends Robot {
         return new Move( this );
     }
 
+    @Override public List<Axis> getAxisAction() {
+        return searchTarget();
+    }
+
     /**
      * Retourne une chaine de caracteres pour l objet Tank.
      *

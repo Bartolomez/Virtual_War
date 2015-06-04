@@ -281,6 +281,10 @@ public class Scavenger extends Robot {
         return this.getView().getPlateau().getCell(axis).isRobot() != this.getTeam().getTeam();
     }
 
+    @Override public List<Axis> getAxisAction() {
+        return initialzedMines();
+    }
+
     /**
      * Retourne une chaine de caracteres pour l objet Scavenger.
      * @return Une chaine de caracteres pour l'objet Scavenger.

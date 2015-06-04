@@ -237,6 +237,10 @@ public class Shooter extends Robot {
         return this.getView().getPlateau().getCell( axis ).isRobot() != this.getTeam().getTeam();
     }
 
+    @Override public List<Axis> getAxisAction() {
+        return searchTarget();
+    }
+
     /**
      * Retourne une chaine de caracteres pour l objet Shooter.
      *

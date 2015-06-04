@@ -279,4 +279,6 @@ public abstract class Robot {
     public abstract Action chosesDisplacement( List<Axis> displacement );
 
     public abstract List<Axis> searchMoves();
+
+    public abstract List<Axis> getAxisAction();
 }
