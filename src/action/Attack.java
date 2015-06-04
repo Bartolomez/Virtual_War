@@ -1,5 +1,6 @@
 package action;
 
+import plateau.Axis;
 import robot.Robot;
 
 /**
@@ -17,6 +18,10 @@ public class Attack extends Action {
      */
     public Attack( Robot robot ) {
         super( robot );
+    }
+
+    public Attack( Robot robot, Axis objective) {
+        super( robot, objective );
     }
 
     @Override public void doSomething() {
