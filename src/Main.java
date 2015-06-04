@@ -96,21 +96,6 @@ public class Main {
         ArrayList<Robot> deadRobot = new ArrayList<>();
         pane.setTeamCourante(teams[0], teams[1]);
         pane.changeTitle(count + 1, teams[count % 2].getNomPays());
-
-        /*for (Team t : teams) {
-            if (t.lose()) {
-                end = true;
-            }
-            deadRobot.addAll(t.getRobots().stream().filter(r -> r.isDead())
-                    .collect(Collectors.toList()));
-        }
-        teams[count % 2].getRobots().stream().filter(r -> r.isBased()).forEach(r -> r.isHeals());
-        if (!deadRobot.isEmpty()) {
-            for (Robot r : deadRobot) {
-                r.revoke();
-            }
-            deadRobot.clear();
-        }*/
     }
 
 }
