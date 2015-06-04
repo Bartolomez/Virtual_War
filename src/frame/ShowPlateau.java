@@ -1,6 +1,7 @@
 package frame;
 
 import action.Action;
+import action.Attack;
 import action.Move;
 import config.Constants;
 import plateau.Axis;
@@ -143,7 +144,28 @@ public class ShowPlateau extends JFrame {
 
     public static void addButtons(Robot r, Container f) {
         resetAction(false);
-        info.setText("Action du robot " + selected.getType());
+        info.setText("Action du robot " + selected.getType() + ", Energie : " + r.getEnergy());
+        for (Axis a : r.getAxisAction()) {
+            if (r.getType().equals(Constants.IS_SCAVENGER)) {
+                buttons.add(new JButton("Poser une mine en " + a));
+            } else {
+                buttons.add(new JButton("Attaquer en " + a));
+            }
+            buttons.get(buttons.size() - 1).setForeground(Color.RED);
+            buttons.get(buttons.size() - 1).addMouseListener(new MouseAdapter() {
+                @Override public void mouseClicked(MouseEvent event) {
+                    action = new Attack(r, a);
+                    action.doSomething();
+                    pane.repaint();
+                    switchTeam();
+                    resetAction(true);
+                    changeTitle(++count, teamCourante.getNomPays());
+                    footer.revalidate();
+                    endTurn();
+                }
+            });
+            footer.add(buttons.get(buttons.size() - 1));
+        }
         for (Axis a : r.searchMoves()) {
             buttons.add(new JButton("Deplacement vers " + a));
             buttons.get(buttons.size() - 1).addMouseListener(new MouseAdapter() {
@@ -155,6 +177,7 @@ public class ShowPlateau extends JFrame {
                     resetAction(true);
                     changeTitle(++count, teamCourante.getNomPays());
                     footer.revalidate();
+                    endTurn();
                 }
             });
             footer.add(buttons.get(buttons.size() - 1));
@@ -182,6 +205,25 @@ public class ShowPlateau extends JFrame {
             info.setText("Vous n'avez rien selectionné");
         }
         footer.revalidate();
+    }
+
+    private static void endTurn() {
+
+        if (waitingTeam.lose()) {
+            // TODO
+        }
+
+        // TODO
+        /*deadRobot.addAll(t.getRobots().stream().filter(r -> r.isDead())
+                .collect(Collectors.toList()));
+
+        teams[count % 2].getRobots().stream().filter(r -> r.isBased()).forEach(r -> r.isHeals());
+        if (!deadRobot.isEmpty()) {
+            for (Robot r : deadRobot) {
+                r.revoke();
+            }
+            deadRobot.clear();
+        }*/
     }
 }
 
