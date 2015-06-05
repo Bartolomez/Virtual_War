@@ -49,7 +49,7 @@ public class Regles extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
-        setVisible(false);
+        setVisible(true);
     }
 
     private void init() {

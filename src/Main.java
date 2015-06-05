@@ -40,7 +40,8 @@ public class Main {
 
         m.regles.addMouseListener(new MouseAdapter() {
             @Override public void mouseClicked(MouseEvent event) {
-
+                launchRules();
+                m.dispose();
             }
         });
     }
