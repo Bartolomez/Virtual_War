@@ -7,6 +7,7 @@ import config.Constants;
 import plateau.Axis;
 import plateau.Plateau;
 import robot.Robot;
+import robot.Scavenger;
 import team.Team;
 
 import javax.swing.*;
@@ -23,13 +24,14 @@ import java.util.List;
  */
 public class ShowPlateau extends JFrame {
     public static int count = 1;
-    public static JLabel       title;
+    public static ArrayList<Robot> deadRobots = new ArrayList<>();
+    public static JLabel title, info;
     public static PanelPlateau pane;
     public static Component    contentPane;
     public static JPanel       footer;
-    public static JLabel       info;
     public static Robot        selected;
     public static Action       action;
+    public static JButton      actionIA;
     public static ArrayList<JButton> buttons = new ArrayList<>();
     private static Team teamCourante, waitingTeam;
 
@@ -65,61 +67,80 @@ public class ShowPlateau extends JFrame {
         footer.setBorder(BorderFactory
                 .createTitledBorder(BorderFactory.createLineBorder(new Color(0)), "Actions"));
         footer.setPreferredSize(new Dimension(400, 125));
-        pane.addMouseListener(new MouseAdapter() {
-            @Override public void mouseClicked(MouseEvent event) {
-                if (!buttons.isEmpty()) {
-                    for (JButton b : buttons) {
-                        footer.remove(b);
+        if (!teamCourante.isIa()) {
+            pane.addMouseListener(new MouseAdapter() {
+                @Override public void mouseClicked(MouseEvent event) {
+                    if (!buttons.isEmpty()) {
+                        for (JButton b : buttons) {
+                            footer.remove(b);
+                        }
+                        buttons = new ArrayList<JButton>();
+                        footer.revalidate();
                     }
-                    buttons = new ArrayList<JButton>();
+                    for (MyCell c : pane.list) {
+                        if (c.contains(event.getX(), event.getY()) && (
+                                (c.isRobotTeam1() && teamCourante.getTeam() == Constants.FIRST_TEAM)
+                                        || (c.isRobotTeam2()
+                                        && teamCourante.getTeam() == Constants.SECOND_TEAM))) {
+                            info.setText("Vous avez selectionné un Robot");
+                            selected = pane.p.getCell((int) c.getX() / pane.tailleCase,
+                                    (int) c.getY() / pane.tailleCase).getRobot();
+                            addButtons(selected);
+                            repaint();
+                        } else if (c.contains(event.getX(), event.getY()) && ((c.isRobotTeam1()
+                                && teamCourante.getTeam() == Constants.SECOND_TEAM) || (
+                                c.isRobotTeam2()
+                                        && teamCourante.getTeam() == Constants.FIRST_TEAM))) {
+                            info.setText("Vous avez selectionné un Robot ennemi");
+                            selected = null;
+                            repaint();
+                        } else if (c.contains(event.getX(), event.getY()) && (
+                                (c.isBaseTeam1() && teamCourante.getTeam() == Constants.FIRST_TEAM)
+                                        || (c.isBaseTeam2()
+                                        && teamCourante.getTeam() == Constants.SECOND_TEAM))) {
+                            selected = null;
+                            info.setText("Vous avez selectionné votre Base");
+                            addButtons(getContentPane());
+                            repaint();
+                        } else if (c.contains(event.getX(), event.getY()) && (
+                                (c.isBaseTeam2() && teamCourante.getTeam() == Constants.FIRST_TEAM)
+                                        || (c.isBaseTeam1()
+                                        && teamCourante.getTeam() == Constants.SECOND_TEAM))) {
+                            selected = null;
+                            info.setText("Vous avez selectionné la Base adverse");
+                            repaint();
+                        } else if (c.contains(event.getX(), event.getY()) && (c.isMineTeam1() || c
+                                .isMineTeam2())) {
+                            selected = null;
+                            info.setText("Vous avez selectionné une Mine");
+                            repaint();
+                        } else if (c.contains(event.getX(), event.getY()) && (c.isVide() || c
+                                .isObstacle())) {
+                            selected = null;
+                            info.setText("Vous n'avez rien selectionné");
+                            repaint();
+                        }
+                    }
+                }
+            });
+        } else {
+            info.setText("Passer au tour suivant :");
+            actionIA = new JButton("Effectuer l'action de l'IA");
+            footer.add(actionIA);
+            actionIA.addMouseListener(new MouseAdapter() {
+                @Override public void mouseClicked(MouseEvent event) {
+                    selected = teamCourante.chooseRobot();
+                    action = selected.selectActionForIa();
+                    action.doSomething();
+                    pane.repaint();
+                    switchTeam();
+                    resetAction(true);
+                    changeTitle(++count, teamCourante.getNomPays());
                     footer.revalidate();
+                    endTurn();
                 }
-                for (MyCell c : pane.list) {
-                    if (c.contains(event.getX(), event.getY()) && (
-                            (c.isRobotTeam1() && teamCourante.getTeam() == Constants.FIRST_TEAM)
-                                    || (c.isRobotTeam2()
-                                    && teamCourante.getTeam() == Constants.SECOND_TEAM))) {
-                        info.setText("Vous avez selectionné un Robot");
-                        selected = pane.p.getCell((int) c.getX() / pane.tailleCase,
-                                (int) c.getY() / pane.tailleCase).getRobot();
-                        addButtons(selected, getContentPane());
-                        repaint();
-                    } else if (c.contains(event.getX(), event.getY()) && (
-                            (c.isRobotTeam1() && teamCourante.getTeam() == Constants.SECOND_TEAM)
-                                    || (c.isRobotTeam2()
-                                    && teamCourante.getTeam() == Constants.FIRST_TEAM))) {
-                        info.setText("Vous avez selectionné un Robot ennemi");
-                        selected = null;
-                        repaint();
-                    } else if (c.contains(event.getX(), event.getY()) && (
-                            (c.isBaseTeam1() && teamCourante.getTeam() == Constants.FIRST_TEAM) || (
-                                    c.isBaseTeam2()
-                                            && teamCourante.getTeam() == Constants.SECOND_TEAM))) {
-                        selected = null;
-                        info.setText("Vous avez selectionné votre Base");
-                        addButtons(getContentPane());
-                        repaint();
-                    } else if (c.contains(event.getX(), event.getY()) && (
-                            (c.isBaseTeam2() && teamCourante.getTeam() == Constants.FIRST_TEAM) || (
-                                    c.isBaseTeam1()
-                                            && teamCourante.getTeam() == Constants.SECOND_TEAM))) {
-                        selected = null;
-                        info.setText("Vous avez selectionné la Base adverse");
-                        repaint();
-                    } else if (c.contains(event.getX(), event.getY()) && (c.isMineTeam1() || c
-                            .isMineTeam2())) {
-                        selected = null;
-                        info.setText("Vous avez selectionné une Mine");
-                        repaint();
-                    } else if (c.contains(event.getX(), event.getY()) && (c.isVide() || c
-                            .isObstacle())) {
-                        selected = null;
-                        info.setText("Vous n'avez rien selectionné");
-                        repaint();
-                    }
-                }
-            }
-        });
+            });
+        }
         add(footer, BorderLayout.EAST);
     }
 
@@ -134,7 +155,7 @@ public class ShowPlateau extends JFrame {
                 buttons.get(buttons.size() - 1).addMouseListener(new MouseAdapter() {
                     @Override public void mouseClicked(MouseEvent event) {
                         selected = r;
-                        addButtons(r, f);
+                        addButtons(r);
                     }
                 });
                 footer.add(buttons.get(buttons.size() - 1));
@@ -142,29 +163,43 @@ public class ShowPlateau extends JFrame {
         }
     }
 
-    public static void addButtons(Robot r, Container f) {
+    public static void addButtons(Robot r) {
         resetAction(false);
         info.setText("Action du robot " + selected.getType() + ", Energie : " + r.getEnergy());
         for (Axis a : r.getAxisAction()) {
             if (r.getType().equals(Constants.IS_SCAVENGER)) {
                 buttons.add(new JButton("Poser une mine en " + a));
+                buttons.get(buttons.size() - 1).setForeground(Color.RED);
+                buttons.get(buttons.size() - 1).addMouseListener(new MouseAdapter() {
+                    @Override public void mouseClicked(MouseEvent event) {
+                        r.setObjective(a);
+                        ((Scavenger) r).mine();
+                        pane.repaint();
+                        switchTeam();
+                        resetAction(true);
+                        changeTitle(++count, teamCourante.getNomPays());
+                        footer.revalidate();
+                        endTurn();
+                    }
+                });
+                footer.add(buttons.get(buttons.size() - 1));
             } else {
                 buttons.add(new JButton("Attaquer en " + a));
+                buttons.get(buttons.size() - 1).setForeground(Color.RED);
+                buttons.get(buttons.size() - 1).addMouseListener(new MouseAdapter() {
+                    @Override public void mouseClicked(MouseEvent event) {
+                        action = new Attack(r, a);
+                        action.doSomething();
+                        pane.repaint();
+                        switchTeam();
+                        resetAction(true);
+                        changeTitle(++count, teamCourante.getNomPays());
+                        footer.revalidate();
+                        endTurn();
+                    }
+                });
+                footer.add(buttons.get(buttons.size() - 1));
             }
-            buttons.get(buttons.size() - 1).setForeground(Color.RED);
-            buttons.get(buttons.size() - 1).addMouseListener(new MouseAdapter() {
-                @Override public void mouseClicked(MouseEvent event) {
-                    action = new Attack(r, a);
-                    action.doSomething();
-                    pane.repaint();
-                    switchTeam();
-                    resetAction(true);
-                    changeTitle(++count, teamCourante.getNomPays());
-                    footer.revalidate();
-                    endTurn();
-                }
-            });
-            footer.add(buttons.get(buttons.size() - 1));
         }
         for (Axis a : r.searchMoves()) {
             buttons.add(new JButton("Deplacement vers " + a));
@@ -194,6 +229,7 @@ public class ShowPlateau extends JFrame {
         Team t = teamCourante;
         teamCourante = waitingTeam;
         waitingTeam = t;
+
     }
 
     public static void resetAction(boolean b) {
@@ -209,7 +245,9 @@ public class ShowPlateau extends JFrame {
 
     private static void endTurn() {
 
-        if (waitingTeam.lose()) {
+        if (teamCourante.lose()) {
+            // TODO
+        } else if (waitingTeam.lose()) {
             // TODO
         }
 

@@ -74,7 +74,7 @@ public class Scavenger extends Robot {
     return false;
   }
 
-  private void mine() {
+  public void mine() {
     this.getView().getPlateau().getCell(getObjective()).putMine(this.getNumberTeam());
     this.looseOneMine();
     this.losesEnergyAfterAction();

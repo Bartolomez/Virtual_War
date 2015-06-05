@@ -165,11 +165,13 @@ public class Initialize extends JFrame {
                     .showMessageDialog(null, "Les deux équipes ne peuvent pas avoir le même pays",
                             "Erreur", JOptionPane.ERROR_MESSAGE);
             b = false;
+        } else if (this.type1.getSelectedItem().equals("Ordinateur") || this.type2.getSelectedItem()
+                .equals("Ordinateur")) {
+            JOptionPane.showMessageDialog(null,
+                    "Les ordinateurs ne sont pas implémentés dans la version graphique", "Erreur",
+                    JOptionPane.ERROR_MESSAGE);
+            b = false;
         }
         return b;
-    }
-
-    public static void main(String[] args) {
-        new Initialize();
     }
 }

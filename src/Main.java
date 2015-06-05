@@ -110,10 +110,10 @@ public class Main {
     private static void launchGame() {
         int count = 0;
         boolean end = false;
+        ShowPlateau.setTeamCourante(teams[0], teams[1]);
         ShowPlateau pane = new ShowPlateau(p);
         ArrayList<Robot> deadRobot = new ArrayList<>();
-        pane.setTeamCourante(teams[0], teams[1]);
-        pane.changeTitle(count + 1, teams[count % 2].getNomPays());
+        ShowPlateau.changeTitle(count + 1, teams[count % 2].getNomPays());
     }
 
 }
