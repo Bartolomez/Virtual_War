@@ -1,6 +1,7 @@
 import frame.Initialize;
 import frame.Menu;
 import frame.ShowPlateau;
+import frame.Regles;
 import ia.ArtificialIntelligence;
 import plateau.Axis;
 import plateau.Plateau;
@@ -34,6 +35,22 @@ public class Main {
             @Override public void mouseClicked(MouseEvent event) {
                 launchInit();
                 m.dispose();
+            }
+        });
+
+        m.regles.addMouseListener(new MouseAdapter() {
+            @Override public void mouseClicked(MouseEvent event) {
+
+            }
+        });
+    }
+
+    private static void launchRules() {
+        Regles r = new Regles();
+        r.retour.addMouseListener(new MouseAdapter() {
+            @Override public void mouseClicked(MouseEvent event) {
+                launchMenu();
+                r.dispose();
             }
         });
     }
