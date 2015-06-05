@@ -287,6 +287,8 @@ public class Scavenger extends Robot {
         for (Axis axis : minesTmp) {
           if (this.valueIsSuitable(axis)) {
             mines.remove(axis);
+          } else if (this.thisAxisIsObstacle(axis)) {
+            mines.remove(axis);
           }
         }
         return mines;
